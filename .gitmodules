@@ -1,0 +1,3 @@
+[submodule "EsnyaUnityTools"]
+	path = EsnyaUnityTools
+	url = https://github.com/esnya/EsnyaUnityTools.git
