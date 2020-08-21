@@ -8,6 +8,9 @@
     "VRChat",
     "Unity"
   ],
+  "scripts": {
+    "version": "npx cross-var npx gitmoji-changelog $npm_package_version && git add CHANGELOG.md"
+  },
   "author": "esnya",
   "license": "MIT",
   "private": true
