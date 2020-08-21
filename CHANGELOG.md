@@ -7,9 +7,11 @@
 
 - ✨ Name Fix [fb7f6b0]
 - ✨ Include EsnyaUnityTools [384ba26]
+- 🎉  [abe5e7e]
 
 ### Changed
 
+- 🎨 Prepare to release unitypackage [50192dc]
 - 🎨 Use namespace [800d21f]
 
 ### Breaking changes
@@ -23,7 +25,6 @@
 ### Miscellaneous
 
 - 📝  [69219fd]
-    * 🎉  (abe5e7e)
 - 📝 Add package.json [f3c54f7]
 -  Initial commit [495e237]
 
