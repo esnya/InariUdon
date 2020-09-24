@@ -19,7 +19,9 @@ jobs:
       - run: |
           find Assets -name \*.meta > metaList
           mkdir build
-          cp -r README.md LICENSE Documents~ build
+          cp -r README.md build
+          cp -r LICENSE build || true
+          cp -r Documents~ build || true
           cp README.md build/README.txt
           cat metaList
       - uses: pCYSl5EDgo/create-unitypackage@master
