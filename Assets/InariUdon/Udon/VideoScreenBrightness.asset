@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: VideoScreenBrightness
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 019964c714c88ca4a90b6168aa4b6678,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: dbe8056da5eebdf4880fec187b9060ff,
     type: 2}
   udonAssembly: 
   assemblyError: 

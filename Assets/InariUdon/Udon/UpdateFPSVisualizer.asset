@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: UpdateFPSVisualizer
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 51f62f41cc822f04eb9016c6c5fedd08,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 1af7c404042d4494684b77939b5f4166,
     type: 2}
   udonAssembly: 
   assemblyError: 
