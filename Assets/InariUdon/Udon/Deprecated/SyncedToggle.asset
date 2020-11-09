@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SyncedToggle
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 6b3dd5c79808aae4f9f182471685f4fb,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 356f10c1e5378ba45bb6c736bb8d88f4,
     type: 2}
   udonAssembly: 
   assemblyError: 

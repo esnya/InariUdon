@@ -7,14 +7,6 @@
 
   public class TumblerSwitch : UdonSharpBehaviour
   {
-#if UNITY_EDITOR
-    public new void SendCustomNetworkEvent(NetworkEventTarget target, string eventName)
-    {
-      Debug.Log($"[STUB] SendCustomNetworkEvent, target: {target}");
-      SendCustomEvent(eventName);
-    }
-#endif
-
     public Animator localAnimator;
     public string localParameter = "State";
 
