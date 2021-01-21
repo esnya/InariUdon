@@ -4,7 +4,12 @@ Useful prefabs and Udon scripts for VRChat World SDK 3.0
 ## Usage
 Place prefabs into Scene in [Assets/InariUdon/Components/<COMPONENT_NAME>](Assets/InariUdon/Components) or add UdonScript in Script directory.
 
-## Common Requirements
+## Setup
+1. Install requirements in below.
+2. Download latest non-pre-release unitypackage from [Releases](releases).
+3. Drag and drop into Project window of Unity.
+
+## Requirements
 * VRC SDK3 Worlds
 * UdonSharp
 * UdonToolkt
