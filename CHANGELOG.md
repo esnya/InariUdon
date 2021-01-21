@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="2.0.1"></a>
+## 2.0.1 (2021-01-21)
+
+### Breaking changes
+
+- 💥 Remove deprecated scripts [[386417b](https://github.com/esnya/EsnyaTinyUdonHome/commit/386417ba65fc9b5ff4c16e25c5fb58f4e53bc7ff)]
+
+
 <a name="2.0.0"></a>
 ## 2.0.0 (2021-01-21)
 
