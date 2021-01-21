@@ -6,20 +6,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.package_name.outputs.tag }}
+      tag: ${{ steps.names.outputs.tag }}
+      package_name: ${{ steps.package_name.outputs.package_name }}
     steps:
     - uses: actions/checkout@v2
     - uses: ypicard/get-branch-name-github-action@v1
       id: names
-    - run: echo "::set-output name=tag::${{ steps.names.outputs.tag }}
-      id: tag
+    - run: echo "::set-output name=package_name::$(echo ${GITHUB_REPOSITORY##*/})-${{ steps.names.outputs.tag }}"
+      id: package_name
 
     - run: find Assets/ -name \*.meta > metaList
     - run: mkdir build
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'build/InariUdon-${{ steps.names.outputs.tag }}.unitypackage'
+        package-path: 'build/${{ steps.package_name.outputs.package_name }}.unitypackage'
         include-files: metaList
 
     - uses: actions/upload-artifact@master
@@ -35,15 +36,15 @@ jobs:
     steps:
       - uses: actions/download-artifact@master
         with:
-          path: 'build/InariUdon-${{ needs.build.outputs.tag }}.unitypackage'
-          name: 'InariUdon-${{ needs.build.outputs.tag }}.unitypackage'
+          path: 'build/${{ needs.build.package_name }}.unitypackage'
+          name: '${{ needs.build.package_name }}.unitypackage'
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           path: ${{needs.prebuild.outputs.package_name}}
-          filename: 'InariUdon-${{ needs.build.outputs.tag }}.zip'
+          filename: '${{ needs.build.package_name }}.zip'
       - name: Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_PATH: 'InariUdon-${{ needs.build.outputs.tag }}.zip'
+          GHR_PATH: '${{ needs.build.package_name }}.zip'
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
