@@ -6,8 +6,8 @@ Place prefabs into Scene in [Assets/InariUdon/Components/<COMPONENT_NAME>](Asset
 
 ## Setup
 1. Install requirements in below.
-2. Download latest non-pre-release unitypackage from [Releases](releases).
-3. Drag and drop into Project window of Unity.
+2. Download latest non-pre-release `InariUdon-<VERSION>.zip` from [Releases](https://github.com/esnya/InariUdon/releases).
+3. Unzip and drag and drop .unitypackage into Project window of Unity.
 
 ## Requirements
 * VRC SDK3 Worlds
