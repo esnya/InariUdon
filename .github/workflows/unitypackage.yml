@@ -26,7 +26,7 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         path: build
-        name: package
+        name: '${{ steps.package_name.outputs.package_name }}.unitypackage'
 
   release:
     runs-on: ubuntu-latest
