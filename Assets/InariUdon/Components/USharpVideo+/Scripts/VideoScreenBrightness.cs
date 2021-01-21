@@ -1,11 +1,9 @@
-﻿namespace EsnyaFactory
-{
-  using UdonSharp;
-  using UnityEngine;
-  using UnityEngine.UI;
-  using VRC.SDKBase;
-  using VRC.Udon;
+﻿using UdonSharp;
+using UnityEngine;
+using UnityEngine.UI;
 
+namespace EsnyaFactory.InariUdon
+{
   public class VideoScreenBrightness : UdonSharpBehaviour
   {
     public Slider slider;

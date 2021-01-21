@@ -1,13 +1,11 @@
-﻿namespace EsnyaFactory
-{
-  using UdonSharp;
-  using UnityEngine;
-  using UnityEngine.UI;
-  using VRC.SDKBase;
-  using VRC.Udon;
-  using VRC.SDK3.Video.Components;
-  using VRC.SDK3.Video.Components.AVPro;
+﻿using UdonSharp;
+using UnityEngine;
+using UnityEngine.UI;
+using VRC.SDK3.Video.Components;
+using VRC.SDK3.Video.Components.AVPro;
 
+namespace EsnyaFactory.InariUdon
+{
   public class VideoPlayerLoop : UdonSharpBehaviour
   {
     public VRCUnityVideoPlayer unityVideoPlayer;
