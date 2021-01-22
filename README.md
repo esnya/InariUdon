@@ -22,7 +22,13 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * Toggle Loop
 * Modify Screen Brightness
 
+### Sun Contrller
+* Synchronized controller of real-time directional lights such as the sun.
+* Also re-renders the reflection probe.
+
 ### Misc
+* FloatValueDriver
+ * Drives float parameters of animators by one float value calculated from scene.
 * EntranceSoundPlayer
 * OwnerNameDisplay
 * PlayerCounterDisplay
