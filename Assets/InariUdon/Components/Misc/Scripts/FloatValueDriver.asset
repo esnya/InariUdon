@@ -630,7 +630,7 @@ MonoBehaviour:
       Data: 
     - Name: name
       Entry: 1
-      Data: Animator Triggers List
+      Data: Animator List
     - Name: addMethodName
       Entry: 6
       Data: 
@@ -720,7 +720,7 @@ MonoBehaviour:
       Data: 
     - Name: name
       Entry: 1
-      Data: Animator Triggers List
+      Data: Animator List
     - Name: addMethodName
       Entry: 6
       Data: 

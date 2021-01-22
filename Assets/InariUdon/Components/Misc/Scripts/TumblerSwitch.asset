@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: TumblerSwitch
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 88c6f00afe59e1f4885a8ba127c7cabd,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 44f3d37f1659c344fb237df64460dd70,
     type: 2}
   udonAssembly: 
   assemblyError: 

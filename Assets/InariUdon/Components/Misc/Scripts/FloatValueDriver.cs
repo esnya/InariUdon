@@ -33,9 +33,9 @@ namespace EsnyaFactory.InariUdon
         [SectionHeader("Drive Targets")][UTEditor]
         public bool driveAnimatorParameters ;
 
-        [HideIf("@!driveAnimatorParameters")][ListView("Animator Triggers List")][UTEditor]
+        [HideIf("@!driveAnimatorParameters")][ListView("Animator List")][UTEditor]
         public Animator[] targetAnimators;
-        [ListView("Animator Triggers List")]
+        [ListView("Animator List")]
         [Popup("GetTargetAnimatorParameters")]
         [UTEditor]
         public string[] targetAnimatorParameters;

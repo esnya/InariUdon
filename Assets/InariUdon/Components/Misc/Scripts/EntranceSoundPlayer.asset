@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: EntranceSoundPlayer
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 596b80ab54ee5e54b8e78af13a921d66,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 026e460f91681bc46b0e631b0a9e2743,
     type: 2}
   udonAssembly: 
   assemblyError: 

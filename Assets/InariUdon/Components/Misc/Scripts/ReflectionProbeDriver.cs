@@ -28,7 +28,6 @@ namespace EsnyaFactory.InariUdon
         {
             if (_reflectionProbe == null) return;
 
-            _reflectionProbe.Reset();
             _reflectionProbe.RenderProbe();
 
             Debug.Log($"[{nameof(ReflectionProbe)}({gameObject.name})] ReflectionProbe rendering");
