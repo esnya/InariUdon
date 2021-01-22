@@ -23,10 +23,9 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * Modify Screen Brightness
 
 ### Misc
-* InteractToggle
-* SyncedToggle
-* OwnerName
-* PlayerCounter
-* UpdateFPSVisualizer
-* ReflectionProbe
+* EntranceSoundPlayer
+* OwnerNameDisplay
+* PlayerCounterDisplay
+* ReflectionProbeDriver
   * Provides CustomEvent `RenderProbe` to render realtime ReflectionProbe.
+* UpdateFPSVisualizer

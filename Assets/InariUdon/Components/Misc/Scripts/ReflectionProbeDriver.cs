@@ -1,15 +1,16 @@
 
 using UdonSharp;
+using UdonToolkit;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 namespace EsnyaFactory.InariUdon
 {
-    public class ReflectionProbe : UdonSharpBehaviour
+    [CustomName("Reflection Probe Driver")]
+    [HelpMessage("Controls ReflectionProbe at runtime. Currently, only the \"RenderProbe\" event is available to update the in real-time mode.")]
+    public class ReflectionProbeDriver : UdonSharpBehaviour
     {
         public GameObject reflectionProbe;
-        public bool renderOnStart;        
+        public bool renderOnStart;
         ReflectionProbe _reflectionProbe; // ToDo
 
         void Start()
@@ -27,6 +28,7 @@ namespace EsnyaFactory.InariUdon
         {
             if (_reflectionProbe == null) return;
 
+            _reflectionProbe.Reset();
             _reflectionProbe.RenderProbe();
 
             Debug.Log($"[{nameof(ReflectionProbe)}({gameObject.name})] ReflectionProbe rendering");
