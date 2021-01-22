@@ -1,5 +1,14 @@
 # Changelog
 
+<a name="2.1.0"></a>
+## 2.1.0 (2021-01-22)
+
+### Added
+
+- ✨ SunController [[cdf09fe](https://github.com/esnya/VRPG_UDON/commit/cdf09fe91935f45aa3f5e4fdf5eac7cfcab717a3)]
+- ✨ FloatDriver [[21d13c8](https://github.com/esnya/VRPG_UDON/commit/21d13c85cbae55b758f04e878250c4f01501fc13)]
+
+
 <a name="2.0.1"></a>
 ## 2.0.1 (2021-01-21)
 
