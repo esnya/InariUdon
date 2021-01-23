@@ -15,7 +15,7 @@ namespace EsnyaFactory.InariUdon
     {
         #region Public Variables
         [SectionHeader("Value Calculation Mode")]
-        [Popup("GetModeOptions")][OnValueChanged("OnModeStringChanged")][UTEditor]
+        [Popup("GetModeOptions")][OnValueChanged("OnModeStringChanged")][HelpBox("")][UTEditor]
         public string modeString;
         [HideInInspector] public int mode;
 
@@ -24,26 +24,47 @@ namespace EsnyaFactory.InariUdon
         [SectionHeader("Value Sources")]
         [HideIf("HideTransformSource")][UTEditor]
         public Transform sourceTransform;
-        [HideIf("HideDirectionVector")][UTEditor]
+        [HideIf("HideTransformOrigin")][UTEditor]
+        public Transform transformOrigin;
+        [HideIf("HideLocalVector")][UTEditor]
         public Vector3 localVector;
-        [HideIf("HideDirectionVector")][UTEditor]
+        [HideIf("HideWorldVector")][UTEditor]
         public Vector3 worldVector;
+        [HideIf("HideAxisVector")][UTEditor]
+        public Vector3 axisVector;
+
+        [Space]
+        [SectionHeader("Value Transform")][UTEditor]
+        public float valueMultiplier = 1;
+        public float valueBias = 0;
+        public bool clampValue;
+        [HideIf("@!clampValue")][UTEditor]
+        public float minValue = 0;
+        [HideIf("@!clampValue")][UTEditor]
+        public float maxValue = 1;
 
         [Space]
         [SectionHeader("Drive Targets")][UTEditor]
         public bool driveAnimatorParameters ;
 
-        [HideIf("@!driveAnimatorParameters")][ListView("Animator List")][UTEditor]
+        [HideIf("@!driveAnimatorParameters")][ListView("Target Animators")][UTEditor]
         public Animator[] targetAnimators;
-        [ListView("Animator List")]
+        [ListView("Target Animators")]
         [Popup("GetTargetAnimatorParameters")]
         [UTEditor]
         public string[] targetAnimatorParameters;
-#endregion
+        #endregion
+
         #region Unity Events
         void Update()
         {
-            var value = CalculateValue();
+            var value = (CalculateValue() + valueBias) * valueMultiplier;
+
+            if (clampValue)
+            {
+                value = Mathf.Clamp(value, minValue, maxValue);
+            }
+
             Drive(value);
         }
         #endregion
@@ -77,6 +98,8 @@ namespace EsnyaFactory.InariUdon
             {
                 case 0:
                     return DirectionInnerProduct();
+                case 1:
+                    return PositionInnerProduct();
                 default:
                     Debug.LogError($"[{nameof(FloatValueDriver)}({gameObject.name})] Invalid calculation mode: {mode}.");
                     return 0;
@@ -92,16 +115,92 @@ namespace EsnyaFactory.InariUdon
 
             return Vector3.Dot(sourceTransform.rotation * localVector, worldVector);
         }
+
+        float PositionInnerProduct()
+        {
+            if (sourceTransform == null)
+            {
+                Debug.LogError($"[{nameof(FloatValueDriver)}({gameObject.name})] sourceTransform is requried.");
+                return 0;
+            }
+            if (transformOrigin == null)
+            {
+                Debug.LogError($"[{nameof(FloatValueDriver)}({gameObject.name})] transformOrigin is requried.");
+                return 0;
+            }
+
+            return Vector3.Dot(transformOrigin.InverseTransformPoint(sourceTransform.position), axisVector);
+        }
         #endregion
 
         #region Editor Utilities
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        public string[] GetModeOptions() => new [] {"Direction Inner Product"};
+        public string[] GetModeOptions()
+        {
+            return new [] {"Direction Inner Product", "Position Inner Product"};
+        }
 
-        public void OnModeStringChanged() => mode = GetModeOptions().Select((s, i) => (s, i)).FirstOrDefault(t => t.Item1 == modeString).Item2;
+        public void OnModeStringChanged(SerializedObject o, SerializedProperty prop)
+        {
+            o.FindProperty("mode").intValue = GetModeOptions().Select((s, i) => (s, i)).FirstOrDefault(t => t.Item1 == prop.stringValue).Item2;
+        }
 
-        public bool HideTransformSource() => mode != 0;
-        public bool HideDirectionVector() => mode != 0;
+        public bool HideTransformSource()
+        {
+            switch (mode)
+            {
+                case 0:
+                case 1:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        public bool HideTransformOrigin()
+        {
+            switch (mode)
+            {
+                case 1:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        public bool HideLocalVector()
+        {
+            switch (mode)
+            {
+                case 0:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        public bool HideWorldVector()
+        {
+            switch (mode)
+            {
+                case 0:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+
+        public bool HideAxisVector()
+        {
+            switch (mode)
+            {
+                case 1:
+                    return false;
+                default:
+                    return true;
+            }
+        }
 
         public string[] GetTargetAnimatorParameters(SerializedProperty prop)
         {
