@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="2.2.1"></a>
+## 2.2.1 (2021-01-23)
+
+### Fixed
+
+- 🐛 Fix SunController2 [[868b6bc](https://github.com/esnya/VRPG_UDON/commit/868b6bc705de36b16edee80243f9dd842821523f)]
+
+
 <a name="2.2.0"></a>
 ## 2.2.0 (2021-01-23)
 
