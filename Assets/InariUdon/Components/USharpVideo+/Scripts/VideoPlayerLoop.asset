@@ -174,7 +174,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: loop
+      Data: icon
     - Name: $v
       Entry: 7
       Data: 10|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -186,7 +186,7 @@ MonoBehaviour:
       Data: 12|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: System.Boolean, mscorlib
+      Data: UnityEngine.UI.Image, UnityEngine.UI
     - Name: 
       Entry: 8
       Data: 
@@ -198,13 +198,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: SystemBoolean
+      Data: UnityEngineUIImage
     - Name: symbolOriginalName
       Entry: 1
-      Data: loop
+      Data: icon
     - Name: symbolUniqueName
       Entry: 1
-      Data: loop
+      Data: icon
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -237,7 +237,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: icon
+      Data: loop
     - Name: $v
       Entry: 7
       Data: 14|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -249,7 +249,7 @@ MonoBehaviour:
       Data: 16|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UnityEngine.UI.Image, UnityEngine.UI
+      Data: System.Boolean, mscorlib
     - Name: 
       Entry: 8
       Data: 
@@ -261,13 +261,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineUIImage
+      Data: SystemBoolean
     - Name: symbolOriginalName
       Entry: 1
-      Data: icon
+      Data: loop
     - Name: symbolUniqueName
       Entry: 1
-      Data: icon
+      Data: loop
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
