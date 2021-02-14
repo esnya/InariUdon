@@ -35,3 +35,5 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * ReflectionProbeDriver
   * Provides CustomEvent `RenderProbe` to render realtime ReflectionProbe.
 * UpdateFPSVisualizer
+* Local Space Tracker
+  * Track source transform as local position/rotation. You can translate and scale by parent transform.
