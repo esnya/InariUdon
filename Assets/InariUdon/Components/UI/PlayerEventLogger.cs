@@ -28,7 +28,7 @@ namespace EsnyaFactory.InariUdon
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            Log("Info", $"{player.displayName} <color=orange>left</color> (Total {VRCPlayerApi.GetPlayerCount()})");
+            Log("Info", $"{player.displayName} <color=orange>left</color> (Total {VRCPlayerApi.GetPlayerCount() - 1})");
         }
         #endregion
 

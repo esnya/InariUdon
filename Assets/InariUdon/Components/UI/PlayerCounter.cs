@@ -15,26 +15,22 @@ namespace EsnyaFactory {
         public int maxCapacity = 0;
 
         private VRCPlayerApi[] players;
-        void Start()
-        {
-            UpdateText();
-        }
 
-        void UpdateText()
+        void UpdateText(int add)
         {
-            var count = VRCPlayerApi.GetPlayerCount();
+            var count = VRCPlayerApi.GetPlayerCount() + add;
             var text = maxCapacity > 0 ? $"{count}/<size=33%>{maxCapacity}</size>" : $"{count}";
             if (uiText != null) uiText.text = text;
             if (tmproText != null) tmproText.text = text;
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player) {
-            UpdateText();
+            UpdateText(0);
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            UpdateText();
+            UpdateText(-1);
         }
     }
 }
