@@ -1,6 +1,7 @@
 
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace EsnyaFactory.InariUdon
@@ -10,6 +11,7 @@ namespace EsnyaFactory.InariUdon
         public int maxLines = 20;
 
         public TextMeshPro tmpText;
+        public Text uiText;
 
         [HideInInspector] public bool initialized;
 
@@ -19,10 +21,14 @@ namespace EsnyaFactory.InariUdon
         void Start()
         {
 
-            if (tmpText == null) tmpText = GetComponentInChildren<TextMeshPro>();
+            if (tmpText == null && uiText == null)
+            {
+                tmpText = GetComponentInChildren<TextMeshPro>();
+                if (tmpText == null) uiText = GetComponentInChildren<Text>();
+            }
 
             initialized = true;
-            Log("Info", "Logger", "Initialized");
+            Log("Info", gameObject.name, "Initialized");
         }
 
         void AppendLine(string line)
@@ -36,7 +42,7 @@ namespace EsnyaFactory.InariUdon
             var formattedLog = $"{level} {time} [{module}] {log}";;
             Debug.Log(formattedLog);
 
-            if (!initialized || tmpText == null) return;
+            if (!initialized) return;
 
             AppendLine(formattedLog);
 
@@ -47,7 +53,8 @@ namespace EsnyaFactory.InariUdon
                 for (int i = lines.Length - maxLines; i < lines.Length; i++) AppendLine(lines[i]);
             }
 
-            tmpText.text = text;
+            if (tmpText != null) tmpText.text = text;
+            if (uiText != null) uiText.text = text;
         }
     }
 }

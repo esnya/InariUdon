@@ -23,12 +23,12 @@ namespace EsnyaFactory.InariUdon
         #region Udon Events
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            Log("Info", $"{player.displayName} Joined");
+            Log("Info", $"{player.displayName} <color=green>joined</color> (Total {VRCPlayerApi.GetPlayerCount()})");
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            Log("Info", $"{player.displayName} Left");
+            Log("Info", $"{player.displayName} <color=orange>left</color> (Total {VRCPlayerApi.GetPlayerCount()})");
         }
         #endregion
 
