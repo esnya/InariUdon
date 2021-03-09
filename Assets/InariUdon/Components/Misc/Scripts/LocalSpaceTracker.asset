@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: LocalSpaceTracker
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 13e112c24ac432b4ca1141c810b009c2,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 98b49df27ad2bae42aa978de3e4631f9,
     type: 2}
   udonAssembly: 
   assemblyError: 
