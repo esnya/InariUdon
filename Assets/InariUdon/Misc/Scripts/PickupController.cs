@@ -17,43 +17,43 @@ namespace EsnyaFactory.InariUdon
     public class PickupController : UdonSharpBehaviour
     {
         #region Public Variables
-        [SectionHeader("Respawn")][HelpBox("Set null to use initial world transform")][UTEditor]
+        [SectionHeader("Respawn")][HelpBox("Set null to use initial world transform")]
         public Transform respawnTarget;
         public bool respawnOnDrop = false;
 
         [Space]
 
-        [SectionHeader("OnPickup")][UTEditor]
+        [SectionHeader("OnPickup")]
         public bool fireOnPickup;
 
-        [HideIf("@!fireOnPickup")][UTEditor]
+        [HideIf("@!fireOnPickup")]
         public bool onPickupNetworked;
 
-        [HideIf("@!fireOnPickup")][UTEditor]
+        [HideIf("@!fireOnPickup")]
         public NetworkEventTarget onPickupNetworkTarget;
 
-        [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")][UTEditor]
+        [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")]
         public UdonSharpBehaviour[] onPickupTargets;
-        [ListView("OnPickup Target List")][Popup("behaviour", "onPickupTargets", true)][UTEditor]
+        [ListView("OnPickup Target List")][Popup("behaviour", "onPickupTargets", true)]
         public string[] onPickupEvents;
 
         [Space]
 
-        [SectionHeader("OnDrop")][UTEditor]
+        [SectionHeader("OnDrop")]
         public bool fireOnDrop;
 
-        [HideIf("@!fireOnDrop")][UTEditor]
+        [HideIf("@!fireOnDrop")]
         public bool onDropNetworked;
 
-        [HideIf("@!fireOnDrop")][UTEditor]
+        [HideIf("@!fireOnDrop")]
         public NetworkEventTarget onDropNetworkTarget;
 
-        [HideIf("@!fireOnDrop")][ListView("OnDrop Target List")][UTEditor]
+        [HideIf("@!fireOnDrop")][ListView("OnDrop Target List")]
         public UdonSharpBehaviour[] onDropTargets;
-        [ListView("OnDrop Target List")][Popup("behaviour", "onDropTargets", true)][UTEditor]
+        [ListView("OnDrop Target List")][Popup("behaviour", "onDropTargets", true)]
         public string[] onDropEvents;
 
-        
+
         #endregion
 
         #region Private Variables

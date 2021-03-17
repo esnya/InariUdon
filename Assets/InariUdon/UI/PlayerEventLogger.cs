@@ -33,7 +33,7 @@ namespace EsnyaFactory.InariUdon
         #endregion
 
         #region UdonLogger
-        [Space][SectionHeader("Udon Logger")][UTEditor]
+        [Space][SectionHeader("Udon Logger")]
         public UdonLogger logger;
         bool loggerInitialized;
         void Log(string level, string log)

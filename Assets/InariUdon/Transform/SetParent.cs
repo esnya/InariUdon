@@ -9,8 +9,8 @@ namespace EsnyaFactory.InariUdon
     public class SetParent : UdonSharpBehaviour
     {
         #region Public Variables
-        [HideIf("@findParentByName")][UTEditor] public Transform parent;
-        [HideIf("@!findParentByName")][UTEditor] public string parentName;
+        [HideIf("@findParentByName")] public Transform parent;
+        [HideIf("@!findParentByName")] public string parentName;
         public bool findParentByName;
         [Tooltip("Use this to set null.")] public Transform target;
         public bool keepGrobalTransform;

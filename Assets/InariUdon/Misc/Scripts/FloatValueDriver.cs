@@ -15,43 +15,43 @@ namespace EsnyaFactory.InariUdon
     {
         #region Public Variables
         [SectionHeader("Value Calculation Mode")]
-        [Popup("GetModeOptions")][OnValueChanged("OnModeStringChanged")][HelpBox("")][UTEditor]
+        [Popup("GetModeOptions")][OnValueChanged("OnModeStringChanged")][HelpBox("")]
         public string modeString;
         [HideInInspector] public int mode;
 
         [Space]
 
         [SectionHeader("Value Sources")]
-        [HideIf("HideTransformSource")][UTEditor]
+        [HideIf("HideTransformSource")]
         public Transform sourceTransform;
-        [HideIf("HideTransformOrigin")][UTEditor]
+        [HideIf("HideTransformOrigin")]
         public Transform transformOrigin;
-        [HideIf("HideLocalVector")][UTEditor]
+        [HideIf("HideLocalVector")]
         public Vector3 localVector;
-        [HideIf("HideWorldVector")][UTEditor]
+        [HideIf("HideWorldVector")]
         public Vector3 worldVector;
-        [HideIf("HideAxisVector")][UTEditor]
+        [HideIf("HideAxisVector")]
         public Vector3 axisVector;
 
         [Space]
-        [SectionHeader("Value Transform")][UTEditor]
+        [SectionHeader("Value Transform")]
         public float valueMultiplier = 1;
         public float valueBias = 0;
         public bool clampValue;
-        [HideIf("@!clampValue")][UTEditor]
+        [HideIf("@!clampValue")]
         public float minValue = 0;
-        [HideIf("@!clampValue")][UTEditor]
+        [HideIf("@!clampValue")]
         public float maxValue = 1;
 
         [Space]
-        [SectionHeader("Drive Targets")][UTEditor]
+        [SectionHeader("Drive Targets")]
         public bool driveAnimatorParameters ;
 
-        [HideIf("@!driveAnimatorParameters")][ListView("Target Animators")][UTEditor]
+        [HideIf("@!driveAnimatorParameters")][ListView("Target Animators")]
         public Animator[] targetAnimators;
         [ListView("Target Animators")]
         [Popup("GetTargetAnimatorParameters")]
-        [UTEditor]
+
         public string[] targetAnimatorParameters;
         #endregion
 

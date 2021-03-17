@@ -13,31 +13,31 @@ namespace EsnyaFactory.InariUdon
     public class PickupEventTrigger : UdonSharpBehaviour
     {
         [SectionHeader("Sync Options")]
-        [UTEditor]
+
         public bool networked;
-        [HideIf("@!networked")][UTEditor]
+        [HideIf("@!networked")]
         public NetworkEventTarget networkTarget;
 
         [Space]
 
-        [SectionHeader("On Pickup")][UTEditor]
+        [SectionHeader("On Pickup")]
         public bool fireOnPickup;
 
-        [ListView("OnPickup List")][HideIf("@!fireOnPickup")][UTEditor]
+        [ListView("OnPickup List")][HideIf("@!fireOnPickup")]
         public UdonSharpBehaviour[] onPickupTargets;
 
-        [ListView("OnPickup List")][Popup("behaviour", "@onPickupTargets", true)][UTEditor]
+        [ListView("OnPickup List")][Popup("behaviour", "@onPickupTargets", true)]
         public string[] onPickupEvents;
 
         [Space]
 
-        [SectionHeader("On Drop")][UTEditor]
+        [SectionHeader("On Drop")]
         public bool fireOnDrop;
 
-        [ListView("OnDrop List")][HideIf("@!fireOnDrop")][UTEditor]
+        [ListView("OnDrop List")][HideIf("@!fireOnDrop")]
         public UdonSharpBehaviour[] onDropTargets;
 
-        [ListView("OnDrop List")][Popup("behaviour", "@onDropTargets", true)][UTEditor]
+        [ListView("OnDrop List")][Popup("behaviour", "@onDropTargets", true)]
         public string[] onDropEvents;
 
 

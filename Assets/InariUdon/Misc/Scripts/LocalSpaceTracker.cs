@@ -9,12 +9,12 @@ namespace EsnyaFactory.InariUdon
     [HelpMessage("Track source transform as local position/rotation. You can translate and scale by parent transform. Call \"Trigger\" custome event to update manually. All fields are optional.")]
     public class LocalSpaceTracker : UdonSharpBehaviour
     {
-        [SectionHeader("Tracked Source")][UTEditor]
+        [SectionHeader("Tracked Source")]
         public Transform source;
         public Transform sourceOrigin;
 
         [Space]
-        [SectionHeader("Tracker Transform")][UTEditor]
+        [SectionHeader("Tracker Transform")]
         public Transform positionTarget;
         public Transform rotationTarget;
 
