@@ -1,11 +1,16 @@
 {
   "dependencies": {
+    "com.orels1.udon-toolkit": "https://github.com/esnya/UdonToolkit.git#feature/upm",
     "com.unity.ads": "2.0.8",
     "com.unity.analytics": "3.2.3",
+    "com.unity.cinemachine": "2.6.1",
     "com.unity.collab-proxy": "1.2.15",
     "com.unity.package-manager-ui": "2.0.8",
+    "com.unity.postprocessing": "3.0.3",
     "com.unity.purchasing": "2.0.3",
-    "com.unity.textmeshpro": "1.4.1",
+    "com.unity.textmeshpro": "1.5.1",
+    "com.unity.xr.oculus.standalone": "1.38.4",
+    "com.unity.xr.openvr.standalone": "1.0.5",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
@@ -36,5 +41,11 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.orels1.udon-toolkit": {
+      "revision": "feature/upm",
+      "hash": "10495a581de75ccf6858c125e78b7d2a35ad689f"
+    }
   }
 }

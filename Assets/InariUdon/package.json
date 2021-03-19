@@ -1,0 +1,13 @@
+{
+  "name": "com.nekometer.esnya.inari-udon",
+  "displayName": "InariUdon",
+  "private": true,
+  "description": "",
+  "keywords": [
+    "VRChat",
+    "Unity"
+  ],
+  "license": "MIT",
+  "author": "esnya",
+  "unity": "2018.4"
+}

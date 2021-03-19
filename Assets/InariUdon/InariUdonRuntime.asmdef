@@ -1,0 +1,18 @@
+{
+    "name": "InariUdonRuntime",
+    "references": [
+        "VRC.Udon",
+        "UdonSharp.Runtime",
+        "UdonToolkitRuntime",
+        "UdonSharp.Editor",
+        "Unity.TextMeshPro"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
