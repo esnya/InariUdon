@@ -2,6 +2,7 @@
   "name": "inari-udon-dev",
   "private": true,
   "description": "",
+  "version": "v3.7.0-alpha.2",
   "keywords": [
     "VRChat",
     "Unity"

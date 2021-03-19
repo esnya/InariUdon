@@ -1,6 +1,7 @@
 {
   "name": "com.esnya.inari-udon",
   "displayName": "InariUdon",
+  "version": "v3.7.0-alpha.2",
   "private": true,
   "description": "",
   "keywords": [
