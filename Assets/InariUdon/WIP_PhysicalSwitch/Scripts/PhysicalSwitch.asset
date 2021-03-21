@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: PhysicalSwitch
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 04f84e45b70258247bf63a8cea631444,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 0ebd8ee362009ac43870f592dd121d86,
     type: 2}
   udonAssembly: 
   assemblyError: 

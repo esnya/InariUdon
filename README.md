@@ -26,6 +26,12 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * Synchronized controller of real-time directional lights such as the sun.
 * Also re-renders the reflection probe.
 
+### Transform
+* Set Parent
+  * Set parent of target Transform. Apply with OnStart or CustomEvent.
+* Local Space Tracker
+  * Track source transform as local position/rotation. You can translate and scale by parent transform.
+
 ### Misc
 * FloatValueDriver
  * Drives float parameters of animators by one float value calculated from scene.
@@ -35,5 +41,5 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * ReflectionProbeDriver
   * Provides CustomEvent `RenderProbe` to render realtime ReflectionProbe.
 * UpdateFPSVisualizer
-* Local Space Tracker
-  * Track source transform as local position/rotation. You can translate and scale by parent transform.
+# Auto Adjusted Chair
+  * Automatically adjusts the seating position for each avatar.
