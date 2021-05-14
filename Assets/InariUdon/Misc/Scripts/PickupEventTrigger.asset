@@ -17,6 +17,7 @@ MonoBehaviour:
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 1f7345f40aaf8444f91b9bc18aa7b340, type: 3}
+  behaviourSyncMode: 0
   behaviourIDHeapVarName: __refl_const_intnl_udonTypeID
   compileErrors: []
   hasInteractEvent: 0
@@ -93,7 +94,7 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 7
-      Data: 6|UdonToolkit.SectionHeaderAttribute, Assembly-CSharp
+      Data: 6|UdonToolkit.SectionHeaderAttribute, UdonToolkitRuntime
     - Name: text
       Entry: 1
       Data: Sync Options
@@ -102,10 +103,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 7|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -174,7 +172,7 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 7
-      Data: 12|UdonToolkit.HideIfAttribute, Assembly-CSharp
+      Data: 12|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!networked'
@@ -183,10 +181,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 13|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -258,7 +253,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 18|UdonToolkit.SectionHeaderAttribute, Assembly-CSharp
+      Data: 18|UdonToolkit.SectionHeaderAttribute, UdonToolkitRuntime
     - Name: text
       Entry: 1
       Data: On Pickup
@@ -267,10 +262,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 19|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 19|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -339,10 +331,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 7
-      Data: 24|UdonToolkit.ListViewAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 24|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnPickup List
@@ -357,7 +346,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 25|UdonToolkit.HideIfAttribute, Assembly-CSharp
+      Data: 25|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!fireOnPickup'
@@ -366,10 +355,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 26|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 26|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -438,10 +424,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 7
-      Data: 31|UdonToolkit.ListViewAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 31|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnPickup List
@@ -456,16 +439,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 32|UdonToolkit.PopupAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 32|UdonToolkit.PopupAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@onPickupTargets'
     - Name: sourceType
       Entry: 3
-      Data: 2
+      Data: 5
     - Name: shaderPropType
       Entry: 3
       Data: 0
@@ -474,10 +454,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 33|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 33|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -549,7 +526,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 38|UdonToolkit.SectionHeaderAttribute, Assembly-CSharp
+      Data: 38|UdonToolkit.SectionHeaderAttribute, UdonToolkitRuntime
     - Name: text
       Entry: 1
       Data: On Drop
@@ -558,10 +535,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 39|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 39|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -624,10 +598,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 7
-      Data: 43|UdonToolkit.ListViewAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 43|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnDrop List
@@ -642,7 +613,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 44|UdonToolkit.HideIfAttribute, Assembly-CSharp
+      Data: 44|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!fireOnDrop'
@@ -651,10 +622,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 45|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 45|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -717,10 +685,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 7
-      Data: 49|UdonToolkit.ListViewAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 49|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnDrop List
@@ -735,16 +700,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 50|UdonToolkit.PopupAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 50|UdonToolkit.PopupAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@onDropTargets'
     - Name: sourceType
       Entry: 3
-      Data: 2
+      Data: 5
     - Name: shaderPropType
       Entry: 3
       Data: 0
@@ -753,10 +715,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 51|UdonToolkit.UTEditorAttribute, Assembly-CSharp
-    - Name: modifiers
-      Entry: 6
-      Data: 
+      Data: 51|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
