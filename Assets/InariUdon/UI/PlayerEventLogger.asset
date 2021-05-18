@@ -125,7 +125,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: EsnyaFactory.InariUdon.UdonLogger, Assembly-CSharp
+      Data: EsnyaFactory.InariUdon.UdonLogger, InariUdonRuntime
     - Name: 
       Entry: 8
       Data: 

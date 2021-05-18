@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
+      propertyPath: m_BeforeStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
+      propertyPath: m_BeforeStackBundles.Array.data[0].assemblyQualifiedName
+      value: IL3DN_Fog_PP, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
     - target: {fileID: 2015320160, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: sharedProfile
       value: 
@@ -76,7 +84,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializedProgramAsset
       value: 
-      objectReference: {fileID: 11400000, guid: abd6eb4bc8472fb4d96380308004ffb9,
+      objectReference: {fileID: 11400000, guid: cf2034311b84e134c92c1b759701c918,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
