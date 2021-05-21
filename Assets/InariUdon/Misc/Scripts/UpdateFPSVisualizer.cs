@@ -4,7 +4,9 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-namespace EsnyaFactory {
+namespace EsnyaFactory
+{
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class UpdateFPSVisualizer : UdonSharpBehaviour
     {
         public UnityEngine.UI.Text text;
@@ -16,25 +18,29 @@ namespace EsnyaFactory {
         float avgFps = 0;
         float prevFrameTime = 0;
 
-        void Update() {
+        void Update()
+        {
             var now = Time.time;
             var fps = 1.0 / (now - prevTime);
             prevTime = now;
 
             var frame = Time.frameCount;
-            if (frame >= nextFrame) {
+            if (frame >= nextFrame)
+            {
                 avgFps = df / (now - prevFrameTime);
                 prevFrameTime = now;
                 nextFrame = frame + df;
             }
 
-            if (text != null) {
+            if (text != null)
+            {
                 text.text = $"Update FPS:\t{fps.ToString("n1")}\n{df}F Average:\t{avgFps.ToString("n1")}";
             }
 
             var value = (float)(fps / 90.0f);
 
-            if (particle != null) {
+            if (particle != null)
+            {
                 var p = particle.transform.localPosition;
                 p.y = value;
                 particle.transform.localPosition = p;

@@ -5,6 +5,7 @@
   using VRC.SDKBase;
   using VRC.Udon;
 
+  [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
   public class AmbientController : UdonSharpBehaviour
   {
     public AmbientMode ambientMode = AmbientMode.Skybox;

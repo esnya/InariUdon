@@ -7,6 +7,7 @@ using VRC.SDK3.Video.Components.AVPro;
 
 namespace EsnyaFactory.InariUdon
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class VideoPlayerLoop : UdonSharpBehaviour
     {
         public VRCUnityVideoPlayer unityVideoPlayer;

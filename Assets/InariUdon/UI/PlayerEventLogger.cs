@@ -6,6 +6,7 @@ using VRC.SDKBase;
 
 namespace EsnyaFactory.InariUdon
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PlayerEventLogger : UdonSharpBehaviour
     {
         #region Internal Variables

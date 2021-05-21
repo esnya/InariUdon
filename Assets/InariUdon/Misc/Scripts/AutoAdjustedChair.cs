@@ -1,16 +1,15 @@
 
-using System.Runtime.Remoting.Services;
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 
 namespace EsnyaFactory.InariUdon
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AutoAdjustedChair : UdonSharpBehaviour
     {
         public Transform seatTopFront;
-        [UdonSynced(UdonSyncMode.Smooth)] private Vector2 offset;
+        [UdonSynced] private Vector2 offset;
         private VRCStation station;
         private Vector3 initialEnterPosition;
         private Transform GetEnterTransform()
@@ -43,6 +42,7 @@ namespace EsnyaFactory.InariUdon
             offset.y = Vector3.Dot(station.transform.up, seatTopFront.position - station.transform.TransformPoint(initialEnterPosition)) - lowerLegLength;
             Debug.Log($"Adjusting... {offset}");
             ApplyOffset();
+            RequestSerialization();
             adjust = false;
         }
 
@@ -52,11 +52,9 @@ namespace EsnyaFactory.InariUdon
         }
 
 
-        private Vector2 prevOffset;
         public override void OnDeserialization()
         {
-            if (offset != prevOffset) ApplyOffset();
-            prevOffset = offset;
+            ApplyOffset();
         }
 
         public override void OnStationEntered(VRCPlayerApi player)

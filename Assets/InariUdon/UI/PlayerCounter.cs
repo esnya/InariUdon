@@ -8,6 +8,7 @@ using VRC.SDKBase;
 namespace EsnyaFactory {
     [CustomName("Player Counter")]
     [HelpMessage("Display player count using UI.Text. Displays world max capacity if provided.")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PlayerCounter : UdonSharpBehaviour
     {
         public Text uiText;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EsnyaFactory.InariUdon
 {
-    [CustomName("Set Parent")]
+    [CustomName("Set Parent"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class SetParent : UdonSharpBehaviour
     {
         #region Public Variables

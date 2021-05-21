@@ -10,6 +10,7 @@ namespace EsnyaFactory.InariUdon
 {
     [CustomName("Pickup Event Trigger")]
     [HelpMessage("SendCustomEvents on pickup events.")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PickupEventTrigger : UdonSharpBehaviour
     {
         [SectionHeader("Sync Options")]

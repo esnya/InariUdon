@@ -5,6 +5,8 @@
   using VRC.Udon;
   using VRC.Udon.Common.Interfaces;
 
+  [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+
   public class TumblerSwitch : UdonSharpBehaviour
   {
     public Animator localAnimator;

@@ -6,6 +6,7 @@ using TMPro;
 
 namespace EsnyaFactory.InariUdon
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class UdonLogger : UdonSharpBehaviour
     {
         public int maxLines = 20;

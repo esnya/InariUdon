@@ -14,6 +14,7 @@ namespace EsnyaFactory.InariUdon
 {
     [CustomName("Pickup Controller")]
     [HelpMessage("Enhancement VRC_Pickup such as relay events or expose Respawn event.")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PickupController : UdonSharpBehaviour
     {
         #region Public Variables
@@ -53,7 +54,7 @@ namespace EsnyaFactory.InariUdon
         [ListView("OnDrop Target List")][Popup("behaviour", "onDropTargets", true)][UTEditor]
         public string[] onDropEvents;
 
-        
+
         #endregion
 
         #region Private Variables

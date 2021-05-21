@@ -7,6 +7,7 @@ namespace EsnyaFactory
 {
     [CustomName("Entrance Sound Player")]
     [HelpMessage("Play sound using AudioSource when player joined or left. To disable either of them, select None.")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class EntranceSoundPlayer : UdonSharpBehaviour
     {
         public AudioSource joinedSoundSource;

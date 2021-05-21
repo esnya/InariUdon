@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace EsnyaFactory.InariUdon
 {
+  [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
   public class VideoScreenBrightness : UdonSharpBehaviour
   {
     public Slider slider;
