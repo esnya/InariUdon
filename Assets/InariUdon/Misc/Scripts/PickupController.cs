@@ -35,7 +35,7 @@ namespace EsnyaFactory.InariUdon
 
         [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")][UTEditor]
         public UdonSharpBehaviour[] onPickupTargets;
-        [ListView("OnPickup Target List")][Popup("behaviour", "onPickupTargets", true)][UTEditor]
+        [ListView("OnPickup Target List")]
         public string[] onPickupEvents;
 
         [Space]

@@ -568,7 +568,7 @@ MonoBehaviour:
       Data: 40|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 7
       Data: 41|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
@@ -585,27 +585,6 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
-      Entry: 7
-      Data: 42|UdonToolkit.PopupAttribute, UdonToolkitRuntime
-    - Name: methodName
-      Entry: 1
-      Data: onPickupTargets
-    - Name: sourceType
-      Entry: 3
-      Data: 5
-    - Name: shaderPropType
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 43|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -628,10 +607,10 @@ MonoBehaviour:
       Data: fireOnDrop
     - Name: $v
       Entry: 7
-      Data: 44|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 42|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 45|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 43|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 11
@@ -658,13 +637,13 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 46|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 44|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 47|UnityEngine.SpaceAttribute, UnityEngine.CoreModule
+      Data: 45|UnityEngine.SpaceAttribute, UnityEngine.CoreModule
     - Name: height
       Entry: 4
       Data: 8
@@ -673,7 +652,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 48|UdonToolkit.SectionHeaderAttribute, UdonToolkitRuntime
+      Data: 46|UdonToolkit.SectionHeaderAttribute, UdonToolkitRuntime
     - Name: text
       Entry: 1
       Data: OnDrop
@@ -682,7 +661,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 49|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
+      Data: 47|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -709,10 +688,10 @@ MonoBehaviour:
       Data: onDropNetworked
     - Name: $v
       Entry: 7
-      Data: 50|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 48|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 51|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 49|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 11
@@ -739,13 +718,13 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 52|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 50|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 53|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
+      Data: 51|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!fireOnDrop'
@@ -754,7 +733,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 54|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
+      Data: 52|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -781,10 +760,10 @@ MonoBehaviour:
       Data: onDropNetworkTarget
     - Name: $v
       Entry: 7
-      Data: 55|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 53|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 56|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 54|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 26
@@ -811,13 +790,13 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 57|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 55|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 58|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
+      Data: 56|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!fireOnDrop'
@@ -826,7 +805,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 59|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
+      Data: 57|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -853,10 +832,10 @@ MonoBehaviour:
       Data: onDropTargets
     - Name: $v
       Entry: 7
-      Data: 60|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 58|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 61|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 59|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 32
@@ -883,13 +862,13 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 62|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 60|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 63|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
+      Data: 61|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: '@!fireOnDrop'
@@ -898,7 +877,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 64|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
+      Data: 62|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnDrop Target List
@@ -913,7 +892,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 65|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
+      Data: 63|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -940,10 +919,10 @@ MonoBehaviour:
       Data: onDropEvents
     - Name: $v
       Entry: 7
-      Data: 66|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 64|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 67|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 65|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 39
@@ -970,13 +949,13 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 68|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 66|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 69|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
+      Data: 67|UdonToolkit.ListViewAttribute, UdonToolkitRuntime
     - Name: name
       Entry: 1
       Data: OnDrop Target List
@@ -991,7 +970,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 70|UdonToolkit.PopupAttribute, UdonToolkitRuntime
+      Data: 68|UdonToolkit.PopupAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
       Data: onDropTargets
@@ -1006,7 +985,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 71|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
+      Data: 69|UdonToolkit.UTEditorAttribute, UdonToolkitRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -1033,13 +1012,13 @@ MonoBehaviour:
       Data: initialPosition
     - Name: $v
       Entry: 7
-      Data: 72|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 70|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 73|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 71|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 7
-      Data: 74|System.RuntimeType, mscorlib
+      Data: 72|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -1069,7 +1048,7 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 75|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 73|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1096,13 +1075,13 @@ MonoBehaviour:
       Data: initialRotation
     - Name: $v
       Entry: 7
-      Data: 76|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 74|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 77|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 75|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 7
-      Data: 78|System.RuntimeType, mscorlib
+      Data: 76|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Quaternion, UnityEngine.CoreModule
@@ -1132,7 +1111,7 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 79|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 77|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
