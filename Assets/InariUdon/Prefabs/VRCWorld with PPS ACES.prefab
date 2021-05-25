@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: m_BeforeStackBundles.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: m_BeforeStackBundles.Array.data[0].assemblyQualifiedName
@@ -84,7 +84,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializedProgramAsset
       value: 
-      objectReference: {fileID: 11400000, guid: cf2034311b84e134c92c1b759701c918,
+      objectReference: {fileID: 11400000, guid: c2103a09df98c1845b8beb61979e532e,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
