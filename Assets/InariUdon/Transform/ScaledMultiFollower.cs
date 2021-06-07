@@ -4,6 +4,7 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using System.Net;
+using VRC.SDK3.Components;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using UdonSharpEditor;
 #endif
@@ -30,12 +31,20 @@ namespace EsnyaFactory.InariUdon
         [SectionHeader("Transforms")]
         public Vector3 positionScale = Vector3.one;
         public float scaleMultiplier = 1.0f;
+        public bool inverseScale = false;
         public bool rotation = true;
 
-        [SectionHeader("Filters")]
-        public bool ownerOnly;
+        [SectionHeader("Other Options")]
+        public bool copyActive = false;
+        public bool deactivateExcessiveTargets = true;
+        public bool ownerOnly = false;
+        public bool toggleTargetColliders = false;
+        public bool freezeTargetWhileSoruceHeld = false;
 
         private int count;
+        private bool[] activeFlags;
+        private VRCPickup[] sourcePickups;
+        private Collider[] targetColliders;
 
         private Transform[] GetChildren(Transform parent, bool find, string path)
         {
@@ -55,10 +64,32 @@ namespace EsnyaFactory.InariUdon
             if (targetParent != null) targets = GetChildren(targetParent, findTargetChild, targetChildPath);
 
             count = Mathf.Min(sources.Length, targets.Length);
+            activeFlags = new bool[count];
+            sourcePickups = new VRCPickup[count];
+            targetColliders = new Collider[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                var active = sources[i].gameObject.activeInHierarchy;
+                if (copyActive) targets[i].gameObject.SetActive(active);
+                activeFlags[i] = active;
+
+                sourcePickups[i] = (VRCPickup)sources[i].GetComponent(typeof(VRCPickup));
+                targetColliders[i] = targets[i].GetComponent<Collider>();
+            }
+
+            if (deactivateExcessiveTargets)
+            {
+                for (int i = count; i < targets.Length; i++)
+                {
+                    targets[i].gameObject.SetActive(false);
+                }
+            }
         }
 
         private void Update()
         {
+            var calcluatedPositionScale = inverseScale ? new Vector3(1.0f / positionScale.x, 1.0f / positionScale.y, 1.0f / positionScale.z) / scaleMultiplier : positionScale * scaleMultiplier;
             for (int i = 0; i < count; i++)
             {
                 var source = sources[i];
@@ -67,11 +98,30 @@ namespace EsnyaFactory.InariUdon
                 var target = targets[i];
                 if (!Utilities.IsValid(target)) continue;
 
-                var sourcePosition = source.position - (sourceOrigin == null ? Vector3.zero : sourceOrigin.position);
-                var scaledPosition = Vector3.Scale(sourcePosition, positionScale) * scaleMultiplier;
-                target.position = scaledPosition + (targetOrigin == null ? Vector3.zero : targetOrigin.position);
+                if (copyActive)
+                {
+                    var active = source.gameObject.activeInHierarchy;
+                    if (active != activeFlags[i])
+                    {
+                        activeFlags[i] = active;
+                        target.gameObject.SetActive(active);
+                    }
+                }
 
-                if (rotation) target.rotation = source.rotation;
+                var sourcePickup = sourcePickups[i];
+                if (!freezeTargetWhileSoruceHeld || sourcePickups[i] == null || !sourcePickup.IsHeld)
+                {
+                    var sourcePosition = source.position - (sourceOrigin == null ? Vector3.zero : sourceOrigin.position);
+                    var scaledPosition = Vector3.Scale(sourcePosition, calcluatedPositionScale);
+                    target.position = scaledPosition + (targetOrigin == null ? Vector3.zero : targetOrigin.position);
+
+                    if (rotation) target.rotation = source.rotation;
+                }
+
+                if (toggleTargetColliders && targetColliders[i] != null && sourcePickup != null)
+                {
+                    targetColliders[i].enabled = !sourcePickup.IsHeld;
+                }
             }
         }
 
