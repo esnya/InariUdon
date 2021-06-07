@@ -4,15 +4,15 @@ using UdonSharp;
 using UdonToolkit;
 using UnityEngine.UI;
 using VRC.SDKBase;
+using TMPro;
 
-namespace EsnyaFactory {
+namespace EsnyaFactory.InariUdon {
     [CustomName("Player Counter")]
     [HelpMessage("Display player count using UI.Text. Displays world max capacity if provided.")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PlayerCounter : UdonSharpBehaviour
     {
-        public Text uiText;
-        public TMPro.TextMeshPro tmproText;
+        public TextMeshPro text;
         public int maxCapacity = 0;
 
         private VRCPlayerApi[] players;
@@ -20,9 +20,8 @@ namespace EsnyaFactory {
         void UpdateText(int add)
         {
             var count = VRCPlayerApi.GetPlayerCount() + add;
-            var text = maxCapacity > 0 ? $"{count}/<size=33%>{maxCapacity}</size>" : $"{count}";
-            if (uiText != null) uiText.text = text;
-            if (tmproText != null) tmproText.text = text;
+            var str = maxCapacity > 0 ? $"{count}/<size=33%>{maxCapacity}</size>" : $"{count}";
+            if (text != null) text.text = str;
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player) {

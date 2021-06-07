@@ -109,7 +109,7 @@ namespace EsnyaFactory.InariUdon
                 }
 
                 var sourcePickup = sourcePickups[i];
-                if (!freezeTargetWhileSoruceHeld || sourcePickups[i] == null || !sourcePickup.IsHeld)
+                if (!freezeTargetWhileSoruceHeld || sourcePickup == null || !sourcePickup.IsHeld)
                 {
                     var sourcePosition = source.position - (sourceOrigin == null ? Vector3.zero : sourceOrigin.position);
                     var scaledPosition = Vector3.Scale(sourcePosition, calcluatedPositionScale);
