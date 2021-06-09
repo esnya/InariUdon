@@ -2,6 +2,8 @@
 using UdonSharp;
 using UnityEngine;
 using Collections.Pooled;
+using System;
+using UnityEngine.SocialPlatforms;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using System.Linq;
 using System.Collections.Generic;
@@ -107,22 +109,32 @@ namespace EsnyaFactory.InariUdon
         {
             return Enumerable.Range(0, ShaderUtil.GetPropertyCount(shader));
         }
-        public static IEnumerable<int> GetShaderPropertyIndices(Shader shader, ShaderUtil.ShaderPropertyType propertyType)
+        public static IEnumerable<int> GetShaderPropertyIndices(Shader shader, IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes)
         {
-            return GetShaderPropertyIndices(shader).Where(i => ShaderUtil.GetPropertyType(shader, i) == propertyType);
+            return GetShaderPropertyIndices(shader).Where(i => propertyTypes.Contains(ShaderUtil.GetPropertyType(shader, i)));
         }
         public static IEnumerable<string> GetShaderPropertyNames(Shader shader)
         {
             return GetShaderPropertyIndices(shader).Select(i => ShaderUtil.GetPropertyName(shader, i));
         }
-        public static IEnumerable<string> GetShaderPropertyNames(Shader shader, ShaderUtil.ShaderPropertyType propertyType)
+        public static IEnumerable<string> GetShaderPropertyNames(Shader shader, IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes)
         {
-            return GetShaderPropertyIndices(shader, propertyType).Select(i => ShaderUtil.GetPropertyName(shader, i));
+            return GetShaderPropertyIndices(shader, propertyTypes).Select(i => ShaderUtil.GetPropertyName(shader, i));
         }
-        public static int GetIndexOfProperty(Shader shader, string name)
+        public static int GetIndexOfProperty(Shader shader, string propertyName)
         {
-            return GetShaderPropertyIndices(shader).Where(i => ShaderUtil.GetPropertyName(shader, i) == name).Append(-1).First();
+            return GetShaderPropertyIndices(shader).Where(i => ShaderUtil.GetPropertyName(shader, i) == propertyName).Append(-1).First();
         }
+        public static int GetIndexOfProperty(Shader shader, string propertyName, IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes)
+        {
+            return GetShaderPropertyNames(shader, propertyTypes)
+                .Select((n, i) => (n, i))
+                .Where(t => ShaderUtil.GetPropertyName(shader, t.i) == propertyName)
+                .Select(t => t.i)
+                .Append(-1)
+                .First();
+        }
+
         public static string GetShaderPropertyName(Shader shader, int index)
         {
             return ShaderUtil.GetPropertyName(shader, Mathf.Clamp(index, 0, ShaderUtil.GetPropertyCount(shader)));
@@ -133,9 +145,19 @@ namespace EsnyaFactory.InariUdon
             SerializedProperty enabledProperty,
             SerializedProperty targetsProperty,
             ShaderUtil.ShaderPropertyType propertyType
+        ) : this(serializedObject, enabledProperty, targetsProperty, Enumerable.Repeat(propertyType, 1))
+        {
+        }
+
+        public MaterialPropertyList(
+            SerializedObject serializedObject,
+            SerializedProperty enabledProperty,
+            SerializedProperty targetsProperty,
+            IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes
         ) : base(serializedObject, targetsProperty)
         {
             var margin = EditorStyles.objectField.margin;
+            var height = EditorStyles.objectField.lineHeight;
             var emptyLabel = new GUIContent();
 
             var indicesProperty = serializedObject.FindProperty(targetsProperty.name.Replace("Targets", "Indices"));
@@ -156,7 +178,11 @@ namespace EsnyaFactory.InariUdon
                 {
                     var fieldRect = rect;
                     fieldRect.xMax /= fieldCount;
-                    fieldRect = margin.Remove(fieldRect);
+                    //fieldRect.xMin += margin.vertical;
+                    //fieldRect.xMax -= margin.vertical;
+                    var verticalMargin = Math.Max(rect.height - height, 0) / 2;
+                    fieldRect.yMin += verticalMargin;
+                    fieldRect.yMax -= verticalMargin;
 
                     var targetProperty = targetsProperty.GetArrayElementAtIndex(index);
                     EditorGUI.PropertyField(fieldRect, targetProperty, emptyLabel);
@@ -173,31 +199,51 @@ namespace EsnyaFactory.InariUdon
 
                     var shader = target?.sharedMaterials.Skip(indexProperty.intValue).FirstOrDefault()?.shader;
                     var nameProperty = namesProperty.GetArrayElementAtIndex(index);
+                    var valueProperty = valuesProperty.GetArrayElementAtIndex(index);
                     if (shader != null)
                     {
-                        var propertyIndices = Enumerable.Range(0, ShaderUtil.GetPropertyCount(shader)).Where(i => ShaderUtil.GetPropertyType(shader, i) == propertyType);
+                        var count = ShaderUtil.GetPropertyCount(shader);
+                        var propertyIndices = GetShaderPropertyIndices(shader, propertyTypes);
+                        var propertyNames = GetShaderPropertyNames(shader, propertyTypes).ToArray();
 
-                        var selected = EditorGUI.Popup(
-                            fieldRect,
-                            GetIndexOfProperty(shader, nameProperty.stringValue),
-                            GetShaderPropertyNames(shader, propertyType).ToArray()
-                        );
+                        var currentSelectedIndex = propertyNames.Select((n, i) => (n, i)).Where(t => t.n == nameProperty.stringValue).Select(t => t.i).FirstOrDefault();
 
-                        nameProperty.stringValue = ShaderUtil.GetPropertyName(shader, selected);
-                    }
-                    else EditorGUI.PropertyField(fieldRect, nameProperty, emptyLabel);
-                    fieldRect.x += rect.width / fieldCount;
+                        var nextSelectedIndex = EditorGUI.Popup(fieldRect,currentSelectedIndex,propertyNames);
+                        fieldRect.x += rect.width / fieldCount;
+                        if (currentSelectedIndex != nextSelectedIndex)
+                        {
+                            nameProperty.stringValue = propertyNames.Skip(nextSelectedIndex).Append(nameProperty.stringValue).First();
+                        }
 
-                    var valueProperty = valuesProperty.GetArrayElementAtIndex(index);
-                    if (propertyType == ShaderUtil.ShaderPropertyType.Color)
-                    {
-                        valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
+                        var shaderPropertyIndex = propertyIndices.Where(i => ShaderUtil.GetPropertyName(shader, i) == nameProperty.stringValue).FirstOrDefault();
+                        switch (ShaderUtil.GetPropertyType(shader, shaderPropertyIndex))
+                        {
+                            case ShaderUtil.ShaderPropertyType.Color:
+                                valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
+                                break;
+                            case ShaderUtil.ShaderPropertyType.Range:
+                                valueProperty.floatValue = EditorGUI.Slider(
+                                    fieldRect,
+                                    valueProperty.floatValue,
+                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1),
+                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2)
+                                );
+                                break;
+                            default:
+                                EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
+                                break;
+                        }
+                        fieldRect.x += rect.width / fieldCount;
                     }
                     else
                     {
+                        EditorGUI.PropertyField(fieldRect, nameProperty, emptyLabel);
+                        fieldRect.x += rect.width / fieldCount;
+
                         EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
+                        fieldRect.x += rect.width / fieldCount;
                     }
-                    fieldRect.x += rect.width / fieldCount;
+
                 }
             };
             onChangedCallback = (list) =>
@@ -222,6 +268,11 @@ namespace EsnyaFactory.InariUdon
             GUILayout.ExpandWidth(false),
         };
 
+        private static readonly ShaderUtil.ShaderPropertyType[] floatLikePropertyTypes = {
+            ShaderUtil.ShaderPropertyType.Float,
+            ShaderUtil.ShaderPropertyType.Range,
+        };
+
         public Color overrideColor = Color.white;
         public float overrideFloat;
         public Texture overrideTexture;
@@ -232,7 +283,13 @@ namespace EsnyaFactory.InariUdon
         public string propertyName;
         private SerializedProperty colorTargets, floatTargets, textureTargets;
         private ReorderableList colorList, floatList, textureList;
+
         private void OnEnable()
+        {
+            InitializeMembers();
+        }
+
+        private void InitializeMembers()
         {
             colorTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.colorTargets));
             floatTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.floatTargets));
@@ -248,7 +305,7 @@ namespace EsnyaFactory.InariUdon
                 serializedObject,
                 serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.writeFloats)),
                 floatTargets,
-                ShaderUtil.ShaderPropertyType.Float
+                floatLikePropertyTypes
             );
             textureList = new MaterialPropertyList(
                 serializedObject,
@@ -270,17 +327,37 @@ namespace EsnyaFactory.InariUdon
             return targetsProperty.serializedObject.FindProperty(targetsProperty.name.Replace("Targets", typeName));
         }
 
-        private bool ContainsRenderer(SerializedProperty targetsProperty, Renderer renderer, int index)
+        private bool ContainsRenderer(SerializedProperty targetsProperty, Renderer renderer, int index, string name)
         {
             var indicesProperty = GetListPropertyOf(targetsProperty, "Indices");
+            var namesProperty= GetListPropertyOf(targetsProperty, "Names");
             for (int i = 0; i < targetsProperty.arraySize; i++)
             {
-                if ((targetsProperty.GetArrayElementAtIndex(i).objectReferenceValue as Renderer) == renderer && indicesProperty.GetArrayElementAtIndex(i).intValue == index) return true;
+                if (targetsProperty.GetArrayElementAtIndex(i).objectReferenceValue as Renderer != renderer) continue;
+                if (i >= indicesProperty.arraySize || indicesProperty.GetArrayElementAtIndex(i).intValue != index) continue;
+                if (i >= namesProperty.arraySize || namesProperty.GetArrayElementAtIndex(i).stringValue != name) continue;
+                return true;
             }
             return false;
         }
 
-        private void AddRenderer(Renderer renderer, int index, SerializedProperty targetsProperty)
+        private void OverrideValue(SerializedProperty valueProperty)
+        {
+                switch (valueProperty.propertyType)
+                {
+                    case SerializedPropertyType.Color:
+                        valueProperty.colorValue = overrideColor;
+                        break;
+                    case SerializedPropertyType.Float:
+                        valueProperty.floatValue = overrideFloat;
+                        break;
+                    case SerializedPropertyType.ObjectReference:
+                        valueProperty.objectReferenceValue = overrideTexture;
+                        break;
+                }
+        }
+
+        private void AddRenderer(Renderer renderer, int index, string propertyName, SerializedProperty targetsProperty)
         {
             var indicesProperty = GetListPropertyOf(targetsProperty, "Indices");
             var namesProperty = GetListPropertyOf(targetsProperty, "Names");
@@ -288,15 +365,16 @@ namespace EsnyaFactory.InariUdon
 
             var i = targetsProperty.arraySize;
             targetsProperty.arraySize++;
+
             indicesProperty.arraySize = targetsProperty.arraySize;
             namesProperty.arraySize = targetsProperty.arraySize;
             valuesProperty.arraySize = targetsProperty.arraySize;
 
             targetsProperty.GetArrayElementAtIndex(i).objectReferenceValue = renderer;
             indicesProperty.GetArrayElementAtIndex(i).intValue = index;
-            namesProperty.GetArrayElementAtIndex(i).stringValue = namesProperty.GetArrayElementAtIndex(Mathf.Max(i - 1, 0)).stringValue;
+            namesProperty.GetArrayElementAtIndex(i).stringValue = propertyName;
 
-            ApplyNow(targetsProperty.serializedObject.targetObject as MaterialPropertyBlockWriter);
+            OverrideValue(valuesProperty.GetArrayElementAtIndex(i));
         }
 
         private MaterialPropertyBlockWriter GetWriter()
@@ -308,7 +386,6 @@ namespace EsnyaFactory.InariUdon
         {
             return SceneManager.GetActiveScene().GetRootGameObjects().SelectMany(o => o.GetUdonSharpComponentsInChildren<MaterialPropertyBlockWriter>());
         }
-
 
         private void ApplyNow(MaterialPropertyBlockWriter writer)
         {
@@ -348,53 +425,46 @@ namespace EsnyaFactory.InariUdon
             else ClearNow(GetWriter());
         }
 
-        private void OverrideAll(SerializedProperty targets, System.Action<SerializedProperty> Action)
+        private void OverrideAll(SerializedProperty targetsProperty)
         {
-            var values = GetListPropertyOf(targets, "Values");
-            for (int i = 0; i < values.arraySize; i++) Action(values.GetArrayElementAtIndex(i));
-            serializedObject.ApplyModifiedProperties();
-            ApplyNow();
+            var valuesProperty = GetListPropertyOf(targetsProperty, "Values");
+            for (int i = 0; i < valuesProperty.arraySize; i++)  OverrideValue(valuesProperty.GetArrayElementAtIndex(i));
         }
 
-        public override void OnInspectorGUI()
+        private void OnListGUI(ReorderableList list, Action RenderField)
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
-            serializedObject.Update();
-
-            EditorGUILayout.LabelField("Write On", EditorStyles.boldLabel);
-            var property = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.onStart));
-            EditorGUILayout.PropertyField(property);
-
-            EditorGUILayout.Space();
-
-            colorList.DoLayoutList();
+            if (list == null) InitializeMembers();
             using (new EditorGUILayout.HorizontalScope())
             {
-                overrideColor = EditorGUILayout.ColorField(new GUIContent(), overrideColor, true, true, true);
-                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(colorTargets, p => p.colorValue = overrideColor);
+                RenderField();
+                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(list.serializedProperty);
             }
+            list.DoLayoutList();
+        }
 
+        private void OnListsGUI()
+        {
+            OnListGUI(
+                colorList,
+                // colorTargets,
+                () => overrideColor = EditorGUILayout.ColorField(new GUIContent(), overrideColor, true, true, true)
+            );
             EditorGUILayout.Space();
-
-            floatList.DoLayoutList();
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                overrideFloat = EditorGUILayout.FloatField(overrideFloat);
-                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(floatTargets, p => p.floatValue = overrideFloat);
-            }
-
+            OnListGUI(
+                floatList,
+                // floatTargets,
+                () => overrideFloat = EditorGUILayout.FloatField(overrideFloat)
+            );
             EditorGUILayout.Space();
+            OnListGUI(
+                textureList,
+                // textureTargets,
+                () => overrideTexture = EditorGUILayout.ObjectField(overrideTexture, typeof(Texture), true) as Texture
+            );
+        }
 
-            textureList.DoLayoutList();
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                overrideTexture = EditorGUILayout.ObjectField(overrideTexture, typeof(Texture), true) as Texture;
-                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(textureTargets, p => p.objectReferenceValue = overrideTexture);
-            }
-
-            EditorGUILayout.Space();
-
+        private void OnPreviewToolsGUI()
+        {
             EditorGUILayout.LabelField("Preview Tools", EditorStyles.boldLabel);
             applyToScene = EditorGUILayout.Toggle("Target to all of scene", applyToScene);
             using (new EditorGUILayout.HorizontalScope())
@@ -402,9 +472,9 @@ namespace EsnyaFactory.InariUdon
                 if (GUILayout.Button("Preview")) ApplyNow(applyToScene);
                 if (GUILayout.Button("Clear")) ClearNow(applyToScene);
             }
-
-            EditorGUILayout.Space();
-
+        }
+        private void OnAddingToolsGUI()
+        {
             EditorGUILayout.LabelField("Adding Tools", EditorStyles.boldLabel);
             includeChildren = EditorGUILayout.Toggle("Include Children", includeChildren);
             using (new EditorGUILayout.HorizontalScope())
@@ -442,9 +512,9 @@ namespace EsnyaFactory.InariUdon
                     var indices = renderer.sharedMaterials.Select((m, i) => (m, i)).Where(t => t.m == materialFilter).Select(t => t.i);
                     foreach (var index in indices)
                     {
-                        var inColor = ContainsRenderer(colorTargets, renderer, index);
-                        var inFloat = ContainsRenderer(floatTargets, renderer, index);
-                        var inTexture = ContainsRenderer(textureTargets, renderer, index);
+                        var inColor = ContainsRenderer(colorTargets, renderer, index, propertyName);
+                        var inFloat = ContainsRenderer(floatTargets, renderer, index, propertyName);
+                        var inTexture = ContainsRenderer(textureTargets, renderer, index, propertyName);
                         if (inColor && inFloat && inTexture) continue;
 
                         using (new EditorGUILayout.HorizontalScope())
@@ -452,13 +522,34 @@ namespace EsnyaFactory.InariUdon
                             EditorGUILayout.ObjectField(renderer, typeof(Renderer), false);
                             EditorGUILayout.ObjectField(renderer.sharedMaterials[index], typeof(Material), false);
 
-                            using (new EditorGUI.DisabledGroupScope(inColor)) if (GUILayout.Button("Color", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, colorTargets);
-                            using (new EditorGUI.DisabledGroupScope(inFloat)) if (GUILayout.Button("Float", EditorStyles.miniButtonMid, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, floatTargets);
-                            using (new EditorGUI.DisabledGroupScope(inTexture)) if (GUILayout.Button("Texture", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, textureTargets);
+                            using (new EditorGUI.DisabledGroupScope(inColor)) if (GUILayout.Button("Color", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, propertyName, colorTargets);
+                            using (new EditorGUI.DisabledGroupScope(inFloat)) if (GUILayout.Button("Float", EditorStyles.miniButtonMid, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, propertyName, floatTargets);
+                            using (new EditorGUI.DisabledGroupScope(inTexture)) if (GUILayout.Button("Texture", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false))) AddRenderer(renderer, index, propertyName, textureTargets);
                         }
                     }
                 }
             }
+        }
+
+        public override void OnInspectorGUI()
+        {
+            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
+
+            serializedObject.Update();
+
+            EditorGUILayout.LabelField("Write On", EditorStyles.boldLabel);
+            var property = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.onStart));
+            EditorGUILayout.PropertyField(property);
+
+            EditorGUILayout.Space();
+            OnListsGUI();
+            EditorGUILayout.Space();
+
+            OnPreviewToolsGUI();
+
+            EditorGUILayout.Space();
+
+            OnAddingToolsGUI();
 
             serializedObject.ApplyModifiedProperties();
         }

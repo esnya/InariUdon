@@ -1,4 +1,4 @@
-# Material Property Block Writer
+## Material Property Block Writer
 
 Apply a `MaterialPropertyBlock` on `Start` or custom event `Trigger`.
 
