@@ -23,6 +23,7 @@ Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [M
 * Modify Screen Brightness
 
 ### Sun Contrller
+**NOTICE: Sun Controller is now separated into a standalone packge. Checkout from https://github.com/esnya/UdonSunController !!**
 * Synchronized controller of real-time directional lights such as the sun.
 * Also re-renders the reflection probe.
 
