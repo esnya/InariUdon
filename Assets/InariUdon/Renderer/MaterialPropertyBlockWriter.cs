@@ -4,6 +4,7 @@ using UnityEngine;
 using Collections.Pooled;
 using System;
 using UnityEngine.SocialPlatforms;
+using VRC.Udon;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using System.Linq;
 using System.Collections.Generic;
@@ -156,8 +157,8 @@ namespace EsnyaFactory.InariUdon
             IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes
         ) : base(serializedObject, targetsProperty)
         {
-            var margin = EditorStyles.objectField.margin;
-            var height = EditorStyles.objectField.lineHeight;
+            var margin = EditorStyles.objectField?.margin ?? new RectOffset();
+            var height = EditorStyles.objectField?.lineHeight ?? 0.0f;
             var emptyLabel = new GUIContent();
 
             var indicesProperty = serializedObject.FindProperty(targetsProperty.name.Replace("Targets", "Indices"));
@@ -176,6 +177,10 @@ namespace EsnyaFactory.InariUdon
             {
                 using (new EditorGUI.DisabledGroupScope(!enabled))
                 {
+                    indicesProperty.arraySize = targetsProperty.arraySize;
+                    namesProperty.arraySize = targetsProperty.arraySize;
+                    valuesProperty.arraySize = targetsProperty.arraySize;
+
                     var fieldRect = rect;
                     fieldRect.xMax /= fieldCount;
                     //fieldRect.xMin += margin.vertical;
@@ -384,7 +389,11 @@ namespace EsnyaFactory.InariUdon
 
         private static IEnumerable<MaterialPropertyBlockWriter> GetAllWriters()
         {
-            return SceneManager.GetActiveScene().GetRootGameObjects().SelectMany(o => o.GetUdonSharpComponentsInChildren<MaterialPropertyBlockWriter>());
+            return SceneManager.GetActiveScene().GetRootGameObjects()
+                .SelectMany(o => o.GetComponentsInChildren<UdonBehaviour>())
+                .Where(udon => UdonSharpEditorUtility.IsUdonSharpBehaviour(udon))
+                .Select(udon => UdonSharpEditorUtility.GetProxyBehaviour(udon) as MaterialPropertyBlockWriter)
+                .Where(writer => writer != null);
         }
 
         private void ApplyNow(MaterialPropertyBlockWriter writer)
@@ -437,9 +446,9 @@ namespace EsnyaFactory.InariUdon
             using (new EditorGUILayout.HorizontalScope())
             {
                 RenderField();
-                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(list.serializedProperty);
+                if (GUILayout.Button("Set All", EditorStyles.miniButton, miniButtonLayout)) OverrideAll(list?.serializedProperty);
             }
-            list.DoLayoutList();
+            list?.DoLayoutList();
         }
 
         private void OnListsGUI()
