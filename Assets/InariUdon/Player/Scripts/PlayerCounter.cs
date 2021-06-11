@@ -2,20 +2,20 @@
 
 using UdonSharp;
 using UdonToolkit;
-using UnityEngine.UI;
 using VRC.SDKBase;
 using TMPro;
+using UnityEngine;
 
-namespace EsnyaFactory.InariUdon {
-    [CustomName("Player Counter")]
-    [HelpMessage("Display player count using UI.Text. Displays world max capacity if provided.")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+namespace EsnyaFactory.InariUdon.Player {
+    [
+        CustomName("Player Counter"),
+        HelpMessage("Display number of players in the instance with TextMeshPro. Alos show world max capacity if provided."),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+    ]
     public class PlayerCounter : UdonSharpBehaviour
     {
-        public TextMeshPro text;
-        public int maxCapacity = 0;
-
-        private VRCPlayerApi[] players;
+        [Tooltip("TextMeshPro component to display counts.")] public TextMeshPro text;
+        [Tooltip("Max capacity of world. Set 0 to disable.")] public int maxCapacity = 0;
 
         void UpdateText(int add)
         {

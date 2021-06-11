@@ -3,7 +3,7 @@ using UdonSharp;
 using VRC.SDKBase;
 using System;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Player
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     class PlayerPositionRecovery : UdonSharpBehaviour
@@ -11,7 +11,7 @@ namespace EsnyaFactory.InariUdon
         public float maxDistanceFromOrigin = 100;
         public float timeoutSeconds = 60*10;
         public int bufferSize = 128;
-        public UdonLogger logger;
+        public UI.UdonLogger logger;
 
         private string[] displayNames;
         private Vector3[] positions;

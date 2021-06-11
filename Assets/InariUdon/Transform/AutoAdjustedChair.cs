@@ -1,10 +1,10 @@
-
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Transforms
 {
+
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AutoAdjustedChair : UdonSharpBehaviour
     {
@@ -29,7 +29,8 @@ namespace EsnyaFactory.InariUdon
         }
 
         bool adjust;
-        private void LateUpdate() {
+        private void LateUpdate()
+        {
             if (!adjust || !Networking.IsOwner(gameObject)) return;
 
             var upperLeg = Networking.LocalPlayer.GetBonePosition(HumanBodyBones.LeftUpperLeg);
@@ -74,7 +75,8 @@ namespace EsnyaFactory.InariUdon
         }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        private void OnDrawGizmosSelected() {
+        private void OnDrawGizmosSelected()
+        {
             var player = Networking.LocalPlayer;
             if (player == null) return;
 

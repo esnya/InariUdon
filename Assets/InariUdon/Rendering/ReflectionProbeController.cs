@@ -1,9 +1,8 @@
-
 using UdonSharp;
 using UdonToolkit;
 using UnityEngine;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Rendering
 {
     [CustomName("Reflection Probe Driver")]
     [HelpMessage("Controls ReflectionProbe at runtime. Currently, only the \"RenderProbe\" event is available to update the in real-time mode.")]

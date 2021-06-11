@@ -3,7 +3,7 @@ using UdonToolkit;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace EsnyaFactory
+namespace EsnyaFactory.InariUdon.Player
 {
     [CustomName("Entrance Sound Player")]
     [HelpMessage("Play sound using AudioSource when player joined or left. To disable either of them, select None.")]

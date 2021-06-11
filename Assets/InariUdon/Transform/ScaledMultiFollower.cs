@@ -1,45 +1,54 @@
 using UdonSharp;
 using UdonToolkit;
 using UnityEngine;
+using VRC.SDK3.Components;
 using VRC.SDKBase;
 using VRC.Udon;
-using System.Net;
-using VRC.SDK3.Components;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using UdonSharpEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Transforms
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+
+    [
+        CustomName("Scaled Multi Follower"),
+        HelpMessage(@"
+Drive multiple transform of targets by source transforms in single Update loop.
+Scale of positions and origin of transforms can be changed.
+This component allows you to display the position of an object on the minimap,  object placement or etc.
+        "),
+        Documentation.ImageAttachments("https://user-images.githubusercontent.com/2088693/121690092-5d425980-cb00-11eb-9518-a19896cbabd5.png"),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+    ]
     public class ScaledMultiFollower : UdonSharpBehaviour
     {
         [SectionHeader("Source")]
-        public Transform sourceParent;
-        [HideIf("HideSources")] public Transform[] sources;
-        public Transform sourceOrigin;
-        public bool findSourceChild;
-        [HideIf("@!findSourceChild")] public string sourceChildPath;
+        [Tooltip("Find source from children")] public Transform sourceParent;
+        [Tooltip("Use specified sources")] [HideIf("EditorHideSources")] public Transform[] sources;
+        [Tooltip("Position origin of sources")] public Transform sourceOrigin;
+        [Tooltip("Find sources by path")] public bool findSourceChild;
+        [Tooltip("Find sources by path")][HideIf("@!findSourceChild")] public string sourceChildPath;
 
         [SectionHeader("Target")]
-        public Transform targetParent;
-        [HideIf("HideTargets")] public Transform[] targets;
-        public Transform targetOrigin;
-        public bool findTargetChild;
-        [HideIf("@!findTargetChild")] public string targetChildPath;
+        [Tooltip("Find targets from children")] public Transform targetParent;
+        [Tooltip("Use specified targets")][HideIf("EditorHideTargets")] public Transform[] targets;
+        [Tooltip("Position origin of targets")] public Transform targetOrigin;
+        [Tooltip("Find targets by path")] public bool findTargetChild;
+        [Tooltip("Find targets by path")] [HideIf("@!findTargetChild")] public string targetChildPath;
 
         [SectionHeader("Transforms")]
-        public Vector3 positionScale = Vector3.one;
-        public float scaleMultiplier = 1.0f;
+        [Tooltip("Scale positions")] public Vector3 positionScale = Vector3.one;
+        [Tooltip("Scale positions")] public float scaleMultiplier = 1.0f;
         public bool inverseScale = false;
-        public bool rotation = true;
+        [Tooltip("Enable rotation copy")] public bool rotation = true;
 
         [SectionHeader("Other Options")]
-        public bool copyActive = false;
+        [Tooltip("Copy `GameObject.activeSelf`")] public bool copyActive = false;
         public bool deactivateExcessiveTargets = true;
-        public bool ownerOnly = false;
-        public bool toggleTargetColliders = false;
-        public bool freezeTargetWhileSoruceHeld = false;
+        [Tooltip("Follow if owenr of source")] public bool ownerOnly = false;
+        [Tooltip("Disable collider while `pickup.IsHeld == true` of source")] public bool toggleTargetColliders = false;
+        [Tooltip("Stop following while `pickup.IsHeld == true` of source")] public bool freezeTargetWhileSoruceHeld = false;
 
         private int count;
         private bool[] activeFlags;
@@ -126,25 +135,25 @@ namespace EsnyaFactory.InariUdon
         }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        public bool HideSources() => sourceParent != null;
-        public bool HideTargets() => targetParent != null;
+        public bool EditorHideSources() => sourceParent != null;
+        public bool EditorHideTargets() => targetParent != null;
 
         [Button("Sources Use Global Space", true)]
-        public void SourcesGlobalSpace()
+        public void EditorSourcesGlobalSpace()
         {
             this.UpdateProxy();
             sourceOrigin = null;
             this.ApplyProxyModifications();
         }
         [Button("Sources Use Local Space", true)]
-        public void SourcesLocalSpace()
+        public void EditorSourcesLocalSpace()
         {
             this.UpdateProxy();
             sourceOrigin = transform;
             this.ApplyProxyModifications();
         }
         [Button("Sources Use Parent Local Space", true)]
-        public void SourcesParentLocalSpace()
+        public void EditorSourcesParentLocalSpace()
         {
             this.UpdateProxy();
             sourceOrigin = targetParent;
@@ -152,21 +161,21 @@ namespace EsnyaFactory.InariUdon
         }
 
         [Button("Targets Use Global Space", true)]
-        public void TargetsGlobalSpace()
+        public void EditorTargetsGlobalSpace()
         {
             this.UpdateProxy();
             targetOrigin = null;
             this.ApplyProxyModifications();
         }
         [Button("Targets Use Local Space", true)]
-        public void TargetsLocalSpace()
+        public void EditorTargetsLocalSpace()
         {
             this.UpdateProxy();
             targetOrigin = transform;
             this.ApplyProxyModifications();
         }
         [Button("Targets Use Parent Local Space", true)]
-        public void TargetsParentLocalSpace()
+        public void EditorTargetsParentLocalSpace()
         {
             this.UpdateProxy();
             targetOrigin = targetParent;

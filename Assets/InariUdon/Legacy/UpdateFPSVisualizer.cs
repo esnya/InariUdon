@@ -4,7 +4,7 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-namespace EsnyaFactory
+namespace EsnyaFactory.InariUdon.Legacy
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class UpdateFPSVisualizer : UdonSharpBehaviour

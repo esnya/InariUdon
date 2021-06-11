@@ -1,6 +1,5 @@
 ﻿
 using UdonSharp;
-using UdonToolkit;
 using VRC.SDKBase;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Reflection;
 using UdonSharpEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Sync
 {
     public class SyncedFloat : UdonSharpBehaviour
     {

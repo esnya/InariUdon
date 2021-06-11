@@ -2,11 +2,9 @@
 using UdonSharp;
 using UdonToolkit;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Misc
 {
     [CustomName("Pickup Event Trigger")]
     [HelpMessage("SendCustomEvents on pickup events.")]

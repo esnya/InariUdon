@@ -1,16 +1,14 @@
 
 using UdonSharp;
-using UdonToolkit;
-using UnityEngine;
 using VRC.SDKBase;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Player
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PlayerEventLogger : UdonSharpBehaviour
     {
         #region Public Variables
-        public UdonLogger logger;
+        public UI.UdonLogger logger;
         public string level = "NOTICE";
         public string joinedFormat = "{0} <color=green>joined</color> (Total {1})";
         public string leftFormat = "{0} <color=orange>left</color> (Total {1})";

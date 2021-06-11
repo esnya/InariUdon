@@ -245,7 +245,7 @@ MonoBehaviour:
       Data: 15|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: EsnyaFactory.InariUdon.UdonLogger, InariUdonRuntime
+      Data: EsnyaFactory.InariUdon.UI.UdonLogger, InariUdonRuntime
     - Name: 
       Entry: 8
       Data: 

@@ -9,7 +9,7 @@ using UdonSharpEditor;
 using UnityEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Misc
 {
     [
         CustomName("Pickup Controller"),

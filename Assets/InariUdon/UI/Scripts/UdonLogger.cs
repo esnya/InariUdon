@@ -1,13 +1,17 @@
 
 using UdonSharp;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UdonToolkit;
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.UI
 {
-    [DefaultExecutionOrder(-1000), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [
+        CustomName("Udon Logger"),
+        HelpMessage("Rich log viewer in world with colord log-levels, timestamp and etc."),
+        DefaultExecutionOrder(-1000),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+    ]
     public class UdonLogger : UdonSharpBehaviour
     {
         public int maxCharacters = 10000;
@@ -32,7 +36,7 @@ namespace EsnyaFactory.InariUdon
         };
         public bool levelsIgnoreCase = true;
 
-        [field: HideInInspector] public bool initialized { get; private set; }
+        [HideInInspector] public bool initialized;
 
         private string str;
         private string[] colorCodes;

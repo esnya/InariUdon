@@ -1,25 +1,34 @@
 
-using UdonSharp;
-using UnityEngine;
-using Collections.Pooled;
 using System;
-using UnityEngine.SocialPlatforms;
+using UdonSharp;
+using UdonToolkit;
+using UnityEngine;
 using VRC.Udon;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using UdonSharpEditor;
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine.SceneManagement;
-using UnityEditor;
-using UdonSharpEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon
+namespace EsnyaFactory.InariUdon.Rendering
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [
+        CustomName("MaterialPropertyBlock Writer"),
+        HelpMessage(@"
+Apply a `MaterialPropertyBlock`.
+Override the material properties with various values, but they can share the same material. This is a first step for GPU instancing."),
+        Documentation.ImageAttachments(new [] {
+            "https://user-images.githubusercontent.com/2088693/121310202-160c6b00-c93e-11eb-92ec-91583c3f69f0.png",
+            "https://user-images.githubusercontent.com/2088693/121310283-2cb2c200-c93e-11eb-9834-c99a901a0f1a.png",
+        }),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)
+    ]
     public class MaterialPropertyBlockWriter : UdonSharpBehaviour
     {
-        public bool onStart = true;
+        [Tooltip("Apply on start")] public bool onStart = true;
 
         public bool writeColors;
         public Renderer[] colorTargets = { };
@@ -44,6 +53,7 @@ namespace EsnyaFactory.InariUdon
             if (onStart) Trigger();
         }
 
+        [Documentation.EventDescription("Apply overrides")]
         public void Trigger()
         {
             var block = new MaterialPropertyBlock();
