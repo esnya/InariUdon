@@ -37,7 +37,7 @@ namespace EsnyaFactory.InariUdon
         {
             var name = type.GetCustomAttribute<CustomNameAttribute>()?.name ?? type.Name;
             var description = type.GetCustomAttribute<HelpMessageAttribute>()?.helpMessage ?? "";
-            return Enumerable.Repeat($"\n### {name}", 1).Append(description);
+            return Enumerable.Repeat($"\n### {name}", 1).Append(description).Append("\n");
         }
 
         private static IEnumerable<string> GenerateVariables(Type type)

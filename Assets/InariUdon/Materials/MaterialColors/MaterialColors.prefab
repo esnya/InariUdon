@@ -1809,7 +1809,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'NonMetal Smooth
+  m_text: 'Metal Smooth
 
     Smoothness 90%'
   m_isRightToLeft: 0
@@ -15455,7 +15455,7 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: 3bf092c5211fdf6418381f1d2ec9ccbb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c96d843ac915e044dbe9a01f8af6141a, type: 2}
+      objectReference: {fileID: 2100000, guid: 78ea74713ac98e340abe9a8d40f62737, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf092c5211fdf6418381f1d2ec9ccbb, type: 3}
 --- !u!4 &3317004891460475229 stripped
