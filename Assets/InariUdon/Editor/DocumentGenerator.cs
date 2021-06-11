@@ -50,7 +50,8 @@ namespace EsnyaFactory.InariUdon
                 var typeName = v.FieldType.ToString();
                 var description = v.GetAttribute<HelpBoxAttribute>()?.text ?? v.GetAttribute<TooltipAttribute>()?.tooltip ?? "";
                 return $"| {name} | {typeName} | {description} |";
-            });
+            })
+            .Append("\n");
             return Enumerable.Repeat(VariablesHeaderString, 1).Concat(variables);
         }
 
@@ -65,7 +66,8 @@ namespace EsnyaFactory.InariUdon
                     var name = m.Name;
                     var description = m.GetAttribute<Documentation.EventDescriptionAttribute>()?.description ?? "";
                     return $"| {name} | {description} |";
-                });
+                })
+                .Append("\n");
             return Enumerable.Repeat(EventsHeaderString, 1).Concat(events);
         }
 
@@ -88,9 +90,9 @@ namespace EsnyaFactory.InariUdon
                         .Concat(
                             items.SelectMany(
                                 c => GenerateHeader(c)
+                                .Concat(GenerateImageAttachments(c))
                                 .Concat(GenerateVariables(c))
                                 .Concat(GenerateEvents(c))
-                                .Concat(GenerateImageAttachments(c))
                             )
                         )
                 )
