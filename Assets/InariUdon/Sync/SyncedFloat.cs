@@ -1,7 +1,12 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
+using UdonToolkit;
+using UnityEngine;
+using UnityEngine.UI;
 using VRC.SDKBase;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
+using UnityEngine.Events;
+using UnityEditor;
+using UnityEditor.Events;
 using System.Linq;
 using System.Reflection;
 using UdonSharpEditor;
@@ -9,12 +14,24 @@ using UdonSharpEditor;
 
 namespace EsnyaFactory.InariUdon.Sync
 {
+    [
+        CustomName("Synced Float"),
+        HelpMessage("Provides single synced float variable with change detection."),
+    ]
     public class SyncedFloat : UdonSharpBehaviour
     {
+        [SectionHeader("Initial Value")]
         public float value;
+
+        [SectionHeader("Udon Integration")]
         public UdonSharpBehaviour eventTarget;
-        public string targetVariableName = "value";
-        public string targetEventName = "OnValueChanged";
+        [Popup("EditorGetVariables")] public string targetVariableName = "value";
+        [Popup("behaviour", "@eventTarget")] public string targetEventName = "OnValueChanged";
+        public bool writeAsArray = false;
+
+        [SectionHeader("UI Integration")]
+        public Slider slider;
+        public bool exp;
 
         [UdonSynced(UdonSyncMode.Smooth)] private float _syncValue;
 
@@ -25,15 +42,24 @@ namespace EsnyaFactory.InariUdon.Sync
 
         public override void OnDeserialization()
         {
-            if (_syncValue != value) SendEvent(_syncValue);
+            if (_syncValue != value)
+            {
+                if (slider != null) slider.value = _syncValue;
+                SendEvent(_syncValue);
+            }
             value = _syncValue;
         }
 
         private void SendEvent(float value)
         {
-            if (!Utilities.IsValid(eventTarget)) return;
-
-            eventTarget.SetProgramVariable(targetVariableName, value);
+            if (writeAsArray)
+            {
+                var array = (float[])eventTarget.GetProgramVariable(targetVariableName);
+                if (array == null) array = new float[1];
+                for (int i = 0; i < array.Length; i++) array[i] = value;
+                eventTarget.SetProgramVariable(targetVariableName, array);
+            }
+            else eventTarget.SetProgramVariable(targetVariableName, value);
             eventTarget.SendCustomEvent(targetEventName);
         }
 
@@ -44,12 +70,34 @@ namespace EsnyaFactory.InariUdon.Sync
             _syncValue = value;
         }
 
+        public void UIValueChanged()
+        {
+            if (slider == null) return;
+            value = exp ? Mathf.Exp(slider.value) : slider.value;
+            Sync();
+        }
+
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        private string[] GetVariables()
+        public string[] EditorGetVariables()
         {
             this.UpdateProxy();
             if (eventTarget == null) return new []{ "" };
-            return eventTarget.GetType().GetProperties(BindingFlags.Public).Where(p => p.PropertyType == typeof(float)).Select(p => p.Name).ToArray();
+            return eventTarget.GetType()
+                .GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Where(p => p.FieldType == typeof(float) || p.FieldType == typeof(float[]))
+                .Select(p => p.Name)
+                .ToArray();
+        }
+
+        [Button("Setup", true)]
+        public void EditorSetup()
+        {
+            this.UpdateProxy();
+            if (slider != null)
+            {
+                while (slider.onValueChanged.GetPersistentEventCount() > 0) UnityEventTools.RemovePersistentListener(slider.onValueChanged, 0);
+                UnityEventTools.AddStringPersistentListener(slider.onValueChanged, UdonSharpEditorUtility.GetBackingUdonBehaviour(this).SendCustomEvent, nameof(UIValueChanged));
+            }
         }
 #endif
     }
