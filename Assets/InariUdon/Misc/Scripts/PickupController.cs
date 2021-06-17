@@ -24,36 +24,25 @@ namespace EsnyaFactory.InariUdon.Misc
         public Transform respawnTarget;
         public bool respawnOnDrop = false;
 
-        [SectionHeader("Collider")]
-        public bool overrideIsTrigger;
+        [SectionHeader("Collider")] public bool overrideIsTrigger;
 
-        [SectionHeader("OnPickup")]
-        public bool fireOnPickup;
+        [SectionHeader("OnPickup")] public bool fireOnPickup;
 
-        [HideIf("@!fireOnPickup")]
-        public bool onPickupNetworked;
+        [HideIf("@!fireOnPickup")] public bool onPickupNetworked;
 
-        [HideIf("@!fireOnPickup")]
-        public NetworkEventTarget onPickupNetworkTarget;
+        [HideIf("@!fireOnPickup")] public NetworkEventTarget onPickupNetworkTarget;
 
-        [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")]
-        public UdonSharpBehaviour[] onPickupTargets;
-        [ListView("OnPickup Target List")]
-        public string[] onPickupEvents;
+        [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")] public UdonSharpBehaviour[] onPickupTargets;
+        [ListView("OnPickup Target List") , Popup("behaviour", "@onPickupTargets", true)] public string[] onPickupEvents;
 
-        [SectionHeader("OnDrop")]
-        public bool fireOnDrop;
+        [SectionHeader("OnDrop")] public bool fireOnDrop;
 
-        [HideIf("@!fireOnDrop")]
-        public bool onDropNetworked;
+        [HideIf("@!fireOnDrop")] public bool onDropNetworked;
 
-        [HideIf("@!fireOnDrop")]
-        public NetworkEventTarget onDropNetworkTarget;
+        [HideIf("@!fireOnDrop")] public NetworkEventTarget onDropNetworkTarget;
 
-        [HideIf("@!fireOnDrop")][ListView("OnDrop Target List")]
-        public UdonSharpBehaviour[] onDropTargets;
-        [ListView("OnDrop Target List")][Popup("behaviour", "onDropTargets", true)]
-        public string[] onDropEvents;
+        [HideIf("@!fireOnDrop")][ListView("OnDrop Target List")] public UdonSharpBehaviour[] onDropTargets;
+        [ListView("OnDrop Target List"), Popup("behaviour", "@onDropTargets", true)] public string[] onDropEvents;
         #endregion
 
         #region Private Variables
