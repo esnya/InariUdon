@@ -44,6 +44,7 @@ This component allows you to display the position of an object on the minimap,  
         [Tooltip("Enable rotation copy")] public bool rotation = true;
 
         [SectionHeader("Other Options")]
+        public float updateFrequency = 900;
         [Tooltip("Copy `GameObject.activeSelf`")] public bool copyActive = false;
         public bool deactivateExcessiveTargets = true;
         [Tooltip("Follow if owenr of source")] public bool ownerOnly = false;
@@ -54,6 +55,7 @@ This component allows you to display the position of an object on the minimap,  
         private bool[] activeFlags;
         private VRCPickup[] sourcePickups;
         private Collider[] targetColliders;
+        private int updateInterval, updatePerFrame, targetIndex = 0;
 
         private Transform[] GetChildren(Transform parent, bool find, string path)
         {
@@ -77,6 +79,9 @@ This component allows you to display the position of an object on the minimap,  
             sourcePickups = new VRCPickup[count];
             targetColliders = new Collider[count];
 
+            updatePerFrame = Mathf.Min(Mathf.Max(Mathf.FloorToInt(Time.fixedUnscaledDeltaTime * updateFrequency), 1), count);
+            updateInterval = Mathf.Max(Mathf.FloorToInt(1.0f / updateFrequency), 1);
+
             for (int i = 0; i < count; i++)
             {
                 var active = sources[i].gameObject.activeInHierarchy;
@@ -98,26 +103,30 @@ This component allows you to display the position of an object on the minimap,  
 
         private void Update()
         {
+            if (Time.frameCount % updateInterval != 0) return;
+
             var calcluatedPositionScale = inverseScale ? new Vector3(1.0f / positionScale.x, 1.0f / positionScale.y, 1.0f / positionScale.z) / scaleMultiplier : positionScale * scaleMultiplier;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < updatePerFrame; i++)
             {
-                var source = sources[i];
+                targetIndex = (targetIndex + 1) % count;
+
+                var source = sources[targetIndex];
                 if (!Utilities.IsValid(source) || ownerOnly && !Networking.IsOwner(source.gameObject)) continue;
 
-                var target = targets[i];
+                var target = targets[targetIndex];
                 if (!Utilities.IsValid(target)) continue;
 
                 if (copyActive)
                 {
                     var active = source.gameObject.activeInHierarchy;
-                    if (active != activeFlags[i])
+                    if (active != activeFlags[targetIndex])
                     {
-                        activeFlags[i] = active;
+                        activeFlags[targetIndex] = active;
                         target.gameObject.SetActive(active);
                     }
                 }
 
-                var sourcePickup = sourcePickups[i];
+                var sourcePickup = sourcePickups[targetIndex];
                 if (!freezeTargetWhileSoruceHeld || sourcePickup == null || !sourcePickup.IsHeld)
                 {
                     var sourcePosition = source.position - (sourceOrigin == null ? Vector3.zero : sourceOrigin.position);
@@ -127,9 +136,9 @@ This component allows you to display the position of an object on the minimap,  
                     if (rotation) target.rotation = source.rotation;
                 }
 
-                if (toggleTargetColliders && targetColliders[i] != null && sourcePickup != null)
+                if (toggleTargetColliders && targetColliders[targetIndex] != null && sourcePickup != null)
                 {
-                    targetColliders[i].enabled = !sourcePickup.IsHeld;
+                    targetColliders[targetIndex].enabled = !sourcePickup.IsHeld;
                 }
             }
         }
