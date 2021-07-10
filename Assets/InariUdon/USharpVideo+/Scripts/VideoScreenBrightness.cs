@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EsnyaFactory.InariUdon
+namespace InariUdon
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class VideoScreenBrightness : UdonSharpBehaviour

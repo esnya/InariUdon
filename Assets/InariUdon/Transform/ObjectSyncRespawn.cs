@@ -4,7 +4,7 @@ using UnityEngine;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 
-namespace EsnyaFactory.InariUdon.Transforms
+namespace InariUdon.Transforms
 {
     [
         CustomName("ObjectSync Respawn"),

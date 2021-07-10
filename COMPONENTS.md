@@ -4,41 +4,6 @@
 
 ## Uncategorized
 
-### DefaultStreamURL
-
-
-
-
-#### Public Variables
-| Name | Type | Description |
-|:--|:--|:--|
-| usharpVideo | UdonSharp.UdonSharpBehaviour |  |
-| url | VRC.SDKBase.VRCUrl |  |
-
-
-
-### VideoPlayerLoop
-
-
-
-
-#### Public Variables
-| Name | Type | Description |
-|:--|:--|:--|
-| unityVideoPlayer | VRC.SDK3.Video.Components.VRCUnityVideoPlayer |  |
-| avProVideoPlayer | VRC.SDK3.Video.Components.AVPro.VRCAVProVideoPlayer |  |
-| icon | UnityEngine.UI.Image |  |
-| loop | System.Boolean |  |
-
-
-
-#### Public Events
-| Name | Description |
-|:--|:--|
-| Toggle |  |
-
-
-
 ### VideoScreenBrightness
 
 
@@ -58,7 +23,7 @@
 #### Public Events
 | Name | Description |
 |:--|:--|
-| SliderValueChanged |  |
+| OnSliderValueChanged |  |
 
 
 
@@ -88,8 +53,6 @@
 | PlayPrevious |  |
 
 
-
-## Driver
 
 ### AnimatorDriver
 
@@ -149,7 +112,20 @@ Drives float parameters of animators by one float value calculated from scene.
 
 
 
-## Legacy
+### SyncedSpinner
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| angle | System.Single |  |
+| axis | UnityEngine.Vector3 |  |
+| speed | System.Single |  |
+| randomizeStartAngle | System.Boolean |  |
+
+
 
 ### AmbientController
 
@@ -220,8 +196,6 @@ Drives float parameters of animators by one float value calculated from scene.
 
 
 
-## Misc
-
 ### Pickup Controller
 Enhancement VRC_Pickup such as relay events or expose Respawn event.
 
@@ -272,8 +246,6 @@ SendCustomEvents on pickup events.
 
 
 
-## Player
-
 ### Entrance Sound Player
 Play sound using AudioSource when player joined or left. To disable either of them, select None.
 
@@ -308,7 +280,7 @@ Display number of players in the instance with TextMeshPro. Alos show world max 
 #### Public Variables
 | Name | Type | Description |
 |:--|:--|:--|
-| logger | EsnyaFactory.InariUdon.UI.UdonLogger |  |
+| logger | InariUdon.UI.UdonLogger |  |
 | level | System.String |  |
 | joinedFormat | System.String |  |
 | leftFormat | System.String |  |
@@ -326,11 +298,9 @@ Display number of players in the instance with TextMeshPro. Alos show world max 
 | maxDistanceFromOrigin | System.Single |  |
 | timeoutSeconds | System.Single |  |
 | bufferSize | System.Int32 |  |
-| logger | EsnyaFactory.InariUdon.UI.UdonLogger |  |
+| logger | InariUdon.UI.UdonLogger |  |
 
 
-
-## Rendering
 
 ### MaterialPropertyBlock Writer
 
@@ -391,10 +361,36 @@ Controls ReflectionProbe at runtime. Currently, only the "RenderProbe" event is 
 
 
 
-## Sync
+### SyncedBooleanLatch
 
-### SyncedFloat
 
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| value | System.Boolean |  |
+| onSetEventListeners | UdonSharp.UdonSharpBehaviour[] |  |
+| onSetEventNames | System.String[] |  |
+| onResetEventListeners | UdonSharp.UdonSharpBehaviour[] |  |
+| onResetEventNames | System.String[] |  |
+| onToggleEventListeners | UdonSharp.UdonSharpBehaviour[] |  |
+| onToggleEventNames | System.String[] |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _TakeOwnership |  |
+| _Set |  |
+| _Reset |  |
+| _Toggle |  |
+
+
+
+### Synced Float
+Provides single synced float variable with change detection.
 
 
 
@@ -405,17 +401,18 @@ Controls ReflectionProbe at runtime. Currently, only the "RenderProbe" event is 
 | eventTarget | UdonSharp.UdonSharpBehaviour |  |
 | targetVariableName | System.String |  |
 | targetEventName | System.String |  |
+| writeAsArray | System.Boolean |  |
+| slider | UnityEngine.UI.Slider |  |
+| exp | System.Boolean |  |
 
 
 
 #### Public Events
 | Name | Description |
 |:--|:--|
-| Sync |  |
+| _Sync |  |
 
 
-
-## Transforms
 
 ### AutoAdjustedChair
 
@@ -464,6 +461,31 @@ Simple event relay component to call `VRCObjecySync.Respawn()`
 
 
 
+### RotationDriver
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| target | UnityEngine.Transform |  |
+| axis | UnityEngine.Vector3 |  |
+| localSpace | System.Boolean |  |
+| applyAngleOnStart | System.Boolean |  |
+| startAngle | System.Single |  |
+| endAngle | System.Single |  |
+| speed | System.Single |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
+
+
+
 ### Scaled Multi Follower
 
 Drive multiple transform of targets by source transforms in single Update loop.
@@ -491,6 +513,7 @@ This component allows you to display the position of an object on the minimap,  
 | scaleMultiplier | System.Single | Scale positions |
 | inverseScale | System.Boolean |  |
 | rotation | System.Boolean | Enable rotation copy |
+| updateFrequency | System.Single |  |
 | copyActive | System.Boolean | Copy `GameObject.activeSelf` |
 | deactivateExcessiveTargets | System.Boolean |  |
 | ownerOnly | System.Boolean | Follow if owenr of source |
@@ -523,7 +546,54 @@ Modify parent in hierarchy ay runtime
 
 
 
-## UI
+### InputTrigger
+Trigger by input
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| keyDown | System.Boolean |  |
+| keyName | System.String |  |
+| buttonDown | System.Boolean |  |
+| buttonName | System.String |  |
+| eventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| eventNames | System.String[] |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
+| _Enable |  |
+| _Disable |  |
+
+
+
+### InteractRelay
+Overrides Interact, or integrates multiple.
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| relayTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| eventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| eventNames | System.String[] |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
+| _Enable |  |
+| _Disable |  |
+
+
 
 ### Udon Logger
 Rich log viewer in world with colord log-levels, timestamp and etc.

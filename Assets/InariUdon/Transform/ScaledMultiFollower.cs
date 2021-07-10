@@ -8,7 +8,7 @@ using VRC.Udon;
 using UdonSharpEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon.Transforms
+namespace InariUdon.Transforms
 {
 
     [
@@ -121,6 +121,9 @@ This component allows you to display the position of an object on the minimap,  
                     var active = source.gameObject.activeInHierarchy;
                     if (active != activeFlags[targetIndex])
                     {
+                        var trailRenderer = target.GetComponentInChildren<TrailRenderer>();
+                        if (trailRenderer != null) trailRenderer.Clear();
+
                         activeFlags[targetIndex] = active;
                         target.gameObject.SetActive(active);
                     }

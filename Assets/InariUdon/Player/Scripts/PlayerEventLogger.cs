@@ -2,7 +2,7 @@
 using UdonSharp;
 using VRC.SDKBase;
 
-namespace EsnyaFactory.InariUdon.Player
+namespace InariUdon.Player
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PlayerEventLogger : UdonSharpBehaviour

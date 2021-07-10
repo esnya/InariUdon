@@ -13,7 +13,7 @@ using UnityEditorInternal;
 using UnityEngine.SceneManagement;
 #endif
 
-namespace EsnyaFactory.InariUdon.Rendering
+namespace InariUdon.Rendering
 {
     [
         CustomName("MaterialPropertyBlock Writer"),

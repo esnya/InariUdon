@@ -2,7 +2,7 @@
 using UdonSharp;
 using UnityEngine;
 
-namespace EsnyaFactory.InariUdon.Driver
+namespace InariUdon.Driver
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class AnimatorDriver : UdonSharpBehaviour

@@ -5,14 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using EsnyaFactory.InariUdon.Documentation;
+using InariUdon.Documentation;
 using UdonSharp;
 using UdonToolkit;
 using UnityEditor;
 using UnityEngine;
 using VRC.Udon.Serialization.OdinSerializer.Utilities;
 
-namespace EsnyaFactory.InariUdon
+namespace InariUdon
 {
     public class DocumentGenerator
     {
@@ -81,7 +81,7 @@ namespace EsnyaFactory.InariUdon
         {
             var doc = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
-                .Where(t => t.Namespace?.StartsWith("EsnyaFactory.InariUdon") ?? false)
+                .Where(t => t.Namespace?.StartsWith("InariUdon") ?? false)
                 .Where(t => t.ImplementsOrInherits(typeof(UdonSharpBehaviour)))
                 .OrderBy(t => t.Namespace)
                 .GroupBy(

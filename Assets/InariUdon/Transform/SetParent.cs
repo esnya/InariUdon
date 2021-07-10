@@ -2,7 +2,7 @@ using UdonSharp;
 using UdonToolkit;
 using UnityEngine;
 
-namespace EsnyaFactory.InariUdon.Transforms
+namespace InariUdon.Transforms
 {
     [
         CustomName("Set Parent"),

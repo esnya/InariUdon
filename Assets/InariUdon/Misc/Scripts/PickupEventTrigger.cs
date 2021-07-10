@@ -4,7 +4,7 @@ using UdonToolkit;
 using UnityEngine;
 using VRC.Udon.Common.Interfaces;
 
-namespace EsnyaFactory.InariUdon.Misc
+namespace InariUdon.Misc
 {
     [CustomName("Pickup Event Trigger")]
     [HelpMessage("SendCustomEvents on pickup events.")]

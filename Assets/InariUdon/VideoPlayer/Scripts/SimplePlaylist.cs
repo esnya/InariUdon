@@ -11,7 +11,7 @@ using VRC.SDK3.Video.Components.AVPro;
 using VRC.SDKBase;
 using VRC.Udon;
 
-namespace EsnyaFactory.InariUdon
+namespace InariUdon
 {
     [RequireComponent(typeof(VRCUnityVideoPlayer))]
     public class SimplePlaylist : UdonSharpBehaviour

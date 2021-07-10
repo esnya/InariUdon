@@ -3,7 +3,7 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
-namespace EsnyaFactory.InariUdon.Legacy
+namespace InariUdon.Legacy
 {
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]

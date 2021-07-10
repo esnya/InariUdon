@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-namespace EsnyaFactory.InariUdon.Driver
+namespace InariUdon.Driver
 {
     [CustomName("Float Value Driver")]
     [HelpMessage("Drives float parameters of animators by one float value calculated from scene.")]

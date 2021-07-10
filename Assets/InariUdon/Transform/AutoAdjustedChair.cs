@@ -2,7 +2,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace EsnyaFactory.InariUdon.Transforms
+namespace InariUdon.Transforms
 {
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

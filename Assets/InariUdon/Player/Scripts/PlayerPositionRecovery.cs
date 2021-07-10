@@ -3,7 +3,7 @@ using UdonSharp;
 using VRC.SDKBase;
 using System;
 
-namespace EsnyaFactory.InariUdon.Player
+namespace InariUdon.Player
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     class PlayerPositionRecovery : UdonSharpBehaviour

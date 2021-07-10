@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UdonToolkit;
 
-namespace EsnyaFactory.InariUdon.UI
+namespace InariUdon.UI
 {
     [
         CustomName("Udon Logger"),
@@ -86,7 +86,7 @@ namespace EsnyaFactory.InariUdon.UI
 
             if (str.Length >= maxCharacters)
             {
-                str = str.Substring(0, maxCharacters);
+                str = str.Substring(str.Length - maxCharacters);
             }
 
             text.text = str;
