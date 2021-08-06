@@ -48,6 +48,12 @@ Override the material properties with various values, but they can share the sam
         public string[] textureNames = { };
         public Texture[] textureValues = { };
 
+        public bool writeVectors;
+        public Renderer[] vectorTargets = {};
+        public int[] vectorIndices = {};
+        public string[] vectorNames = {};
+        public Vector4[] vectorValues = {};
+
         private void Start()
         {
             if (onStart) Trigger();
@@ -90,6 +96,18 @@ Override the material properties with various values, but they can share the sam
                     var materialIndex = textureIndices[i];
                     target.GetPropertyBlock(block, materialIndex);
                     block.SetTexture(textureNames[i], textureValues[i]);
+                    target.SetPropertyBlock(block, materialIndex);
+                }
+            }
+
+            if (writeVectors)
+            {
+                for (int i = 0; i < vectorTargets.Length; i++)
+                {
+                    var target = vectorTargets[i];
+                    var materialIndex = vectorIndices[i];
+                    target.GetPropertyBlock(block, materialIndex);
+                    block.SetVector(vectorNames[i], vectorValues[i]);
                     target.SetPropertyBlock(block, materialIndex);
                 }
             }
@@ -193,8 +211,6 @@ Override the material properties with various values, but they can share the sam
 
                     var fieldRect = rect;
                     fieldRect.xMax /= fieldCount;
-                    //fieldRect.xMin += margin.vertical;
-                    //fieldRect.xMax -= margin.vertical;
                     var verticalMargin = Math.Max(rect.height - height, 0) / 2;
                     fieldRect.yMin += verticalMargin;
                     fieldRect.yMax -= verticalMargin;
@@ -225,29 +241,36 @@ Override the material properties with various values, but they can share the sam
 
                         var nextSelectedIndex = EditorGUI.Popup(fieldRect,currentSelectedIndex,propertyNames);
                         fieldRect.x += rect.width / fieldCount;
-                        if (currentSelectedIndex != nextSelectedIndex)
+                        nameProperty.stringValue = propertyNames.Skip(nextSelectedIndex).Append(nameProperty.stringValue).First();
+
+                        var shaderPropertyIndex = propertyIndices.SkipWhile(i => GetShaderPropertyName(shader, i) != nameProperty.stringValue).FirstOrDefault();
+
+                        if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Color))
                         {
-                            nameProperty.stringValue = propertyNames.Skip(nextSelectedIndex).Append(nameProperty.stringValue).First();
+                            valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
+                        }
+                        else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Range) && ShaderUtil.GetPropertyType(shader, shaderPropertyIndex) == ShaderUtil.ShaderPropertyType.Range && ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1) != ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2))
+                        {
+                            valueProperty.floatValue = EditorGUI.Slider(
+                                fieldRect,
+                                valueProperty.floatValue,
+                                ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1),
+                                ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2)
+                            );
+                        }
+                        else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Vector))
+                        {
+                            valueProperty.vector4Value = EditorGUI.Vector4Field(
+                                fieldRect,
+                                emptyLabel,
+                                valueProperty.vector4Value
+                            );
+                        }
+                        else
+                        {
+                            EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
                         }
 
-                        var shaderPropertyIndex = propertyIndices.Where(i => ShaderUtil.GetPropertyName(shader, i) == nameProperty.stringValue).FirstOrDefault();
-                        switch (ShaderUtil.GetPropertyType(shader, shaderPropertyIndex))
-                        {
-                            case ShaderUtil.ShaderPropertyType.Color:
-                                valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
-                                break;
-                            case ShaderUtil.ShaderPropertyType.Range:
-                                valueProperty.floatValue = EditorGUI.Slider(
-                                    fieldRect,
-                                    valueProperty.floatValue,
-                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1),
-                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2)
-                                );
-                                break;
-                            default:
-                                EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
-                                break;
-                        }
                         fieldRect.x += rect.width / fieldCount;
                     }
                     else
@@ -296,8 +319,8 @@ Override the material properties with various values, but they can share the sam
         public bool applyToScene = true;
         public Material materialFilter;
         public string propertyName;
-        private SerializedProperty colorTargets, floatTargets, textureTargets;
-        private ReorderableList colorList, floatList, textureList;
+        private SerializedProperty colorTargets, floatTargets, textureTargets, vectorTargets;
+        private ReorderableList colorList, floatList, textureList, vectorList;
 
         private void OnEnable()
         {
@@ -309,6 +332,7 @@ Override the material properties with various values, but they can share the sam
             colorTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.colorTargets));
             floatTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.floatTargets));
             textureTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.textureTargets));
+            vectorTargets = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.vectorTargets));
 
             colorList = new MaterialPropertyList(
                 serializedObject,
@@ -327,6 +351,12 @@ Override the material properties with various values, but they can share the sam
                 serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.writeTextures)),
                 textureTargets,
                 ShaderUtil.ShaderPropertyType.TexEnv
+            );
+            vectorList = new MaterialPropertyList(
+                serializedObject,
+                serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.writeVectors)),
+                vectorTargets,
+                ShaderUtil.ShaderPropertyType.Vector
             );
 
             var colorValues = GetListPropertyOf(colorTargets, "Values");
@@ -465,20 +495,21 @@ Override the material properties with various values, but they can share the sam
         {
             OnListGUI(
                 colorList,
-                // colorTargets,
                 () => overrideColor = EditorGUILayout.ColorField(new GUIContent(), overrideColor, true, true, true)
             );
             EditorGUILayout.Space();
             OnListGUI(
                 floatList,
-                // floatTargets,
                 () => overrideFloat = EditorGUILayout.FloatField(overrideFloat)
             );
             EditorGUILayout.Space();
             OnListGUI(
                 textureList,
-                // textureTargets,
                 () => overrideTexture = EditorGUILayout.ObjectField(overrideTexture, typeof(Texture), true) as Texture
+            );
+            OnListGUI(
+                vectorList,
+                () => { }
             );
         }
 

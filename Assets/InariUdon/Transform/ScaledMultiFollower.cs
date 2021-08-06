@@ -101,10 +101,8 @@ This component allows you to display the position of an object on the minimap,  
             }
         }
 
-        private void Update()
+        public void _Trigger()
         {
-            if (Time.frameCount % updateInterval != 0) return;
-
             var calcluatedPositionScale = inverseScale ? new Vector3(1.0f / positionScale.x, 1.0f / positionScale.y, 1.0f / positionScale.z) / scaleMultiplier : positionScale * scaleMultiplier;
             for (int i = 0; i < updatePerFrame; i++)
             {
@@ -146,52 +144,23 @@ This component allows you to display the position of an object on the minimap,  
             }
         }
 
+        private void Update()
+        {
+            if (Time.frameCount % updateInterval != 0) return;
+            _Trigger();
+        }
+
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         public bool EditorHideSources() => sourceParent != null;
         public bool EditorHideTargets() => targetParent != null;
 
-        [Button("Sources Use Global Space", true)]
-        public void EditorSourcesGlobalSpace()
+        [Button("Sync Now", true)]
+        public void EditorSyncNow()
         {
             this.UpdateProxy();
-            sourceOrigin = null;
-            this.ApplyProxyModifications();
-        }
-        [Button("Sources Use Local Space", true)]
-        public void EditorSourcesLocalSpace()
-        {
-            this.UpdateProxy();
-            sourceOrigin = transform;
-            this.ApplyProxyModifications();
-        }
-        [Button("Sources Use Parent Local Space", true)]
-        public void EditorSourcesParentLocalSpace()
-        {
-            this.UpdateProxy();
-            sourceOrigin = targetParent;
-            this.ApplyProxyModifications();
-        }
-
-        [Button("Targets Use Global Space", true)]
-        public void EditorTargetsGlobalSpace()
-        {
-            this.UpdateProxy();
-            targetOrigin = null;
-            this.ApplyProxyModifications();
-        }
-        [Button("Targets Use Local Space", true)]
-        public void EditorTargetsLocalSpace()
-        {
-            this.UpdateProxy();
-            targetOrigin = transform;
-            this.ApplyProxyModifications();
-        }
-        [Button("Targets Use Parent Local Space", true)]
-        public void EditorTargetsParentLocalSpace()
-        {
-            this.UpdateProxy();
-            targetOrigin = targetParent;
-            this.ApplyProxyModifications();
+            Start();
+            updatePerFrame = count;
+            _Trigger();
         }
 #endif
     }

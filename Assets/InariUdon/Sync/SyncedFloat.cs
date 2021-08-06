@@ -51,7 +51,7 @@ namespace InariUdon.Sync
         {
             if (_syncValue != value)
             {
-                if (slider != null) slider.value = _syncValue;
+                if (slider != null) slider.value = exp ? Mathf.Log(_syncValue) : _syncValue;
                 SendEvent(_syncValue);
             }
             value = _syncValue;
