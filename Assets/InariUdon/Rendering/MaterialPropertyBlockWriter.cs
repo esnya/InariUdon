@@ -29,6 +29,7 @@ Override the material properties with various values, but they can share the sam
     public class MaterialPropertyBlockWriter : UdonSharpBehaviour
     {
         [Tooltip("Apply on start")] public bool onStart = true;
+        [Tooltip("Apply on enable")] public bool onEnable = false;
 
         public bool writeColors;
         public Renderer[] colorTargets = { };
@@ -57,6 +58,11 @@ Override the material properties with various values, but they can share the sam
         private void Start()
         {
             if (onStart) Trigger();
+        }
+
+        private void OnEnable()
+        {
+            if (onEnable) Trigger();
         }
 
         [Documentation.EventDescription("Apply overrides")]
@@ -589,6 +595,8 @@ Override the material properties with various values, but they can share the sam
 
             EditorGUILayout.LabelField("Write On", EditorStyles.boldLabel);
             var property = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.onStart));
+            EditorGUILayout.PropertyField(property);
+            property = serializedObject.FindProperty(nameof(MaterialPropertyBlockWriter.onEnable));
             EditorGUILayout.PropertyField(property);
 
             EditorGUILayout.Space();
