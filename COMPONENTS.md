@@ -4,29 +4,6 @@
 
 ## Uncategorized
 
-### VideoScreenBrightness
-
-
-
-
-#### Public Variables
-| Name | Type | Description |
-|:--|:--|:--|
-| slider | UnityEngine.UI.Slider |  |
-| screen | UnityEngine.MeshRenderer |  |
-| subMesh | System.Int32 |  |
-| colorPropertyName | System.String |  |
-| icon | UnityEngine.UI.Image |  |
-
-
-
-#### Public Events
-| Name | Description |
-|:--|:--|
-| OnSliderValueChanged |  |
-
-
-
 ### SimplePlaylist
 
 
@@ -109,6 +86,31 @@ Drives float parameters of animators by one float value calculated from scene.
 | HideLocalVector |  |
 | HideWorldVector |  |
 | HideAxisVector |  |
+
+
+
+### RotationDriver
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| target | UnityEngine.Transform |  |
+| axis | UnityEngine.Vector3 |  |
+| localSpace | System.Boolean |  |
+| applyAngleOnStart | System.Boolean |  |
+| startAngle | System.Single |  |
+| endAngle | System.Single |  |
+| speed | System.Single |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
 
 
 
@@ -315,6 +317,7 @@ Override the material properties with various values, but they can share the sam
 | Name | Type | Description |
 |:--|:--|:--|
 | onStart | System.Boolean | Apply on start |
+| onEnable | System.Boolean | Apply on enable |
 | writeColors | System.Boolean |  |
 | colorTargets | UnityEngine.Renderer[] |  |
 | colorIndices | System.Int32[] |  |
@@ -330,6 +333,11 @@ Override the material properties with various values, but they can share the sam
 | textureIndices | System.Int32[] |  |
 | textureNames | System.String[] |  |
 | textureValues | UnityEngine.Texture[] |  |
+| writeVectors | System.Boolean |  |
+| vectorTargets | UnityEngine.Renderer[] |  |
+| vectorIndices | System.Int32[] |  |
+| vectorNames | System.String[] |  |
+| vectorValues | UnityEngine.Vector4[] |  |
 
 
 
@@ -358,6 +366,25 @@ Controls ReflectionProbe at runtime. Currently, only the "RenderProbe" event is 
 | Name | Description |
 |:--|:--|
 | RenderProbe |  |
+
+
+
+### ObjectSyncRespawner
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| targets | VRC.SDK3.Components.VRCObjectSync[] |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
 
 
 
@@ -461,31 +488,6 @@ Simple event relay component to call `VRCObjecySync.Respawn()`
 
 
 
-### RotationDriver
-
-
-
-
-#### Public Variables
-| Name | Type | Description |
-|:--|:--|:--|
-| target | UnityEngine.Transform |  |
-| axis | UnityEngine.Vector3 |  |
-| localSpace | System.Boolean |  |
-| applyAngleOnStart | System.Boolean |  |
-| startAngle | System.Single |  |
-| endAngle | System.Single |  |
-| speed | System.Single |  |
-
-
-
-#### Public Events
-| Name | Description |
-|:--|:--|
-| _Trigger |  |
-
-
-
 ### Scaled Multi Follower
 
 Drive multiple transform of targets by source transforms in single Update loop.
@@ -519,6 +521,13 @@ This component allows you to display the position of an object on the minimap,  
 | ownerOnly | System.Boolean | Follow if owenr of source |
 | toggleTargetColliders | System.Boolean | Disable collider while `pickup.IsHeld == true` of source |
 | freezeTargetWhileSoruceHeld | System.Boolean | Stop following while `pickup.IsHeld == true` of source |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
 
 
 
@@ -592,6 +601,31 @@ Overrides Interact, or integrates multiple.
 | _Trigger |  |
 | _Enable |  |
 | _Disable |  |
+
+
+
+### VideoScreenBrightness
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| slider | UnityEngine.UI.Slider |  |
+| screen | UnityEngine.MeshRenderer |  |
+| subMesh | System.Int32 |  |
+| colorPropertyName | System.String |  |
+| uiBrightness | System.Boolean |  |
+| icon | UnityEngine.UI.Image |  |
+| uiMaterial | UnityEngine.Material |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| OnSliderValueChanged |  |
 
 
 
