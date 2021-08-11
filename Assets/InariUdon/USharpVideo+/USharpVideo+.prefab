@@ -2960,6 +2960,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 6421412929076350976, guid: 87d772cf1b1ec7b49839dde29eb427be,
+        type: 3}
+      propertyPath: EnableAutomaticResync
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6421412929076350977, guid: 87d772cf1b1ec7b49839dde29eb427be,
         type: 3}
       propertyPath: serializedProgramAsset
@@ -2970,6 +2975,11 @@ PrefabInstance:
         type: 3}
       propertyPath: AllowCollisionOwnershipTransfer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421412929076350978, guid: 87d772cf1b1ec7b49839dde29eb427be,
+        type: 3}
+      propertyPath: EnableAutomaticResync
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6421412929117373412, guid: 87d772cf1b1ec7b49839dde29eb427be,
         type: 3}
