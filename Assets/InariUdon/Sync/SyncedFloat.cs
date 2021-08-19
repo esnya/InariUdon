@@ -1,10 +1,10 @@
 ﻿#pragma warning disable IDE1006
-
 using UdonSharp;
 using UdonToolkit;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
+using VRC.Udon;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Events;
@@ -24,12 +24,21 @@ namespace InariUdon.Sync
         [SectionHeader("Initial Value")]
         public float value;
 
-        [SectionHeader("Udon Integration")]
-        [ListView("Targets")] public UdonSharpBehaviour[] targets = {};
-        [ListView("Targets"), Popup("programVariable", "@targets")] public string[] variableNames = {};
-        [ListView("Targets"), Popup("behaviour", "@targets")] public string[] eventNames = {};
+        [SectionHeader("Program Variables")]
+        public bool writeProgramVariables = false;
         public bool sendEvents = true;
         public bool writeAsArray = false;
+        public bool programVariablesFromChildren = false;
+        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours")] public UdonSharpBehaviour[] targets = {};
+        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours"), Popup("programVariable", "@targets")] public string[] variableNames = {};
+        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours"), Popup("behaviour", "@targets")] public string[] eventNames = {};
+        [HideIf("@!programVariablesFromChildren")] public Transform targetsParent;
+        [HideIf("@!programVariablesFromChildren")] public string variableName, eventName;
+
+        [SectionHeader("Animators")]
+        public bool writeAnimatorParameters = false;
+        [HideIf("@!writeAnimatorParameters")][ListView("Animators")] public Animator[] animators = {};
+        [HideIf("@!writeAnimatorParameters")][ListView("Animators"), Popup("animatorFloat", "@animators")] public string[] animatorParameterNames = {};
 
         [SectionHeader("UI Integration")]
         public Slider slider;
@@ -40,6 +49,15 @@ namespace InariUdon.Sync
             set {
                 _syncValue = value;
                 if (slider != null) slider.value = exp ? Mathf.Log(_syncValue) : _syncValue;
+
+                if (writeProgramVariables) WriteProgramVariables(value);
+                if (writeAnimatorParameters) WriteAnimatorParameters(value);
+            }
+            get => _syncValue;
+        }
+
+        private void WriteProgramVariables(float value)
+        {
 
                 var variableLength = Mathf.Min(targets.Length, variableNames.Length);
                 for (int i = 0; i < variableLength; i++)
@@ -67,12 +85,45 @@ namespace InariUdon.Sync
                         eventTarget.SendCustomEvent(eventNames[i]);
                     }
                 }
+        }
+
+        private void WriteAnimatorParameters(float value)
+        {
+            var length = Mathf.Min(animators.Length, animatorParameterNames.Length);
+            for (int i = 0; i < length; i++)
+            {
+                var animator = animators[i];
+                if (animator == null) continue;
+
+                animator.SetFloat(animatorParameterNames[i], value);
             }
-            get => _syncValue;
         }
 
         private void Start()
         {
+            if (programVariablesFromChildren)
+            {
+                var targetCount = 0;
+                for(int i = 0; i < targetsParent.childCount; i++)
+                {
+                    if ((UdonSharpBehaviour)targetsParent.GetChild(i).GetComponent(typeof(UdonBehaviour)) != null) targetCount++;
+                }
+
+                targets = new UdonSharpBehaviour[targetCount];
+                variableNames = new string[targetCount];
+                eventNames = new string[targetCount];
+                for (int i = 0, j = 0; i < targetsParent.childCount && j < targetCount; i++)
+                {
+                    var udon = (UdonSharpBehaviour)targetsParent.GetChild(i).GetComponent(typeof(UdonBehaviour));
+                    if (udon == null) continue;
+
+                    targets[j] = udon;
+                    variableNames[j] = variableName;
+                    eventNames[j] = eventName;
+
+                    j++;
+                }
+            }
             if (ReadSliderValue()) SyncValue = value;
         }
 

@@ -1,3 +1,5 @@
+#pragma warning disable IDE1006
+
 using UdonSharp;
 using UdonToolkit;
 using UnityEngine;

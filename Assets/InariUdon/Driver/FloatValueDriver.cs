@@ -143,7 +143,7 @@ namespace InariUdon.Driver
 
         public void OnModeStringChanged(SerializedObject o, SerializedProperty prop)
         {
-            o.FindProperty("mode").intValue = GetModeOptions().Select((s, i) => (s, i)).FirstOrDefault(t => t.Item1 == prop.stringValue).Item2;
+            o.FindProperty("mode").intValue = GetModeOptions().Select((s, i) => (s, i)).FirstOrDefault(t => t.s == prop.stringValue).i;
         }
 
         public bool HideTransformSource()
