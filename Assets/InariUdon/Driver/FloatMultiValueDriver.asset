@@ -826,7 +826,7 @@ MonoBehaviour:
       Data: 55|UdonToolkit.HideIfAttribute, UdonToolkitRuntime
     - Name: methodName
       Entry: 1
-      Data: '@!findTargetFromChildren'
+      Data: '@!findTargetFromChildgit staren'
     - Name: 
       Entry: 8
       Data: 
