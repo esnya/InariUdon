@@ -425,9 +425,10 @@ Provides single synced float variable with change detection.
 | Name | Type | Description |
 |:--|:--|:--|
 | value | System.Single |  |
-| eventTarget | UdonSharp.UdonSharpBehaviour |  |
-| targetVariableName | System.String |  |
-| targetEventName | System.String |  |
+| targets | UdonSharp.UdonSharpBehaviour[] |  |
+| variableNames | System.String[] |  |
+| eventNames | System.String[] |  |
+| sendEvents | System.Boolean |  |
 | writeAsArray | System.Boolean |  |
 | slider | UnityEngine.UI.Slider |  |
 | exp | System.Boolean |  |
@@ -552,6 +553,21 @@ Modify parent in hierarchy ay runtime
 | Name | Description |
 |:--|:--|
 | Trigger | Set parent |
+
+
+
+### EnabledTrigger
+Trigger by Enable/Disable Component and GameObject
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| enabledEventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| enabledEvents | System.String[] |  |
+| disabledEventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| disabledEvents | System.String[] |  |
 
 
 
