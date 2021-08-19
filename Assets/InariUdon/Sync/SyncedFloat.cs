@@ -18,35 +18,42 @@ namespace InariUdon.Sync
     [
         CustomName("Synced Float"),
         HelpMessage("Provides single synced float variable with change detection."),
+        DefaultExecutionOrder(1000)
     ]
     public class SyncedFloat : UdonSharpBehaviour
     {
         [SectionHeader("Initial Value")]
         public float value;
+        public bool castToInt;
 
         [SectionHeader("Program Variables")]
         public bool writeProgramVariables = false;
         public bool sendEvents = true;
         public bool writeAsArray = false;
         public bool programVariablesFromChildren = false;
-        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours")] public UdonSharpBehaviour[] targets = {};
-        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours"), Popup("programVariable", "@targets")] public string[] variableNames = {};
-        [HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours"), Popup("behaviour", "@targets")] public string[] eventNames = {};
+        [HideIf("@programVariablesFromChildren")] [HideIf("@!writeProgramVariables")] [ListView("UdonBehaviours")] public UdonSharpBehaviour[] targets = { };
+        [HideIf("@programVariablesFromChildren")] [HideIf("@!writeProgramVariables")] [ListView("UdonBehaviours"), Popup("programVariable", "@targets")] public string[] variableNames = { };
+        [HideIf("@programVariablesFromChildren")] [HideIf("@!writeProgramVariables")] [ListView("UdonBehaviours"), Popup("behaviour", "@targets")] public string[] eventNames = { };
         [HideIf("@!programVariablesFromChildren")] public Transform targetsParent;
         [HideIf("@!programVariablesFromChildren")] public string variableName, eventName;
 
         [SectionHeader("Animators")]
         public bool writeAnimatorParameters = false;
-        [HideIf("@!writeAnimatorParameters")][ListView("Animators")] public Animator[] animators = {};
-        [HideIf("@!writeAnimatorParameters")][ListView("Animators"), Popup("animatorFloat", "@animators")] public string[] animatorParameterNames = {};
+        [HideIf("@!writeAnimatorParameters")] [ListView("Animators")] public Animator[] animators = { };
+        [HideIf("@!writeAnimatorParameters")] [ListView("Animators"), Popup("animatorFloat", "@animators")] public string[] animatorParameterNames = { };
 
         [SectionHeader("UI Integration")]
         public Slider slider;
+        public bool wholeNumbers;
+        public float minValue = 0;
+        public float maxValue = 100;
         public bool exp;
 
         [UdonSynced(UdonSyncMode.Smooth), FieldChangeCallback(nameof(SyncValue))] private float _syncValue;
-        private float SyncValue {
-            set {
+        private float SyncValue
+        {
+            set
+            {
                 _syncValue = value;
                 if (slider != null) slider.value = exp ? Mathf.Log(_syncValue) : _syncValue;
 
@@ -58,33 +65,35 @@ namespace InariUdon.Sync
 
         private void WriteProgramVariables(float value)
         {
+            var variableLength = Mathf.Min(targets.Length, variableNames.Length);
+            for (int i = 0; i < variableLength; i++)
+            {
+                var eventTarget = targets[i];
+                if (eventTarget == null) continue;
+                var targetVariableName = variableNames[i];
+                if (writeAsArray)
+                {
+                    var array = (float[])eventTarget.GetProgramVariable(targetVariableName);
+                    if (array == null) array = new float[1];
+                    for (int j = 0; j < array.Length; j++) array[j] = value;
+                    eventTarget.SetProgramVariable(targetVariableName, array);
+                }
+                else {
+                    if (castToInt) eventTarget.SetProgramVariable(targetVariableName, (int)value);
+                    else eventTarget.SetProgramVariable(targetVariableName, value);
+                }
+            }
 
-                var variableLength = Mathf.Min(targets.Length, variableNames.Length);
-                for (int i = 0; i < variableLength; i++)
+            if (sendEvents)
+            {
+                var eventLength = Mathf.Min(variableLength, eventNames.Length);
+                for (int i = 0; i < eventLength; i++)
                 {
                     var eventTarget = targets[i];
                     if (eventTarget == null) continue;
-                    var targetVariableName = variableNames[i];
-                    if (writeAsArray)
-                    {
-                        var array = (float[])eventTarget.GetProgramVariable(targetVariableName);
-                        if (array == null) array = new float[1];
-                        for (int j = 0; j < array.Length; j++) array[j] = value;
-                        eventTarget.SetProgramVariable(targetVariableName, array);
-                    }
-                    else eventTarget.SetProgramVariable(targetVariableName, value);
+                    eventTarget.SendCustomEvent(eventNames[i]);
                 }
-
-                if (sendEvents)
-                {
-                    var eventLength = Mathf.Min(variableLength, eventNames.Length);
-                    for (int i = 0; i < eventLength; i++)
-                    {
-                        var eventTarget = targets[i];
-                        if (eventTarget == null) continue;
-                        eventTarget.SendCustomEvent(eventNames[i]);
-                    }
-                }
+            }
         }
 
         private void WriteAnimatorParameters(float value)
@@ -95,7 +104,8 @@ namespace InariUdon.Sync
                 var animator = animators[i];
                 if (animator == null) continue;
 
-                animator.SetFloat(animatorParameterNames[i], value);
+                if (castToInt) animator.SetInteger(animatorParameterNames[i], (int)value);
+                else animator.SetFloat(animatorParameterNames[i], value);
             }
         }
 
@@ -104,9 +114,9 @@ namespace InariUdon.Sync
             if (programVariablesFromChildren)
             {
                 var targetCount = 0;
-                for(int i = 0; i < targetsParent.childCount; i++)
+                for (int i = 0; i < targetsParent.childCount; i++)
                 {
-                    if ((UdonSharpBehaviour)targetsParent.GetChild(i).GetComponent(typeof(UdonBehaviour)) != null) targetCount++;
+                    if ((UdonBehaviour)targetsParent.GetChild(i).GetComponent(typeof(UdonBehaviour)) != null) targetCount++;
                 }
 
                 targets = new UdonSharpBehaviour[targetCount];
@@ -124,7 +134,15 @@ namespace InariUdon.Sync
                     j++;
                 }
             }
-            if (ReadSliderValue()) SyncValue = value;
+
+            if (slider != null)
+            {
+                slider.minValue = minValue;
+                slider.maxValue = maxValue;
+                slider.wholeNumbers = castToInt || wholeNumbers;
+            }
+
+            SyncValue = value;
         }
 
         private bool ReadSliderValue()
@@ -152,6 +170,17 @@ namespace InariUdon.Sync
         //         UnityEventTools.AddStringPersistentListener(slider.onValueChanged, UdonSharpEditorUtility.GetBackingUdonBehaviour(this).SendCustomEvent, nameof(_Sync));
         //     }
         // }
+
+        private void OnValidate()
+        {
+            if (slider != null)
+            {
+                slider.minValue = minValue;
+                slider.maxValue = maxValue;
+                slider.wholeNumbers = castToInt || wholeNumbers;
+                slider.value = value;
+            }
+        }
 #endif
     }
 }

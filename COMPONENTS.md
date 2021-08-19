@@ -52,6 +52,36 @@
 
 
 
+### FloatMultiValueDriver
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| value | System.Single |  |
+| castToInt | System.Boolean |  |
+| writeProgramVariables | System.Boolean |  |
+| sendEvent | System.Boolean |  |
+| ignoreFirstEvent | System.Boolean |  |
+| findTargetFromChildren | System.Boolean |  |
+| behaviours | UdonSharp.UdonSharpBehaviour[] |  |
+| variableNames | System.String[] |  |
+| eventNames | System.String[] |  |
+| behaviourParent | UnityEngine.Transform |  |
+| variableName | System.String |  |
+| eventName | System.String |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _ValueChanged |  |
+
+
+
 ### Float Value Driver
 Drives float parameters of animators by one float value calculated from scene.
 
@@ -377,7 +407,10 @@ Controls ReflectionProbe at runtime. Currently, only the "RenderProbe" event is 
 #### Public Variables
 | Name | Type | Description |
 |:--|:--|:--|
+| findObjectSyncFromChildren | System.Boolean |  |
 | targets | VRC.SDK3.Components.VRCObjectSync[] |  |
+| targetsParent | UnityEngine.GameObject |  |
+| includeDisabled | System.Boolean |  |
 
 
 
@@ -425,12 +458,24 @@ Provides single synced float variable with change detection.
 | Name | Type | Description |
 |:--|:--|:--|
 | value | System.Single |  |
+| castToInt | System.Boolean |  |
+| writeProgramVariables | System.Boolean |  |
+| sendEvents | System.Boolean |  |
+| writeAsArray | System.Boolean |  |
+| programVariablesFromChildren | System.Boolean |  |
 | targets | UdonSharp.UdonSharpBehaviour[] |  |
 | variableNames | System.String[] |  |
 | eventNames | System.String[] |  |
-| sendEvents | System.Boolean |  |
-| writeAsArray | System.Boolean |  |
+| targetsParent | UnityEngine.Transform |  |
+| variableName | System.String |  |
+| eventName | System.String |  |
+| writeAnimatorParameters | System.Boolean |  |
+| animators | UnityEngine.Animator[] |  |
+| animatorParameterNames | System.String[] |  |
 | slider | UnityEngine.UI.Slider |  |
+| wholeNumbers | System.Boolean |  |
+| minValue | System.Single |  |
+| maxValue | System.Single |  |
 | exp | System.Boolean |  |
 
 
