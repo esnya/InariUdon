@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.Events;
 using System.Linq;
 using System.Reflection;
@@ -24,88 +25,82 @@ namespace InariUdon.Sync
         public float value;
 
         [SectionHeader("Udon Integration")]
-        public UdonSharpBehaviour eventTarget;
-        [Popup("EditorGetVariables")] public string targetVariableName = "value";
-        [Popup("behaviour", "@eventTarget")] public string targetEventName = "OnValueChanged";
+        [ListView("Targets")] public UdonSharpBehaviour[] targets = {};
+        [ListView("Targets"), Popup("programVariable", "@targets")] public string[] variableNames = {};
+        [ListView("Targets"), Popup("behaviour", "@targets")] public string[] eventNames = {};
+        public bool sendEvents = true;
         public bool writeAsArray = false;
 
         [SectionHeader("UI Integration")]
         public Slider slider;
         public bool exp;
 
-        [UdonSynced(UdonSyncMode.Smooth)] private float _syncValue;
+        [UdonSynced(UdonSyncMode.Smooth), FieldChangeCallback(nameof(SyncValue))] private float _syncValue;
+        private float SyncValue {
+            set {
+                _syncValue = value;
+                if (slider != null) slider.value = exp ? Mathf.Log(_syncValue) : _syncValue;
+
+                var variableLength = Mathf.Min(targets.Length, variableNames.Length);
+                for (int i = 0; i < variableLength; i++)
+                {
+                    var eventTarget = targets[i];
+                    if (eventTarget == null) continue;
+                    var targetVariableName = variableNames[i];
+                    if (writeAsArray)
+                    {
+                        var array = (float[])eventTarget.GetProgramVariable(targetVariableName);
+                        if (array == null) array = new float[1];
+                        for (int j = 0; j < array.Length; j++) array[j] = value;
+                        eventTarget.SetProgramVariable(targetVariableName, array);
+                    }
+                    else eventTarget.SetProgramVariable(targetVariableName, value);
+                }
+
+                if (sendEvents)
+                {
+                    var eventLength = Mathf.Min(variableLength, eventNames.Length);
+                    for (int i = 0; i < eventLength; i++)
+                    {
+                        var eventTarget = targets[i];
+                        if (eventTarget == null) continue;
+                        eventTarget.SendCustomEvent(eventNames[i]);
+                    }
+                }
+            }
+            get => _syncValue;
+        }
 
         private void Start()
         {
-            _syncValue = value;
-            ReadSliderValue();
-            if (_syncValue != value) SendEvent(value);
+            if (ReadSliderValue()) SyncValue = value;
         }
 
-        public override void OnPreSerialization()
+        private bool ReadSliderValue()
         {
-            _syncValue = value;
-        }
-
-        public override void OnDeserialization()
-        {
-            if (_syncValue != value)
-            {
-                if (slider != null) slider.value = exp ? Mathf.Log(_syncValue) : _syncValue;
-                SendEvent(_syncValue);
-            }
-            value = _syncValue;
-        }
-
-        private void ReadSliderValue()
-        {
-            if (slider == null) return;
-            value = exp ? Mathf.Exp(slider.value) : slider.value;
-        }
-
-        private void SendEvent(float value)
-        {
-            if (writeAsArray)
-            {
-                var array = (float[])eventTarget.GetProgramVariable(targetVariableName);
-                if (array == null) array = new float[1];
-                for (int i = 0; i < array.Length; i++) array[i] = value;
-                eventTarget.SetProgramVariable(targetVariableName, array);
-            }
-            else eventTarget.SetProgramVariable(targetVariableName, value);
-            eventTarget.SendCustomEvent(targetEventName);
+            if (slider == null) return true;
+            SyncValue = exp ? Mathf.Exp(slider.value) : slider.value;
+            return false;
         }
 
         public void _Sync()
         {
             if (!Networking.IsOwner(gameObject)) Networking.SetOwner(Networking.LocalPlayer, gameObject);
-            ReadSliderValue();
-            if (_syncValue != value) SendEvent(value);
-            _syncValue = value;
+            if (ReadSliderValue()) SyncValue = value;
         }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        public string[] EditorGetVariables()
-        {
-            this.UpdateProxy();
-            if (eventTarget == null) return new []{ "" };
-            return eventTarget.GetType()
-                .GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Where(p => p.FieldType == typeof(float) || p.FieldType == typeof(float[]))
-                .Select(p => p.Name)
-                .ToArray();
-        }
 
-        [Button("Setup", true)]
-        public void EditorSetup()
-        {
-            this.UpdateProxy();
-            if (slider != null)
-            {
-                while (slider.onValueChanged.GetPersistentEventCount() > 0) UnityEventTools.RemovePersistentListener(slider.onValueChanged, 0);
-                UnityEventTools.AddStringPersistentListener(slider.onValueChanged, UdonSharpEditorUtility.GetBackingUdonBehaviour(this).SendCustomEvent, nameof(_Sync));
-            }
-        }
+        // [Button("Setup", true)]
+        // public void EditorSetup()
+        // {
+        //     this.UpdateProxy();
+        //     if (slider != null)
+        //     {
+        //         while (slider.onValueChanged.GetPersistentEventCount() > 0) UnityEventTools.RemovePersistentListener(slider.onValueChanged, 0);
+        //         UnityEventTools.AddStringPersistentListener(slider.onValueChanged, UdonSharpEditorUtility.GetBackingUdonBehaviour(this).SendCustomEvent, nameof(_Sync));
+        //     }
+        // }
 #endif
     }
 }
