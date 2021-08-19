@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: ObjectSyncRespawner
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: dc229fc9ad08da44e9f294a00e85aa28,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 53ce34bbba556994a92009c5fac92b6e,
     type: 2}
   udonAssembly: 
   assemblyError: 
