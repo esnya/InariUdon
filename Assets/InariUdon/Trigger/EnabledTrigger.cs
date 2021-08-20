@@ -8,7 +8,10 @@ using UdonToolkit;
 namespace InariUdon.Trigger
 {
 
-    [HelpMessage("Trigger by Enable/Disable Component and GameObject")]
+    [
+        HelpMessage("Trigger by Enable/Disable Component and GameObject"),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+    ]
     public class EnabledTrigger : UdonSharpBehaviour
     {
         [ListView("Enabled Events")] public UdonSharpBehaviour[] enabledEventTargets = {};
