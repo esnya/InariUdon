@@ -74,13 +74,16 @@ namespace InariUdon.UI
 
         public void Log(string level, string module, string log)
         {
+            if (!initialized)
+            {
+                Debug.Log($"{level} [{module}] {log}");
+                return;
+            }
+
             var time = System.DateTime.Now.ToString("HH:mm:ss.fff");
             var levelIndex = GetLevelIndex(level);
             var color = colorCodes[levelIndex];
-            var formattedLog = $"<color={color}>{level}</color> {time} [{module}] {log}";;
-            Debug.Log(formattedLog);
-
-            if (!initialized) return;
+            var formattedLog = $"<color={color}>{level}</color> {time} [{module}] {log}";
 
             AppendLine(formattedLog);
 
