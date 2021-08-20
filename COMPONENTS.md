@@ -70,6 +70,8 @@
 | variableNames | System.String[] |  |
 | eventNames | System.String[] |  |
 | behaviourParent | UnityEngine.Transform |  |
+| useFind | System.Boolean |  |
+| findPath | System.String |  |
 | variableName | System.String |  |
 | eventName | System.String |  |
 
@@ -484,6 +486,28 @@ Provides single synced float variable with change detection.
 | Name | Description |
 |:--|:--|
 | _Sync |  |
+
+
+
+### SyncedObjectMultiplexer
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| initialIndex | System.Int32 |  |
+| targets | UnityEngine.GameObject[] |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| get_Index |  |
+| _Increment |  |
+| _Decrement |  |
 
 
 
