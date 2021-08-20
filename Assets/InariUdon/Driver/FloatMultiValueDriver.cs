@@ -21,7 +21,7 @@ namespace InariUdon.Driver
         [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), ListView("ProgramVariable Targets")] public UdonSharpBehaviour[] behaviours = {};
         [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), ListView("ProgramVariable Targets"), Popup("programVariable", "@behaviours", true)] public string[] variableNames = {};
         [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), HideIf("@!sendEvent"), ListView("ProgramVariable Targets"), Popup("behaviour", "@behaviours", true)] public string[] eventNames = {};
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildgit staren")] public Transform behaviourParent;
+        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public Transform behaviourParent;
         [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public bool useFind;
         [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren"), HideIf("@!useFind")] public string findPath;
         [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public string variableName;
