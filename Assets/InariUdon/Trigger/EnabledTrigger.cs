@@ -1,8 +1,7 @@
-﻿
+﻿#pragma warning disable IDE0051,IDE1006,IDE0018
+
 using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 using UdonToolkit;
 
 namespace InariUdon.Trigger
