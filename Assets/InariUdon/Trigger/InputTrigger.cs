@@ -8,24 +8,30 @@ using UdonToolkit;
 
 namespace InariUdon.Trigger
 {
-    [HelpMessage("Trigger by input")]
+    [HelpMessage("Trigger by input"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class InputTrigger : UdonSharpBehaviour
     {
-        public bool keyDown = true;
         public string keyName = "return";
-
-        public bool buttonDown = true;
         public string buttonName = "Oculus_CrossPlatform_Button4";
+        [Header("OnDown Events")]
+        public bool keyDown = true;
+        public bool buttonDown = true;
+        [ListView("OnDown Event Targets")] public UdonSharpBehaviour[] eventTargets;
+        [ListView("OnDown Event Targets"), Popup("behaviour", "@eventTargets", true)] public string[] eventNames;
 
-        [ListView("Event Targets")] public UdonSharpBehaviour[] eventTargets;
-        [ListView("Event Targets"), Popup("behaviour", "@eventTargets", true)] public string[] eventNames;
+        [Header("OnUp Events")]
+        public bool keyUp = false;
+        public bool buttonUp = false;
+        [ListView("OnUp Event Targets")] public UdonSharpBehaviour[] onUpEventTargets;
+        [ListView("OnUp Event Targets"), Popup("behaviour", "@onUpEventTargets", true)] public string[] onUpEventNames;
 
         private void Update()
         {
-            if (keyDown && Input.GetKeyDown(keyName) || buttonDown && Input.GetButtonDown(buttonName)) _Trigger();
+            if (keyDown && Input.GetKeyDown(keyName) || buttonDown && Input.GetButtonDown(buttonName)) _SendEvents(eventTargets, eventNames);
+            if (keyUp && Input.GetKeyUp(keyName) || buttonUp && Input.GetButtonUp(buttonName)) _SendEvents(onUpEventTargets, onUpEventNames);
         }
 
-        public void _Trigger()
+        private void _SendEvents(UdonSharpBehaviour[] eventTargets, string[] eventNames)
         {
             if (eventTargets != null && eventNames != null)
             {
