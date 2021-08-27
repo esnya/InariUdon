@@ -6,11 +6,13 @@ using UdonSharpEditor;
 using System.Reflection;
 using System;
 using UnityEditor;
+#endif
 
-namespace InariUdon
+namespace InariUdon.Editor
 {
     public class InariUdonValidator
     {
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
         public static bool Validate<T>(T target) where T : UdonSharpBehaviour
         {
             if (Application.isPlaying) return false;
@@ -48,6 +50,6 @@ namespace InariUdon
             if (!condition) Debug.LogError(message, target);
             return condition;
         }
+#endif
     }
 }
-#endif
