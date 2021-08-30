@@ -7,14 +7,16 @@
         "UdonSharp.Editor",
         "UdonToolkitRuntime",
         "UdonToolkitEditor",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "InariUdonEditor"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

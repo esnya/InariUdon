@@ -8,7 +8,7 @@ using System;
 using UnityEditor;
 #endif
 
-namespace InariUdon.Editor
+namespace InariUdon.Validation
 {
     public class InariUdonValidator
     {
