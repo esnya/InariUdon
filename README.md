@@ -20,8 +20,12 @@ Place prefabs into Scene in [Assets/InariUdon/Components/<COMPONENT_NAME>](Asset
 See also [COMPONENTS.md](COMPONENTS.md).
 
 ### USharpVideo+
+![image](https://user-images.githubusercontent.com/2088693/131600243-9bc85ee3-ab77-43c7-aaf3-7f4b215f2852.png)
+
 Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [MerlinVR](https://github.com/MerlinVR). Requires [MerlinVR/USharpVideo](https://github.com/MerlinVR/USharpVideo).
 
 #### Features
-* Toggle Loop
-* Modify Screen Brightness
+* Slider for Screen/UI Brightness
+* 3D/2S AudioModeToggle (Synced)
+* Toggle UpdateGIMaterials
+  * Workaround to avoid VRAM leaking issue: https://feedback.vrchat.com/bug-reports/p/1121-vram-leak-when-using-vrccustomrendererbehaviourrendererextensionsupdategima
