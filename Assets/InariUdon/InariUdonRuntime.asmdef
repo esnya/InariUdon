@@ -7,8 +7,7 @@
         "UdonSharp.Editor",
         "UdonToolkitRuntime",
         "UdonToolkitEditor",
-        "Unity.TextMeshPro",
-        "InariUdonEditor"
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
