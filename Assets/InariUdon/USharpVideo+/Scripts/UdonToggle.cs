@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace InariUdon.UdonSharpVideoPlus
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UdonToggle : UdonSharpBehaviour
     {
         public UdonSharpBehaviour target;

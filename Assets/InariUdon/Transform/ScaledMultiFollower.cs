@@ -21,7 +21,7 @@ Scale of positions and origin of transforms can be changed.
 This component allows you to display the position of an object on the minimap,  object placement or etc.
         "),
         Documentation.ImageAttachments("https://user-images.githubusercontent.com/2088693/121690092-5d425980-cb00-11eb-9518-a19896cbabd5.png"),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+        UdonBehaviourSyncMode(BehaviourSyncMode.None),
     ]
     public class ScaledMultiFollower : UdonSharpBehaviour
     {

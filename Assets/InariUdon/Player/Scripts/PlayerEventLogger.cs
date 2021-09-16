@@ -4,7 +4,7 @@ using VRC.SDKBase;
 
 namespace InariUdon.Player
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerEventLogger : UdonSharpBehaviour
     {
         #region Public Variables

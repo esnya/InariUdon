@@ -9,17 +9,36 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: m_BeforeStackBundles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
+      propertyPath: m_BeforeTransparentBundles.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: m_BeforeStackBundles.Array.data[0].assemblyQualifiedName
       value: IL3DN_Fog_PP, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
+      propertyPath: m_BeforeStackBundles.Array.data[1].assemblyQualifiedName
+      value: MassiveCloudsBeforeStackEffectSettings, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324552204, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
+      propertyPath: m_BeforeTransparentBundles.Array.data[0].assemblyQualifiedName
+      value: MassiveCloudsBeforeTransparentEffectSettings, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
     - target: {fileID: 2015320160, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}
       propertyPath: sharedProfile
       value: 
       objectReference: {fileID: 11400000, guid: da8e447ac85f60540a92e7a98b7c4322,
         type: 2}
+    - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37,6 +56,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -48,16 +72,6 @@ PrefabInstance:
     - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2400132633676470439, guid: 7a48752b0c4c9814bbd36744f4111da8,
@@ -80,5 +94,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VRCWorld with PPS ACES
       objectReference: {fileID: 0}
+    - target: {fileID: 4457425173392522008, guid: 7a48752b0c4c9814bbd36744f4111da8,
+        type: 3}
+      propertyPath: serializedProgramAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: cf2034311b84e134c92c1b759701c918,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a48752b0c4c9814bbd36744f4111da8, type: 3}

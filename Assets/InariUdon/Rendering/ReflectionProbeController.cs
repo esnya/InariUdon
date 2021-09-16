@@ -6,7 +6,7 @@ namespace InariUdon.Rendering
 {
     [CustomName("Reflection Probe Driver")]
     [HelpMessage("Controls ReflectionProbe at runtime. Currently, only the \"RenderProbe\" event is available to update the in real-time mode.")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ReflectionProbeController : UdonSharpBehaviour
     {
         public GameObject reflectionProbe;

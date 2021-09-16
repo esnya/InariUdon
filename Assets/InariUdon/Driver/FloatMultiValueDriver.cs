@@ -7,7 +7,7 @@ using VRC.Udon;
 
 namespace InariUdon.Driver
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FloatMultiValueDriver : UdonSharpBehaviour
     {
         public float value;

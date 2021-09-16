@@ -11,7 +11,7 @@ namespace InariUdon.Driver
 {
     [CustomName("Float Value Driver")]
     [HelpMessage("Drives float parameters of animators by one float value calculated from scene.")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FloatValueDriver : UdonSharpBehaviour
     {
         #region Public Variables

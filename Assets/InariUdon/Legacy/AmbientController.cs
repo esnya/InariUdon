@@ -7,7 +7,7 @@ using VRC.Udon;
 namespace InariUdon.Legacy
 {
 
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AmbientController : UdonSharpBehaviour
     {
         public AmbientMode ambientMode = AmbientMode.Skybox;

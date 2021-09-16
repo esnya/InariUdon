@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InariUdon.Driver
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AnimatorDriver : UdonSharpBehaviour
     {
         public Animator animator;

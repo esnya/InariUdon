@@ -7,7 +7,7 @@ using VRC.Udon;
 
 namespace InariUdon.Driver
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class RotationDriver : UdonSharpBehaviour
     {
         public Transform target;

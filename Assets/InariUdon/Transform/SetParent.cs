@@ -7,7 +7,7 @@ namespace InariUdon.Transforms
     [
         CustomName("Set Parent"),
         HelpMessage("Modify parent in hierarchy ay runtime"),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+        UdonBehaviourSyncMode(BehaviourSyncMode.None),
     ]
     public class SetParent : UdonSharpBehaviour
     {

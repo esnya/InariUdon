@@ -9,7 +9,7 @@ using UdonToolkit;
 
 namespace InariUdon.Sync
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ObjectSyncRespawner : UdonSharpBehaviour
     {
         public bool findObjectSyncFromChildren = false;

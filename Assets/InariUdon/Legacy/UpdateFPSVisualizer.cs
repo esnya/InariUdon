@@ -6,7 +6,7 @@ using VRC.Udon;
 
 namespace InariUdon.Legacy
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UpdateFPSVisualizer : UdonSharpBehaviour
     {
         public UnityEngine.UI.Text text;

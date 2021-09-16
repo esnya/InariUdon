@@ -15,7 +15,7 @@ namespace InariUdon.Misc
     [
         CustomName("Pickup Controller"),
         HelpMessage("Enhancement VRC_Pickup such as relay events or expose Respawn event."),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+        UdonBehaviourSyncMode(BehaviourSyncMode.None),
         RequireComponent(typeof(VRCPickup)),
     ]
     public class PickupController : UdonSharpBehaviour

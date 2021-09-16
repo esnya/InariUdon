@@ -10,7 +10,7 @@ namespace InariUdon.Trigger
 
     [
         HelpMessage("Trigger by Enable/Disable Component and GameObject"),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
+        UdonBehaviourSyncMode(BehaviourSyncMode.None),
     ]
     public class EnabledTrigger : UdonSharpBehaviour
     {
