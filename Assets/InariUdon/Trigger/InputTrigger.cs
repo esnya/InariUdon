@@ -8,7 +8,7 @@ using UdonToolkit;
 
 namespace InariUdon.Trigger
 {
-    [HelpMessage("Trigger by input"), UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [HelpMessage("Trigger by input"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class InputTrigger : UdonSharpBehaviour
     {
         public string keyName = "return";

@@ -10,7 +10,7 @@ namespace InariUdon.UI
         CustomName("Udon Logger"),
         HelpMessage("Rich log viewer in world with colord log-levels, timestamp and etc."),
         DefaultExecutionOrder(-1000),
-        UdonBehaviourSyncMode(BehaviourSyncMode.None),
+        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
     ]
     public class UdonLogger : UdonSharpBehaviour
     {

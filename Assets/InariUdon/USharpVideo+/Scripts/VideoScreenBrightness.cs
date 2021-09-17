@@ -5,7 +5,7 @@ using UdonToolkit;
 
 namespace InariUdon.UdonSharpVideoPlus
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class VideoScreenBrightness : UdonSharpBehaviour
     {
         public Slider slider;

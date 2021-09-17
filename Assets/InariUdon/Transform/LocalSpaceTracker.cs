@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace InariUdon.Transforms
 {
-    [CustomName("Local Space Tracker"), UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [CustomName("Local Space Tracker"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     [HelpMessage("Track source transform as local position/rotation. You can translate and scale by parent transform. Call \"Trigger\" custome event to update manually. All fields are optional.")]
     public class LocalSpaceTracker : UdonSharpBehaviour
     {
