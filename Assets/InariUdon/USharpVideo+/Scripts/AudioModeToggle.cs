@@ -83,6 +83,7 @@ namespace InariUdon.UdonSharpVideoPlus
             if (lockIcon != null)
             {
                 var player = Networking.LocalPlayer;
+                if (player == null) return;
                 Locked = !player.isMaster && (!allowInstanceCreatorControl || !player.isInstanceOwner) && lockIcon.activeSelf;
             }
         }

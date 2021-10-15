@@ -29,6 +29,7 @@ namespace InariUdon.Player
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
+            if (player == null) return;
             Log("Info", string.Format(leftFormat, player.displayName, VRCPlayerApi.GetPlayerCount() - 1));
         }
         #endregion
