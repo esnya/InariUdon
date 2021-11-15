@@ -43,7 +43,7 @@ namespace InariUdon
 
         private static IEnumerable<string> GenerateVariables(Type type)
         {
-            var items = type.GetFields(bindingFlags).Where(p => !p.HasCustomAttribute<HideInInspector>()).ToArray();
+            var items = type.GetFields(bindingFlags).Where(p => p.GetAttribute<HideInInspector>() == null).ToArray();
             if (items.Length == 0) return Enumerable.Empty<string>();
 
             var variables = items.Select(v => {
