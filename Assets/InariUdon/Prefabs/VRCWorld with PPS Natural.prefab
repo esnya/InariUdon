@@ -82,7 +82,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1324552203
 Transform:
   m_ObjectHideFlags: 0
@@ -767,9 +767,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1415578911040940289, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
+      propertyPath: _syncMethod
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415578911040940289, guid: 8894fa7e4588a5c4fab98453e558847d,
+        type: 3}
       propertyPath: serializedProgramAsset
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: ee9927f912f083043ac9dcb5187e1a6a,
+        type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: ReferenceCamera
