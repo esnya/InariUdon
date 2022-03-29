@@ -1,7 +1,7 @@
 {
   "name": "com.nekometer.esnya.inari-udon",
   "displayName": "InariUdon",
-  "version": "2.2.1",
+  "version": "8.0.0",
   "private": true,
   "description": " Useful prefabs and Udon scripts for VRChat World SDK 3.0",
   "keywords": [
@@ -10,5 +10,13 @@
   ],
   "license": "MIT",
   "author": "esnya",
-  "unity": "2019.4"
+  "unity": "2019.4",
+  "dependencies": {
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^9.0.1",
+    "semantic-release": "^19.0.2",
+    "semantic-release-gitmoji": "^1.4.4"
+  }
 }
