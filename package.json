@@ -1,16 +1,6 @@
 {
-  "name": "com.nekometer.esnya.inari-udon",
-  "displayName": "InariUdon",
-  "version": "8.1.0-beta.1",
+  "name": "build",
   "private": true,
-  "description": " Useful prefabs and Udon scripts for VRChat World SDK 3.0",
-  "keywords": [
-    "VRChat",
-    "Unity"
-  ],
-  "license": "MIT",
-  "author": "esnya",
-  "unity": "2019.4",
   "devDependencies": {
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -18,11 +8,5 @@
     "@semantic-release/npm": "^9.0.1",
     "semantic-release": "^19.0.2",
     "semantic-release-gitmoji": "^1.4.4"
-  },
-  "gitDependencies": {
-    "sh.orels.udontoolkit": "https://github.com/orels1/UdonToolkit.git#develop",
-    "com.merlinvr.udonsharp": "https://github.com/vrchat-community/UdonSharp.git?path=Assets/UdonSharp#1.0-dev-serialization",
-    "com.vrchat.base": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.base#3.0.2",
-    "com.vrchat.worlds": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.worlds#3.0.2"
   }
 }
