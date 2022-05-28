@@ -18,25 +18,46 @@ namespace InariUdon.Interaction
         };
         public bool reparent;
 
+        private Transform snapTarget;
         private Transform initialParent;
         private void Start()
         {
             initialParent = transform.parent;
         }
 
-        public override void OnPickup()
+        private void OnTriggerExit(Collider collider)
         {
-            transform.SetParent(initialParent);
+            if (reparent && collider && collider.transform == snapTarget)
+            {
+                Break();
+            }
+
         }
 
-        public override void OnDrop()
+        public override void OnPickup()
         {
-            var snapTarget = FindSnapTarget();
+            Break();
+        }
+
+        private void Snap(Transform target)
+        {
+            snapTarget = target;
             if (snapTarget)
             {
                 transform.SetPositionAndRotation(snapTarget.position, snapTarget.rotation);
                 if (reparent) transform.SetParent(snapTarget);
             }
+        }
+
+        private void Break()
+        {
+            snapTarget = null;
+            if (reparent) transform.SetParent(initialParent);
+        }
+
+        public override void OnDrop()
+        {
+            Snap(FindSnapTarget());
         }
 
         private Transform FindSnapTarget()
