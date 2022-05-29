@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
-  m_Name: Snappable
+  m_Name: EventBroadcaster
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: e358f3f6a930a504b8d55eacc7c78015,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 4f76249ac47e74c4aa2f25936036f448,
     type: 2}
   udonAssembly: 
   assemblyError: 
-  sourceCsScript: {fileID: 11500000, guid: bdb542f3ca0b57d40a073aebb870b4fe, type: 3}
+  sourceCsScript: {fileID: 11500000, guid: 031fc26c2228b414db4b02183b792ad4, type: 3}
   behaviourSyncMode: 1
   behaviourIDHeapVarName: __refl_const_intnl_udonTypeID
   compileErrors: []
@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: layerMask
+      Data: parent
     - Name: $v
       Entry: 7
       Data: 2|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+      Data: UnityEngine.GameObject, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
@@ -73,13 +73,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineLayerMask
+      Data: UnityEngineGameObject
     - Name: symbolOriginalName
       Entry: 1
-      Data: layerMask
+      Data: parent
     - Name: symbolUniqueName
       Entry: 1
-      Data: layerMask
+      Data: parent
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -112,7 +112,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: snapTargetPrefixes
+      Data: eventName
     - Name: $v
       Entry: 7
       Data: 6|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -124,7 +124,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: System.String[], mscorlib
+      Data: System.String, mscorlib
     - Name: 
       Entry: 8
       Data: 
@@ -136,13 +136,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: SystemStringArray
+      Data: SystemString
     - Name: symbolOriginalName
       Entry: 1
-      Data: snapTargetPrefixes
+      Data: eventName
     - Name: symbolUniqueName
       Entry: 1
-      Data: snapTargetPrefixes
+      Data: eventName
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -175,7 +175,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: reparent
+      Data: includeInactive
     - Name: $v
       Entry: 7
       Data: 10|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -202,10 +202,10 @@ MonoBehaviour:
       Data: SystemBoolean
     - Name: symbolOriginalName
       Entry: 1
-      Data: reparent
+      Data: includeInactive
     - Name: symbolUniqueName
       Entry: 1
-      Data: reparent
+      Data: includeInactive
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -238,7 +238,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: snapTarget
+      Data: networked
     - Name: $v
       Entry: 7
       Data: 14|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -246,29 +246,23 @@ MonoBehaviour:
       Entry: 7
       Data: 15|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
-      Entry: 7
-      Data: 16|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: UnityEngine.Transform, UnityEngine.CoreModule
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 12
     - Name: declarationType
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: syncMode
       Entry: 3
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineTransform
+      Data: SystemBoolean
     - Name: symbolOriginalName
       Entry: 1
-      Data: snapTarget
+      Data: networked
     - Name: symbolUniqueName
       Entry: 1
-      Data: snapTarget
+      Data: networked
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -277,7 +271,7 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 16|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -301,31 +295,37 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: initialParent
+      Data: networkEventTarget
     - Name: $v
       Entry: 7
-      Data: 18|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 17|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 19|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 18|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
-      Entry: 9
-      Data: 16
+      Entry: 7
+      Data: 19|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: VRC.Udon.Common.Interfaces.NetworkEventTarget, VRC.Udon.Common
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: declarationType
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: syncMode
       Entry: 3
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineTransform
+      Data: VRCUdonCommonInterfacesNetworkEventTarget
     - Name: symbolOriginalName
       Entry: 1
-      Data: initialParent
+      Data: networkEventTarget
     - Name: symbolUniqueName
       Entry: 1
-      Data: initialParent
+      Data: networkEventTarget
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
