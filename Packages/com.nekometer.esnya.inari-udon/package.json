@@ -9,7 +9,9 @@
     "Unity"
   ],
   "license": "MIT",
-  "author": "esnya",
+  "author": {
+    "name": "esnya"
+  },
   "unity": "2019.4",
   "devDependencies": {
     "@semantic-release/exec": "^6.0.3",
