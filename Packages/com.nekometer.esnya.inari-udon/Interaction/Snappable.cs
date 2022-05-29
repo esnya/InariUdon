@@ -25,18 +25,9 @@ namespace InariUdon.Interaction
             initialParent = transform.parent;
         }
 
-        private void OnTriggerExit(Collider collider)
-        {
-            if (reparent && collider && collider.transform == snapTarget)
-            {
-                Break();
-            }
-
-        }
-
         public override void OnPickup()
         {
-            Break();
+            Release();
         }
 
         private void Snap(Transform target)
@@ -49,7 +40,7 @@ namespace InariUdon.Interaction
             }
         }
 
-        private void Break()
+        public void Release()
         {
             snapTarget = null;
             if (reparent) transform.SetParent(initialParent);
