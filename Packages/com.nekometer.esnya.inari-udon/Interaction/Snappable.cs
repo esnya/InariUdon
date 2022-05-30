@@ -25,30 +25,35 @@ namespace InariUdon.Interaction
             initialParent = transform.parent;
         }
 
-        public override void OnPickup()
+        public override void OnPickup() => _Release();
+        public override void OnDrop() => _Snap();
+
+        public void _TakeOwnership()
         {
-            Release();
+            if (Networking.IsOwner(gameObject)) return;
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
         }
 
-        private void Snap(Transform target)
+        public void _Snap()
         {
-            snapTarget = target;
+            snapTarget = FindSnapTarget();
+            Debug.Log($"[{this}] Snapping: {snapTarget}");
             if (snapTarget)
             {
+                _TakeOwnership();
                 transform.SetPositionAndRotation(snapTarget.position, snapTarget.rotation);
                 if (reparent) transform.SetParent(snapTarget);
             }
+            Debug.Log($"[{this}] Snapped");
         }
 
-        public void Release()
+        public void _Release()
         {
+            Debug.Log($"[{this}] Releasing");
+            _Snap();
             snapTarget = null;
             if (reparent) transform.SetParent(initialParent);
-        }
-
-        public override void OnDrop()
-        {
-            Snap(FindSnapTarget());
+            Debug.Log($"[{this}] Released");
         }
 
         private Transform FindSnapTarget()
