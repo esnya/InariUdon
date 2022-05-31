@@ -11,6 +11,6 @@ jobs:
       - uses: actions/setup-node@v3
       - run: npm install semantic-release @semantic-release/github @semantic-release/exec semantic-release-gitmoji @semantic-release/npm @semantic-release/git
 
-      - run: npx semantic-release
+      - run: cd Packages/com.nekometer.esnya.inari-udon && npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
