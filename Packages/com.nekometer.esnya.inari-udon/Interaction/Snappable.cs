@@ -37,14 +37,14 @@ namespace InariUdon.Interaction
         public void _Snap()
         {
             snapTarget = FindSnapTarget();
-            Debug.Log($"[{this}] Snapping: {snapTarget}");
+            Debug.Log($"[{this}] Snapping");
             if (snapTarget)
             {
                 _TakeOwnership();
                 transform.SetPositionAndRotation(snapTarget.position, snapTarget.rotation);
                 if (reparent) transform.SetParent(snapTarget);
+                Debug.Log($"[{this}] Snapped {snapTarget}");
             }
-            Debug.Log($"[{this}] Snapped");
         }
 
         public void _Release()
