@@ -16,6 +16,7 @@ namespace InariUdon
         private VRCPickup pickup;
         private Vector3 prevOriginPosition;
         private Vector3 relativePosition;
+        private bool isHeld;
 
         private void Start()
         {
@@ -27,8 +28,9 @@ namespace InariUdon
 
         private void OnDisable()
         {
-            if (pickup.IsHeld)
+            if (isHeld)
             {
+                isHeld = false;
                 if (jumpOnDisable) Jump();
                 pickup.Drop();
                 ResetPosition();
@@ -38,21 +40,23 @@ namespace InariUdon
         public override void OnPickup()
         {
             prevOriginPosition = origin.position;
+            isHeld = true;
         }
 
         public override void OnDrop()
         {
+            isHeld = false;
             ResetPosition();
         }
 
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
-            if (value && pickup.IsHeld) Jump();
+            if (value && isHeld) Jump();
         }
 
         private void LateUpdate()
         {
-            if (!pickup.IsHeld) return;
+            if (!isHeld) return;
 
             var deltaTime = Time.deltaTime;
             var originPosition = origin.position;
