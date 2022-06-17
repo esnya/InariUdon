@@ -40,7 +40,7 @@ namespace InariUdon
             if (!clockAnimator) clockAnimator = GetComponentInParent<Animator>();
 
             var layerId = clockAnimator.GetLayerIndex(layerName);;
-            var time = useUTC ? DateTime.Now : DateTime.UtcNow;
+            var time = useUTC ? DateTime.UtcNow : DateTime.Now;
             var normalizedTime = Convert.ToSingle(time.TimeOfDay.TotalHours / 12.0 % 1.0);
 
             clockAnimator.Play(stateName, layerId, normalizedTime);
