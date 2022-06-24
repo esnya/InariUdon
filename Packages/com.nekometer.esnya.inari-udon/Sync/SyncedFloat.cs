@@ -138,9 +138,8 @@ namespace InariUdon.Sync
             {
                 _value = clampValue ? Mathf.Clamp(value, minValue, maxValue) : value;
                 if (slider) slider.value = exp ? Mathf.Log(_value) : _value;
-
-                if (writeProgramVariables) WriteProgramVariables(value);
-                if (writeAnimatorParameters) WriteAnimatorParameters(value);
+                if (writeProgramVariables) WriteProgramVariables(_value);
+                if (writeAnimatorParameters) WriteAnimatorParameters(_value);
             }
             get => _value;
         }
@@ -271,7 +270,7 @@ namespace InariUdon.Sync
         public void _Decrement()
         {
             _TakeOwnership();
-            Value += incrementStep;
+            Value -= incrementStep;
         }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
