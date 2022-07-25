@@ -12,8 +12,7 @@ Recommended to use latest versions.
 - [UdonSharp](https://github.com/vrchat-community/UdonSharp) [1.x](https://github.com/vrchat-community/UdonSharp/blob/1.0.1/Packages/com.vrchat.UdonSharp/package.json)
 - [UdonToolkit](https://github.com/orels1/UdonToolkit/tree/develop) [develop](https://github.com/orels1/UdonToolkit/blob/develop/package.json) **!! Not Release Version !!**
 
-# InstallationInstall
-
+# Installation
 - Install and setup requirements above.
 - Open Unity Package Manager via Menu > Window > Package Manager.
 - Click plus button then select `Add package from git URL`.
