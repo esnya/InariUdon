@@ -1,31 +1,21 @@
 # InariUdon
 Useful prefabs and Udon scripts for VRChat World SDK 3.0
 
-**NOTICE: Sun Controller is now separated into a standalone packge. Checkout from https://github.com/esnya/UdonSunController !!**
+**BREAKING_CHANGE: UdonSharp is upgraded to 1.x. You must create project via VRChat Creator Companion**
 
-## Usage
-Place prefabs into Scene in [Assets/InariUdon/Components/<COMPONENT_NAME>](Assets/InariUdon/Components) or add UdonScript in Script directory.
+Do you looking for Udon Sun Controller ? This package does not contains them. It's [here](https://github.com/esnya/UdonSunController).
 
-## Setup
-1. Install requirements in below.
-2. Download latest non-pre-release `InariUdon-<VERSION>.zip` from [Releases](https://github.com/esnya/InariUdon/releases).
-3. Unzip and drag and drop .unitypackage into Project window of Unity.
+# Requireiments
+Recommended to use latest versions.
 
-## Requirements
-* VRC SDK3 Worlds
-* UdonSharp
-* UdonToolkt
+- [VRChat SDK World](https://github.com/vrchat/packages) [3.x](https://github.com/vrchat/packages/blob/3.0.4/packages/com.vrchat.worlds/package.json)
+- [UdonSharp](https://github.com/vrchat-community/UdonSharp) [1.x](https://github.com/vrchat-community/UdonSharp/blob/1.0.1/Packages/com.vrchat.UdonSharp/package.json)
+- [UdonToolkit](https://github.com/orels1/UdonToolkit/tree/develop) [develop](https://github.com/orels1/UdonToolkit/blob/develop/package.json) **!! Not Release Version !!**
 
-## Usage
-See also [COMPONENTS.md](COMPONENTS.md).
-
-### USharpVideo+
-![image](https://user-images.githubusercontent.com/2088693/131600243-9bc85ee3-ab77-43c7-aaf3-7f4b215f2852.png)
-
-Enhanced Version of [USharpVideo](https://github.com/MerlinVR/USharpVideo) by [MerlinVR](https://github.com/MerlinVR). Requires [MerlinVR/USharpVideo](https://github.com/MerlinVR/USharpVideo).
-
-#### Features
-* Slider for Screen/UI Brightness
-* 3D/2S AudioModeToggle (Synced)
-* Toggle UpdateGIMaterials
-  * Workaround to avoid VRAM leaking issue: https://feedback.vrchat.com/bug-reports/p/1121-vram-leak-when-using-vrccustomrendererbehaviourrendererextensionsupdategima
+# Install
+- Install requirements
+- Open Unity Package Manager via Menu > Windows > Package Manager
+- Click `+` button then select `Add from git URL`.
+- Enter `https://github.com/esnya/InariUdon.git?path=/Packages/com.nekometer.esnya.inari-udon#beta` to text box and press `Add`.
+![image](https://user-images.githubusercontent.com/2088693/180705211-f0f25559-d66f-460c-aede-445a230ae87a.png)
+![image](https://user-images.githubusercontent.com/2088693/180705244-5dea9e3b-62a0-4ed5-b12d-89e612f49ecc.png)
