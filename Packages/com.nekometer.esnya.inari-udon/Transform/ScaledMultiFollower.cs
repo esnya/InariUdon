@@ -159,7 +159,6 @@ This component allows you to display the position of an object on the minimap,  
         [Button("Sync Now", true)]
         public void EditorSyncNow()
         {
-            this.UpdateProxy();
             Start();
             updatePerFrame = count;
             _Trigger();

@@ -11,7 +11,6 @@ using UdonSharp;
 using UdonToolkit;
 using UnityEditor;
 using UnityEngine;
-using VRC.Udon.Serialization.OdinSerializer.Utilities;
 
 namespace InariUdon
 {
@@ -43,13 +42,13 @@ namespace InariUdon
 
         private static IEnumerable<string> GenerateVariables(Type type)
         {
-            var items = type.GetFields(bindingFlags).Where(p => p.GetAttribute<HideInInspector>() == null).ToArray();
+            var items = type.GetFields(bindingFlags).Where(p => p.GetCustomAttribute<HideInInspector>() == null).ToArray();
             if (items.Length == 0) return Enumerable.Empty<string>();
 
             var variables = items.Select(v => {
                 var name = v.Name;
                 var typeName = v.FieldType.ToString();
-                var description = v.GetAttribute<HelpBoxAttribute>()?.text ?? v.GetAttribute<TooltipAttribute>()?.tooltip ?? "";
+                var description = v.GetCustomAttribute<HelpBoxAttribute>()?.text ?? v.GetCustomAttribute<TooltipAttribute>()?.tooltip ?? "";
                 return $"| {name} | {typeName} | {description} |";
             })
             .Append("\n");
@@ -65,7 +64,7 @@ namespace InariUdon
                 .Where(m => m.GetParameters().FirstOrDefault() == null)
                 .Select(m => {
                     var name = m.Name;
-                    var description = m.GetAttribute<Documentation.EventDescriptionAttribute>()?.description ?? "";
+                    var description = m.GetCustomAttribute<Documentation.EventDescriptionAttribute>()?.description ?? "";
                     return $"| {name} | {description} |";
                 })
                 .Append("\n");
@@ -74,7 +73,7 @@ namespace InariUdon
 
         private static IEnumerable<string> GenerateImageAttachments(Type type)
         {
-            return type.GetAttribute<ImageAttachments>()?.urls?.Select(url => $"![image]({url})") ?? Enumerable.Empty<string>();
+            return type.GetCustomAttribute<ImageAttachments>()?.urls?.Select(url => $"![image]({url})") ?? Enumerable.Empty<string>();
         }
 
         [MenuItem("EsnyaTools/InariUdon/Generate Documents")]
@@ -83,7 +82,7 @@ namespace InariUdon
             var doc = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
                 .Where(t => t.Namespace?.StartsWith("InariUdon") ?? false)
-                .Where(t => t.ImplementsOrInherits(typeof(UdonSharpBehaviour)))
+                .Where(t => t.IsSubclassOf(typeof(UdonSharpBehaviour)))
                 .OrderBy(t => t.Namespace)
                 .GroupBy(
                     t => t.Namespace.Split('.').Skip(2).Append("Uncategorized").FirstOrDefault(),
