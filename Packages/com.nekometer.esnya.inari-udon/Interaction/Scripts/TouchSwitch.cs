@@ -16,7 +16,6 @@ namespace InariUdon.Interaction
 
         [Header("Networked")]
         public bool ownerOnly = false;
-        [Tooltip("Deprecated: Use networked")] public bool sentToOwner = false;
         public bool networked = false;
         public NetworkEventTarget networkEventTarget;
 
@@ -90,13 +89,7 @@ namespace InariUdon.Interaction
 
         private void Start()
         {
-            if (sentToOwner && !networked)
-            {
-                networked = true;
-                networkEventTarget = NetworkEventTarget.Owner;
-            }
-
-            SendCustomEventDelayedSeconds(nameof(_AwakeCheck), UnityEngine.Random.Range(0, awakeCheckInterval));
+            SendCustomEventDelayedSeconds(nameof(_AwakeCheck), Random.Range(0, awakeCheckInterval));
         }
 
         public void _PostStart()
