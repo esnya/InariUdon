@@ -445,7 +445,6 @@ Override the material properties with various values, but they can share the sam
         private void ApplyNow(MaterialPropertyBlockWriter writer)
         {
             if (writer == null) return;
-            writer.UpdateProxy();
             writer.Trigger();
         }
         private void ApplyNow(bool applyToScene = false)
@@ -467,7 +466,6 @@ Override the material properties with various values, but they can share the sam
 
         private void ClearNow(MaterialPropertyBlockWriter writer)
         {
-            writer.UpdateProxy();
             writer.ClearTargetProperties();
         }
 
