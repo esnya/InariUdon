@@ -36,12 +36,16 @@ namespace InariUdon.UI
         };
         public bool levelsIgnoreCase = true;
 
+        public bool isGlobal = true;
+
         [HideInInspector] public bool initialized;
 
         private string str;
         private string[] colorCodes;
         private void Start()
         {
+            if (isGlobal) gameObject.name = nameof(UdonLogger);
+
             colorCodes = new string[colors.Length];
             for (int i = 0; i < colors.Length; i++)
             {
@@ -93,6 +97,12 @@ namespace InariUdon.UI
             }
 
             text.text = str;
+        }
+
+        public static UdonLogger GetInstance()
+        {
+            var o = GameObject.Find(nameof(UdonLogger));
+            return o ? o.GetComponent<UdonLogger>() : null;
         }
     }
 }
