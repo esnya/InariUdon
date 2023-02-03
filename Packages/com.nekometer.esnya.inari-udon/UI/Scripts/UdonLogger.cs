@@ -1,23 +1,22 @@
 
-using UdonSharp;
-using UnityEngine;
 using TMPro;
+using UdonSharp;
 using UdonToolkit;
+using UnityEngine;
 
 namespace InariUdon.UI
 {
-    [
-        CustomName("Udon Logger"),
-        HelpMessage("Rich log viewer in world with colord log-levels, timestamp and etc."),
-        DefaultExecutionOrder(-1000),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
-    ]
+    [CustomName("Udon Logger")]
+    [HelpMessage("Rich log viewer in world with colord log-levels, timestamp and etc.")]
+    [DefaultExecutionOrder(-1000)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UdonLogger : UdonSharpBehaviour
     {
         public int maxCharacters = 10000;
         public TextMeshProUGUI text;
 
-        [ListView("Levels")] public string[] levels = {
+        [ListView("Levels")]
+        public string[] levels = {
             "Unknown",
             "Debug",
             "Info",
@@ -26,7 +25,8 @@ namespace InariUdon.UI
             "Error",
             "Fatal",
         };
-        [ListView("Levels")] public Color[] colors = {
+        [ListView("Levels")]
+        public Color[] colors = {
             Color.gray,
             Color.white,
             Color.green,
