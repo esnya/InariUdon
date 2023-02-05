@@ -15,6 +15,11 @@ namespace InariUdon
         public string textPath;
 
 #if UNITY_EDITOR
+        private void Start()
+        {
+            Load();
+        }
+
         private void Load()
         {
             var textAssets = AssetDatabase
@@ -41,13 +46,6 @@ namespace InariUdon
             }
         }
 
-        [InitializeOnLoadMethod]
-        public static void Initialize()
-        {
-            EditorApplication.playModeStateChanged += (state) => {
-                if (state == PlayModeStateChange.EnteredPlayMode) LoadAllInScene();
-            };
-        }
 
         public class BuildCallback : Editor, IVRCSDKBuildRequestedCallback
         {
