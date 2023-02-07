@@ -12,6 +12,14 @@ namespace InariUdon.EditorTools
 {
     public class USharpPrefabUpgradeHelper : EditorWindow
     {
+        [Flags]
+        public enum Filter {
+            UpgradeRequired = 0x01,
+            Upgraded = 0x02,
+            SceneUpgraded = 0x04,
+            PrefabUpgraded = 0x08,
+            All = -1,
+        }
         private class AssetEditingScope : IDisposable
         {
             public AssetEditingScope()
@@ -24,6 +32,7 @@ namespace InariUdon.EditorTools
                 AssetDatabase.StopAssetEditing();
             }
         }
+
         private static Enum GetBehaviourVersion(UdonBehaviour udon)
         {
             return (Enum)typeof(UdonSharpEditorUtility).GetMethod("GetBehaviourVersion", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new[] { udon });
@@ -31,6 +40,10 @@ namespace InariUdon.EditorTools
         private static bool HasSceneBehaviourUpgradeFlag(UdonBehaviour udon)
         {
             return (bool)typeof(UdonSharpEditorUtility).GetMethod("HasSceneBehaviourUpgradeFlag", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new[] { udon });
+        }
+        private static void SetSceneBehaviourUpgraded(UdonBehaviour udon)
+        {
+            typeof(UdonSharpEditorUtility).GetMethod("SetSceneBehaviourUpgraded", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new[] { udon });
         }
 
         private static void UpgradePrefabs(IEnumerable<GameObject> prefabRootEnumerable)
@@ -53,6 +66,15 @@ namespace InariUdon.EditorTools
             return udon.programSource is UdonSharpProgramAsset;
         }
 
+        private bool MatchFilter(CacheItem item)
+        {
+            if ((filter & Filter.Upgraded) != 0 && item.version.Equals(2)) return true;
+            if ((filter & Filter.UpgradeRequired) != 0 && !item.version.Equals(2)) return true;
+            if ((filter & Filter.SceneUpgraded) != 0 && item.sceneUpgraded) return true;
+            if ((filter & Filter.PrefabUpgraded) != 0 && !item.sceneUpgraded) return true;
+            return false;
+        }
+
         [MenuItem("InariUdon/U# Prefab Upgrade Helper")]
         private static void ShowWindow()
         {
@@ -72,11 +94,12 @@ namespace InariUdon.EditorTools
 
         public Vector2 scrollPosition;
         public bool includeChildren = true;
-
+        public Filter filter = Filter.All;
         private CacheItem[] cache;
 
         private void Scan()
         {
+            AssetDatabase.Refresh();
             cache = Selection.gameObjects
                 .SelectMany(o => includeChildren ? o.GetComponentsInChildren<UdonBehaviour>(true) : o.GetComponents<UdonBehaviour>())
                 .Where(IsUdonSharpUdonBehaviour)
@@ -93,7 +116,9 @@ namespace InariUdon.EditorTools
                         expanded = false,
                     };
                 })
+                .Where(MatchFilter)
                 .ToArray();
+            Repaint();
         }
 
         private void UpgradePrefabs()
@@ -118,6 +143,7 @@ namespace InariUdon.EditorTools
                 foreach (var udon in udons)
                 {
                     ClearBehaviourVariables(udon, false);
+                    SetSceneBehaviourUpgraded(udon);
                     EditorUtility.SetDirty(udon);
                 }
             }
@@ -141,6 +167,7 @@ namespace InariUdon.EditorTools
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 includeChildren = EditorGUILayout.Toggle("Include Children", includeChildren);
+                filter = (Filter)EditorGUILayout.EnumFlagsField("Filter", filter);
                 if (check.changed) Scan();
             }
 
