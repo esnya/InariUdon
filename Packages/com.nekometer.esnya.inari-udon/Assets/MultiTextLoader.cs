@@ -17,10 +17,10 @@ namespace InariUdon
 #if UNITY_EDITOR
         private void Start()
         {
-            Load();
+            Load(false);
         }
 
-        private void Load()
+        private void Load(bool destroy)
         {
             var textAssets = AssetDatabase
                 .FindAssets("t:TextAsset", new [] { textPath })
@@ -35,14 +35,14 @@ namespace InariUdon
                 tmp.text = textAssets[name].text;
             }
 
-            DestroyImmediate(this);
+            if (destroy) DestroyImmediate(this);
         }
 
-        private static void LoadAllInScene()
+        private static void LoadAllInScene(bool destroy)
         {
             foreach (var o in FindObjectsOfType(typeof(MultiTextLoader)))
             {
-                (o as MultiTextLoader)?.Load();
+                (o as MultiTextLoader)?.Load(destroy);
             }
         }
 
@@ -53,7 +53,7 @@ namespace InariUdon
 
             public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
             {
-                LoadAllInScene();
+                LoadAllInScene(true);
                 return true;
             }
         }
