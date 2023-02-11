@@ -4,6 +4,57 @@
 
 ## Uncategorized
 
+### ClockAnimationStarter
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| clockAnimator | UnityEngine.Animator |  |
+| useUTC | System.Boolean |  |
+| layerName | System.String |  |
+| stateName | System.String |  |
+
+
+
+### EventBroadcaster
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| parent | UnityEngine.GameObject |  |
+| eventName | System.String |  |
+| includeInactive | System.Boolean |  |
+| networked | System.Boolean |  |
+| networkEventTarget | VRC.Udon.Common.Interfaces.NetworkEventTarget |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Trigger |  |
+
+
+
+### GripTransporeter
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| origin | UnityEngine.Transform | Set null to use Transform.parent |
+| jumpOnDisable | System.Boolean |  |
+
+
+
 ### SimplePlaylist
 
 
@@ -161,6 +212,104 @@ Drives float parameters of animators by one float value calculated from scene.
 
 
 
+### KeyboardInput
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| keyCodes | System.Int32[] |  |
+| modes | System.Int32[] |  |
+| eventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| onKeyDownEvents | System.String[] |  |
+| holdTime | System.Single |  |
+| holdInterval | System.Single |  |
+| audioSource | UnityEngine.AudioSource |  |
+
+
+
+### Snappable
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| layerMask | UnityEngine.LayerMask |  |
+| snapTargetPrefixes | System.String[] |  |
+| reparent | System.Boolean |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _TakeOwnership |  |
+| _Snap |  |
+| _Release |  |
+
+
+
+### TouchSwitch
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| radius | System.Single |  |
+| thickness | System.Single |  |
+| maxPlayerDistance | System.Single |  |
+| awakeCheckInterval | System.Int32 |  |
+| ownerOnly | System.Boolean |  |
+| sentToOwner | System.Boolean | Deprecated: Use networked |
+| networked | System.Boolean |  |
+| networkEventTarget | VRC.Udon.Common.Interfaces.NetworkEventTarget |  |
+| eventTarget | UdonSharp.UdonSharpBehaviour |  |
+| eventName | System.String |  |
+| disableInteractInVR | System.Boolean |  |
+| throttlingDelay | System.Single |  |
+| fingerMode | System.Boolean |  |
+| grip | System.Boolean |  |
+| onTouchStart | System.String |  |
+| onTouchEnd | System.String |  |
+| knobMode | System.Boolean |  |
+| onKnobRight | System.String |  |
+| onKnobLeft | System.String |  |
+| knobStep | System.Single |  |
+| directionalMode | System.Boolean |  |
+| directionalThreshold | System.Single |  |
+| onUp | System.String |  |
+| onDown | System.String |  |
+| onLeft | System.String |  |
+| onRight | System.String |  |
+| wheelMode | System.Boolean |  |
+| onWheelRight | System.String |  |
+| onWheelLeft | System.String |  |
+| wheelStep | System.Single |  |
+| enableDesktopKey | System.Boolean | Deprecated: Use KeyboardInput |
+| desktopKey | UnityEngine.KeyCode | Deprecated: Use KeyboardInput |
+| audioSource | UnityEngine.AudioSource |  |
+| enableHaptics | System.Boolean |  |
+| hapticDuration | System.Single |  |
+| hapticAmplitude | System.Single |  |
+| hapticFrequency | System.Single |  |
+| debugTouhSource | UnityEngine.Transform |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _PostStart |  |
+| _AwakeCheck |  |
+
+
+
 ### AmbientController
 
 
@@ -242,22 +391,23 @@ Enhancement VRC_Pickup such as relay events or expose Respawn event.
 | respawnOnDrop | System.Boolean |  |
 | overrideIsTrigger | System.Boolean |  |
 | fireOnPickup | System.Boolean |  |
-| onPickupNetworked | System.Boolean |  |
-| onPickupNetworkTarget | VRC.Udon.Common.Interfaces.NetworkEventTarget |  |
 | onPickupTargets | UdonSharp.UdonSharpBehaviour[] |  |
 | onPickupEvents | System.String[] |  |
 | fireOnDrop | System.Boolean |  |
-| onDropNetworked | System.Boolean |  |
 | onDropNetworkTarget | VRC.Udon.Common.Interfaces.NetworkEventTarget |  |
 | onDropTargets | UdonSharp.UdonSharpBehaviour[] |  |
 | onDropEvents | System.String[] |  |
+| fireOnPickupUseDown | System.Boolean |  |
+| onPickupUseDownTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| onPickupUseDownEvents | System.String[] |  |
 
 
 
 #### Public Events
 | Name | Description |
 |:--|:--|
-| Respawn |  |
+| _TakeOwnership |  |
+| _Respawn |  |
 
 
 
@@ -451,8 +601,8 @@ Controls ReflectionProbe at runtime. Currently, only the "RenderProbe" event is 
 
 
 
-### Synced Float
-Provides single synced float variable with change detection.
+### SyncedFloat
+
 
 
 
@@ -461,6 +611,10 @@ Provides single synced float variable with change detection.
 |:--|:--|:--|
 | value | System.Single |  |
 | castToInt | System.Boolean |  |
+| clampValue | System.Boolean |  |
+| minValue | System.Single |  |
+| maxValue | System.Single |  |
+| incrementStep | System.Single |  |
 | writeProgramVariables | System.Boolean |  |
 | sendEvents | System.Boolean |  |
 | writeAsArray | System.Boolean |  |
@@ -476,8 +630,6 @@ Provides single synced float variable with change detection.
 | animatorParameterNames | System.String[] |  |
 | slider | UnityEngine.UI.Slider |  |
 | wholeNumbers | System.Boolean |  |
-| minValue | System.Single |  |
-| maxValue | System.Single |  |
 | exp | System.Boolean |  |
 
 
@@ -485,7 +637,35 @@ Provides single synced float variable with change detection.
 #### Public Events
 | Name | Description |
 |:--|:--|
+| _TakeOwnership |  |
 | _Sync |  |
+| _Increment |  |
+| _Decrement |  |
+| HideSliderOptions |  |
+
+
+
+### SyncedMultiObjectToggle
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| targets | UnityEngine.GameObject[] |  |
+| initialState | System.Boolean |  |
+| initializeDelay | System.Single |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Activate |  |
+| _Deactivate |  |
+| _ToggleActive |  |
+| _Initialize |  |
 
 
 
@@ -508,6 +688,27 @@ Provides single synced float variable with change detection.
 | get_Index |  |
 | _Increment |  |
 | _Decrement |  |
+
+
+
+### SyncedObjectToggle
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| target | UnityEngine.GameObject |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Activate |  |
+| _Deactivate |  |
+| _ToggleActive |  |
 
 
 
@@ -543,18 +744,6 @@ Track source transform as local position/rotation. You can translate and scale b
 | Name | Description |
 |:--|:--|
 | Trigger |  |
-
-
-
-### ObjectSync Respawn
-Simple event relay component to call `VRCObjecySync.Respawn()`
-
-
-
-#### Public Events
-| Name | Description |
-|:--|:--|
-| Respawn |  |
 
 
 
@@ -637,6 +826,7 @@ Trigger by Enable/Disable Component and GameObject
 | enabledEvents | System.String[] |  |
 | disabledEventTargets | UdonSharp.UdonSharpBehaviour[] |  |
 | disabledEvents | System.String[] |  |
+| ownerOnly | System.Boolean |  |
 
 
 
@@ -648,19 +838,22 @@ Trigger by input
 #### Public Variables
 | Name | Type | Description |
 |:--|:--|:--|
-| keyDown | System.Boolean |  |
 | keyName | System.String |  |
-| buttonDown | System.Boolean |  |
 | buttonName | System.String |  |
+| keyDown | System.Boolean |  |
+| buttonDown | System.Boolean |  |
 | eventTargets | UdonSharp.UdonSharpBehaviour[] |  |
 | eventNames | System.String[] |  |
+| keyUp | System.Boolean |  |
+| buttonUp | System.Boolean |  |
+| onUpEventTargets | UdonSharp.UdonSharpBehaviour[] |  |
+| onUpEventNames | System.String[] |  |
 
 
 
 #### Public Events
 | Name | Description |
 |:--|:--|
-| _Trigger |  |
 | _Enable |  |
 | _Disable |  |
 
@@ -686,6 +879,50 @@ Overrides Interact, or integrates multiple.
 | _Trigger |  |
 | _Enable |  |
 | _Disable |  |
+
+
+
+### AudioModeToggle
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| usharpVideoPlayer | UdonSharp.UdonSharpBehaviour |  |
+| audioSources | UnityEngine.AudioSource[] |  |
+| sliderTransform | UnityEngine.RectTransform |  |
+| lockedOverlay | UnityEngine.GameObject |  |
+| lockIcon | UnityEngine.GameObject |  |
+| default2DMode | System.Boolean |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| Toggle |  |
+
+
+
+### UdonToggle
+
+
+
+
+#### Public Variables
+| Name | Type | Description |
+|:--|:--|:--|
+| target | UdonSharp.UdonSharpBehaviour |  |
+| buttonImage | UnityEngine.UI.Image |  |
+
+
+
+#### Public Events
+| Name | Description |
+|:--|:--|
+| _Toggle |  |
 
 
 
