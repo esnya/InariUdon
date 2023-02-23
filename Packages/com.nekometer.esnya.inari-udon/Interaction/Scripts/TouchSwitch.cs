@@ -90,6 +90,7 @@ namespace InariUdon.Interaction
         private void Start()
         {
             SendCustomEventDelayedSeconds(nameof(_AwakeCheck), Random.Range(0, awakeCheckInterval));
+            SendCustomEventDelayedSeconds(nameof(_PostStart), 1);
         }
 
         public void _PostStart()
