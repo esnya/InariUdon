@@ -24,7 +24,7 @@ namespace InariUdon.DynamicDownloaders
         /// <summary>
         /// Minimum delay in seconds before downloading.
         /// </summary>
-        public float minDelay = 0;
+        public float minDelay = 10;
 
         /// <summary>
         /// Maximum delay in seconds before downloading.
