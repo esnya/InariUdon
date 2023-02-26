@@ -5,6 +5,9 @@ using VRC.Udon.Common.Interfaces;
 
 namespace InariUdon.Interaction
 {
+    /// <summary>
+    /// A switch that can be interacted with by touching or turning, with different modes for different kinds of interaction.
+    /// </summary>
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class TouchSwitch : UdonSharpBehaviour
     {
@@ -90,6 +93,7 @@ namespace InariUdon.Interaction
         private void Start()
         {
             SendCustomEventDelayedSeconds(nameof(_AwakeCheck), Random.Range(0, awakeCheckInterval));
+            SendCustomEventDelayedSeconds(nameof(_PostStart), 1);
         }
 
         public void _PostStart()

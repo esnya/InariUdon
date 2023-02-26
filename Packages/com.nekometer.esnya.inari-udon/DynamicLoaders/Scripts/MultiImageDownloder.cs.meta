@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 4fa124338179c694fbd93e49ac19598e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _udonSharpBackingUdonBehaviour: {instanceID: 0}
+  - loaderMaterial: {fileID: 2100000, guid: 169901c81c7b1644684fd2f087007405, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
