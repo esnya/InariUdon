@@ -1,6 +1,9 @@
 {
   "name": "inariudon",
   "version": "10.0.0-alpha.1",
+  "workspaces": [
+    "Packages/*"
+  ],
   "private": true,
   "license": "MIT",
   "scripts": {
