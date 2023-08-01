@@ -38,17 +38,34 @@ namespace InariUdon.DynamicDownloaders
         /// </summary>
         public bool cache = true;
 
+        /// <summary>
+        /// Minimum delay (in seconds) before the next image download begins after error.
+        /// </summary>
+        public float minRetryDelay = 0;
+
+        /// <summary>
+        /// Maximum delay (in seconds) before the next image download begins after error.
+        /// </summary>
+        public float maxRetryDelay = 1;
+
+        /// <summary>
+        /// Exclude erroed url from next download.
+        /// </summary>
+        public bool excludeErroedUrl = true;
+
         private int Index => shuffle ? indices[index] : index;
         public override VRCUrl ImageUrl => urls[index];
         private int[] indices;
         private int index;
         private Texture[] textures;
         private float nextUpdateTime;
+        private bool[] erroed;
 
         private void Start()
         {
             indices = new int[urls.Length];
             textures = new Texture[urls.Length];
+            erroed = new bool[urls.Length];
             for (var i = 0; i < urls.Length; i++) indices[i] = i;
             if (shuffle) Shuffle();
             _DownloadDelayed();
@@ -68,10 +85,19 @@ namespace InariUdon.DynamicDownloaders
             if (cachedTexture) ApplyTexture(cachedTexture);
             else base._Download();
 
-            if (++index >= urls.Length)
+            IncrementIndex();
+        }
+
+        private void IncrementIndex()
+        {
+            for (var i = 0; i < urls.Length; i++)
             {
-                index = 0;
-                if (shuffle) Shuffle();
+                if (++index >= urls.Length)
+                {
+                    index = 0;
+                    if (shuffle) Shuffle();
+                }
+                if (!excludeErroedUrl || !erroed[Index]) break;
             }
         }
 
@@ -89,6 +115,16 @@ namespace InariUdon.DynamicDownloaders
         {
             base.OnImageLoadSuccess(result);
             textures[Index] = result.Material.GetTexture(textureInfo.MaterialProperty);
+        }
+
+        public override void OnImageLoadError(IVRCImageDownload result)
+        {
+            base.OnImageLoadError(result);
+
+            if (excludeErroedUrl) erroed[Index] = true;
+
+            IncrementIndex();
+            SendCustomEventDelayedSeconds(nameof(_Download), Random.Range(minRetryDelay, maxRetryDelay));
         }
     }
 }
