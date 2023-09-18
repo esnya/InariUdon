@@ -2,7 +2,7 @@ name: Release
 on: push
 
 env:
-  packageName: "com.nekometer.esnya.inari-udon"
+  packageName: "com.nekometer.esnya.udon-sun-controller"
 
 permissions:
   contents: write
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-      - run: npm i -g semantic-release semantic-release-gitmoji @semantic-release/github @semantic-release/git @semantic-release/npm foreach-cli
+      - run: npm ci
 
       - id: prev_version
         uses: notiz-dev/github-action-json-property@7c8cf5cc36eb85d8d287a8086a39dac59628eb31
@@ -42,6 +42,8 @@ jobs:
     if: needs.semantic-release.outputs.prev_version != needs.semantic-release.outputs.next_version
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: v${{ needs.semantic-release.outputs.next_version }}
       - run: echo "version=${{ needs.semantic-release.outputs.next_version }}" >> $GITHUB_ENV
 
       - run: |
