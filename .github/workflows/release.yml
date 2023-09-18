@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-      - run: npm ci
+      - run: npm i -g semantic-release semantic-release-gitmoji @semantic-release/github @semantic-release/git @semantic-release/npm foreach-cli
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
