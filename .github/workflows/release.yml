@@ -71,7 +71,7 @@ jobs:
         with:
           tag: v${{ env.version }}
           file: Packages/${{ env.packageName }}/package.json
-      - run: 
+      - run: |
           TOKEN=${{ secrets.VCC_PACKAGES_TOKEN }}
           OWNER=esnya
           REPO=vcc-packages
