@@ -71,3 +71,14 @@ jobs:
         with:
           tag: v${{ env.version }}
           file: Packages/${{ env.packageName }}/package.json
+      - run: 
+          TOKEN=${{ secrets.VCC_PACKAGES_TOKEN }}
+          OWNER=esnya
+          REPO=vcc-packages
+
+          curl \
+            -X POST \
+            -H "Authorization: token $TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$OWNER/$REPO/dispatches \
+            -d '{"event_type":"build-listing","client_payload":{}}'
