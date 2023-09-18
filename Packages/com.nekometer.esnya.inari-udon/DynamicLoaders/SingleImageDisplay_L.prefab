@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8694422547119031961}
   - component: {fileID: 5737138932777523801}
   m_Layer: 0
-  m_Name: DynamicSinage_A0_L
+  m_Name: SingleImageDisplay_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,8 +94,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.891, y: 0.11499998, z: 1.7194998}
-  m_Center: {x: 0, y: 0, z: 0.8597499}
+  m_Size: {x: 1.2400002, y: 0.114999995, z: 1.4455}
+  m_Center: {x: -0.00000011920929, y: 0, z: 0.72275}
 --- !u!114 &8694422547119031961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,8 +141,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 8694422547119031961}
-  url:
-    url: https://placekitten.com/420/297
   materialIndex: 0
   minDelay: 10
   maxDelay: 30
@@ -155,3 +153,5 @@ MonoBehaviour:
     MaterialProperty: _MainTex
     GenerateMipMaps: 1
   loaderMaterial: {fileID: 2100000, guid: 169901c81c7b1644684fd2f087007405, type: 2}
+  url:
+    url: https://placekitten.com/420/297

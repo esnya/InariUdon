@@ -8,7 +8,7 @@ const pattern = new RegExp(
     "      value:.*\n",
     `      objectReference: ${guidPattern}\n`,
     "|",
-    `  serializedProgramAsset: ${guidPattern}\n`,
+    `  serialized(Udon)?ProgramAsset: ${guidPattern}\n`,
     "|",
     "    SerializedFormat: [02]\n",
   ].join(""),

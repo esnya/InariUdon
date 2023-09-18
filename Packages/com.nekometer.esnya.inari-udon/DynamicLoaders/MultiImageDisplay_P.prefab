@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8576674997620115003}
   - component: {fileID: 8576674997620115002}
   m_Layer: 0
-  m_Name: DynamicSinage_A0_P (1)
+  m_Name: MultiImageDisplay_P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
