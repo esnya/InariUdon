@@ -1,13 +1,10 @@
 {
   "name": "inariudon",
   "version": "10.0.0-alpha.3",
-  "workspaces": [
-    "Packages/*"
-  ],
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postversion": "foreach Packages/*/ \"npm --prefix #{path} version ${npm_package_version}\""
+    "version": "foreach Packages/*/ \"npm --prefix #{path} version $npm_package_version\" && git add ."
   },
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",
