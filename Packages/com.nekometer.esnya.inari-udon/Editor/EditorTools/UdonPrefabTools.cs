@@ -10,6 +10,7 @@ using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 using VRC.Udon.Serialization.OdinSerializer;
 using Object = UnityEngine.Object;
+using SerializationUtility = VRC.Udon.Serialization.OdinSerializer.SerializationUtility;
 
 namespace InariUdon.EditorTools
 {
