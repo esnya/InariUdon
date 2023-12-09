@@ -75,10 +75,18 @@ namespace InariUdon.EditorTools
                 listView.selectionType = SelectionType.Multiple;
                 listView.style.flexGrow = 1.0f;
 
+#if UNITY_2022_3_OR_NEWER
+                listView.selectionChanged += objects =>
+                {
+                    Selection.objects = objects.Select(o => (o as UdonBehaviour)?.gameObject).Where(o => o != null).ToArray();
+                };          
+#else
                 listView.onSelectionChanged += objects =>
                 {
                     Selection.objects = objects.Select(o => (o as UdonBehaviour)?.gameObject).Where(o => o != null).ToArray();
                 };
+#endif
+
                 Add(listView);
 
                 UpdateToolbarText();
