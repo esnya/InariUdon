@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UdonSharpEditor;
@@ -8,6 +7,13 @@ namespace InariUdon.Driver
     [CustomEditor(typeof(FloatValueDriver))]
     public class FloatValueDriverEditor : Editor
     {
+        private string[] _modeOptions;
+
+        private void OnEnable()
+        {
+            _modeOptions = ((FloatValueDriver)target).GetModeOptions();
+        }
+
         public override void OnInspectorGUI()
         {
             if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
@@ -15,7 +21,7 @@ namespace InariUdon.Driver
             serializedObject.Update();
 
             var driver = (FloatValueDriver)target;
-            var modeOptions = driver.GetModeOptions();
+            var modeOptions = _modeOptions ?? driver.GetModeOptions();
 
             var modeProp = serializedObject.FindProperty(nameof(FloatValueDriver.mode));
             var modeStringProp = serializedObject.FindProperty(nameof(FloatValueDriver.modeString));
@@ -23,6 +29,7 @@ namespace InariUdon.Driver
             // Keep mode in sync with modeString on load (handles legacy data)
             var currentIndex = System.Array.IndexOf(modeOptions, modeStringProp.stringValue);
             if (currentIndex < 0) currentIndex = modeProp.intValue;
+            if (currentIndex < 0 || currentIndex >= modeOptions.Length) currentIndex = 0;
 
             EditorGUI.BeginChangeCheck();
             var newIndex = EditorGUILayout.Popup(new GUIContent("Mode"), currentIndex, modeOptions);
