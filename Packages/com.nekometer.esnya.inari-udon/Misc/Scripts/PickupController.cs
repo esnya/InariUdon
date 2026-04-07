@@ -27,16 +27,16 @@ namespace InariUdon.Misc
         [Header("Send Events")]
         public bool fireOnPickup;
 
-         public UdonSharpBehaviour[] onPickupTargets;
+        public UdonSharpBehaviour[] onPickupTargets;
         public string[] onPickupEvents;
 
         public bool fireOnDrop;
-         public NetworkEventTarget onDropNetworkTarget;
-         public UdonSharpBehaviour[] onDropTargets;
+        public NetworkEventTarget onDropNetworkTarget;
+        public UdonSharpBehaviour[] onDropTargets;
         public string[] onDropEvents;
 
         public bool fireOnPickupUseDown;
-         public UdonSharpBehaviour[] onPickupUseDownTargets;
+        public UdonSharpBehaviour[] onPickupUseDownTargets;
         public string[] onPickupUseDownEvents;
         #endregion
 

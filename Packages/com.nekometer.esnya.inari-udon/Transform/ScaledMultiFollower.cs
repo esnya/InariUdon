@@ -20,7 +20,7 @@ namespace InariUdon.Transforms
     {
         [Header("Source")]
         [Tooltip("Find source from children")] public Transform sourceParent;
-        [Tooltip("Use specified sources")]  public Transform[] sources;
+        [Tooltip("Use specified sources")] public Transform[] sources;
         [Tooltip("Position origin of sources")] public Transform sourceOrigin;
         [Tooltip("Find sources by path")] public bool findSourceChild;
         [Tooltip("Find sources by path")] public string sourceChildPath;
@@ -30,7 +30,7 @@ namespace InariUdon.Transforms
         [Tooltip("Use specified targets")] public Transform[] targets;
         [Tooltip("Position origin of targets")] public Transform targetOrigin;
         [Tooltip("Find targets by path")] public bool findTargetChild;
-        [Tooltip("Find targets by path")]  public string targetChildPath;
+        [Tooltip("Find targets by path")] public string targetChildPath;
 
         [Header("Transforms")]
         [Tooltip("Scale positions")] public Vector3 positionScale = Vector3.one;

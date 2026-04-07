@@ -14,9 +14,9 @@ namespace InariUdon.Driver
 
         [Header("Write UdonBehaviour ProgramVariables")]
         public bool writeProgramVariables = false;
-         public bool sendEvent = false;
+        public bool sendEvent = false;
         public bool ignoreFirstEvent = false;
-         public bool findTargetFromChildren = false;
+        public bool findTargetFromChildren = false;
         public UdonSharpBehaviour[] behaviours = {};
         public string[] variableNames = {};
         public string[] eventNames = {};

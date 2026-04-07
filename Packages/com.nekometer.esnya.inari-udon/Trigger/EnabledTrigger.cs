@@ -12,9 +12,9 @@ namespace InariUdon.Trigger
     ]
     public class EnabledTrigger : UdonSharpBehaviour
     {
-         public UdonSharpBehaviour[] enabledEventTargets = {};
+        public UdonSharpBehaviour[] enabledEventTargets = {};
         public string[] enabledEvents = {};
-         public UdonSharpBehaviour[] disabledEventTargets = {};
+        public UdonSharpBehaviour[] disabledEventTargets = {};
         public string[] disabledEvents = {};
         public bool ownerOnly = false;
 

@@ -7,8 +7,8 @@ namespace InariUdon.Transforms
     public class SetParent : UdonSharpBehaviour
     {
         #region Public Variables
-          public Transform parent;
-          public string parentName;
+        public Transform parent;
+        public string parentName;
         [Tooltip("Find parent by `GameObject.Find(parentName)`")] public bool findParentByName;
         [Tooltip("None to use `this.transform`")] public Transform target;
 
