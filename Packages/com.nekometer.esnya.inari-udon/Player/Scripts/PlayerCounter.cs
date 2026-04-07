@@ -1,15 +1,12 @@
 
-
 using TMPro;
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.SDKBase;
 
 namespace InariUdon.Player
 {
-    [CustomName("Player Counter")]
-    [HelpMessage("Display number of players in the instance with TextMeshPro. Alos show world max capacity if provided.")]
+    
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerCounter : UdonSharpBehaviour
     {

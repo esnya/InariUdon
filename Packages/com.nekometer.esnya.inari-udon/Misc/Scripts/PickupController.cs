@@ -1,5 +1,4 @@
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.Udon.Common.Interfaces;
 using VRC.SDK3.Components;
@@ -13,35 +12,32 @@ using UnityEditor;
 namespace InariUdon.Misc
 {
     [
-        CustomName("Pickup Controller"),
-        HelpMessage("Enhancement VRC_Pickup such as relay events or expose Respawn event."),
         UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
         RequireComponent(typeof(VRCPickup)),
     ]
     public class PickupController : UdonSharpBehaviour
     {
         #region Public Variables
-        [SectionHeader("Respawn")][HelpBox("Set null to use initial world transform")]
+        [Header("Respawn")]
         public Transform respawnTarget;
         public bool respawnOnDrop = false;
 
-        [SectionHeader("Collider")] public bool overrideIsTrigger;
+        [Header("Collider")] public bool overrideIsTrigger;
 
-        [SectionHeader("Send Events")]
+        [Header("Send Events")]
         public bool fireOnPickup;
 
-        [HideIf("@!fireOnPickup")][ListView("OnPickup Target List")] public UdonSharpBehaviour[] onPickupTargets;
-        [ListView("OnPickup Target List") , Popup("behaviour", "@onPickupTargets", true)] public string[] onPickupEvents;
+         public UdonSharpBehaviour[] onPickupTargets;
+        public string[] onPickupEvents;
 
         public bool fireOnDrop;
-        [HideIf("@!fireOnDrop")] public NetworkEventTarget onDropNetworkTarget;
-        [HideIf("@!fireOnDrop")][ListView("OnDrop Target List")] public UdonSharpBehaviour[] onDropTargets;
-        [ListView("OnDrop Target List"), Popup("behaviour", "@onDropTargets", true)] public string[] onDropEvents;
-
+         public NetworkEventTarget onDropNetworkTarget;
+         public UdonSharpBehaviour[] onDropTargets;
+        public string[] onDropEvents;
 
         public bool fireOnPickupUseDown;
-        [HideIf("@!fireOnPickupUseDown")][ListView("OnPickupUseDown Target List")] public UdonSharpBehaviour[] onPickupUseDownTargets;
-        [ListView("OnPickupUseDown Target List"), Popup("behaviour", "@onPickupUseDownTargets", true)] public string[] onPickupUseDownEvents;
+         public UdonSharpBehaviour[] onPickupUseDownTargets;
+        public string[] onPickupUseDownEvents;
         #endregion
 
         Vector3 initialPosition;

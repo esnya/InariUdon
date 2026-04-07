@@ -1,6 +1,5 @@
-﻿#pragma warning disable IDE1006
+#pragma warning disable IDE1006
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
@@ -37,12 +36,12 @@ namespace InariUdon.Sync
         /// <summary>
         /// min value of clamp range.
         /// </summary>
-        [HideIf("@!clampValue")] public float minValue = 0.0f;
+         public float minValue = 0.0f;
 
         /// <summary>
         /// max value of clamp range.
         /// </summary>
-        [HideIf("@!clampValue")] public float maxValue = 1.0f;
+         public float maxValue = 1.0f;
 
         [Header("Increment")]
         /// <summary>
@@ -59,43 +58,43 @@ namespace InariUdon.Sync
         /// <summary>
         /// Send event on change.
         /// </summary>
-        [HideIf("@!writeProgramVariables")] public bool sendEvents = true;
+         public bool sendEvents = true;
 
         /// <summary>
         /// Write value as float[] or int[].
         /// </summary>
-        [HideIf("@!writeProgramVariables")] public bool writeAsArray = false;
+         public bool writeAsArray = false;
 
         /// <summary>
         /// Find targets by parent.
         /// </summary>
-        [HideIf("@!writeProgramVariables")] public bool programVariablesFromChildren = false;
+         public bool programVariablesFromChildren = false;
 
         /// <summary>
         /// List of target uson behaviours.
         /// </summary>
-        [NotNull][HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours")] public UdonSharpBehaviour[] targets = { };
+         public UdonSharpBehaviour[] targets = { };
 
         /// <summary>
         /// List of variable names.
         /// </summary>
-        [NotNull][HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours")][Popup("programVariable", "@targets")] public string[] variableNames = { };
+         public string[] variableNames = { };
 
         /// <summary>
         /// List of event names sent on cahange.
         /// </summary>
         /// <returns></returns>
-        [NotNull][HideIf("@programVariablesFromChildren")][HideIf("@!writeProgramVariables")][ListView("UdonBehaviours")][Popup("behaviour", "@targets")] public string[] eventNames = { };
+         public string[] eventNames = { };
 
         /// <summary>
         /// Parent transform of targets.
         /// </summary>
-        [HideIf("@!programVariablesFromChildren")] public Transform targetsParent;
+         public Transform targetsParent;
 
         /// <summary>
         /// Common variable name and event name for all targets.
         /// </summary>
-        [HideIf("@!programVariablesFromChildren")] public string variableName, eventName;
+         public string variableName, eventName;
 
         [Header("Animators")]
         /// <summary>
@@ -106,12 +105,12 @@ namespace InariUdon.Sync
         /// <summary>
         /// List of target animators.
         /// </summary>
-        [NotNull][HideIf("@!writeAnimatorParameters")][ListView("Animators")] public Animator[] animators = { };
+         public Animator[] animators = { };
 
         /// <summary>
         /// List of animator float parameter names.
         /// </summary>
-        [NotNull][HideIf("@!writeAnimatorParameters")][ListView("Animators")][Popup("animatorFloat", "@animators")] public string[] animatorParameterNames = { };
+         public string[] animatorParameterNames = { };
 
         [Header("UI")]
         /// <summary>
@@ -124,12 +123,12 @@ namespace InariUdon.Sync
         /// <summary>
         /// Force enable whole numbers.
         /// </summary>
-        [HideIf("HideSliderOptions")] public bool wholeNumbers;
+         public bool wholeNumbers;
 
         /// <summary>
         /// Apply exp curve.
         /// </summary>
-        [HideIf("HideSliderOptions")] public bool exp;
+         public bool exp;
 
         [UdonSynced(UdonSyncMode.Smooth)][FieldChangeCallback(nameof(Value))] private float _value;
         private float Value

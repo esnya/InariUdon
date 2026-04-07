@@ -4,11 +4,9 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using UdonToolkit;
-
 namespace InariUdon.Trigger
 {
-    [HelpMessage("Trigger by input"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class InputTrigger : UdonSharpBehaviour
     {
         public string keyName = "return";
@@ -16,14 +14,14 @@ namespace InariUdon.Trigger
         [Header("OnDown Events")]
         public bool keyDown = true;
         public bool buttonDown = true;
-        [ListView("OnDown Event Targets")] public UdonSharpBehaviour[] eventTargets;
-        [ListView("OnDown Event Targets"), Popup("behaviour", "@eventTargets", true)] public string[] eventNames;
+         public UdonSharpBehaviour[] eventTargets;
+        public string[] eventNames;
 
         [Header("OnUp Events")]
         public bool keyUp = false;
         public bool buttonUp = false;
-        [ListView("OnUp Event Targets")] public UdonSharpBehaviour[] onUpEventTargets;
-        [ListView("OnUp Event Targets"), Popup("behaviour", "@onUpEventTargets", true)] public string[] onUpEventNames;
+         public UdonSharpBehaviour[] onUpEventTargets;
+        public string[] onUpEventNames;
 
         private void Update()
         {

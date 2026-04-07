@@ -1,44 +1,37 @@
-﻿
+
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.Udon.Common.Interfaces;
 
 namespace InariUdon.Misc
 {
-    [CustomName("Pickup Event Trigger")]
-    [HelpMessage("SendCustomEvents on pickup events.")]
+    
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PickupEventTrigger : UdonSharpBehaviour
     {
-        [SectionHeader("Sync Options")]
-        [UTEditor]
+        [Header("Sync Options")]
+        
         public bool networked;
-        [HideIf("@!networked")][UTEditor]
+        
         public NetworkEventTarget networkTarget;
 
         [Space]
 
-        [SectionHeader("On Pickup")][UTEditor]
+        [Header("On Pickup")]
         public bool fireOnPickup;
 
-        [ListView("OnPickup List")][HideIf("@!fireOnPickup")][UTEditor]
         public UdonSharpBehaviour[] onPickupTargets;
 
-        [ListView("OnPickup List")][Popup("behaviour", "@onPickupTargets", true)][UTEditor]
         public string[] onPickupEvents;
 
         [Space]
 
-        [SectionHeader("On Drop")][UTEditor]
+        [Header("On Drop")]
         public bool fireOnDrop;
 
-        [ListView("OnDrop List")][HideIf("@!fireOnDrop")][UTEditor]
         public UdonSharpBehaviour[] onDropTargets;
 
-        [ListView("OnDrop List")][Popup("behaviour", "@onDropTargets", true)][UTEditor]
         public string[] onDropEvents;
-
 
         public override void OnPickup()
         {
@@ -49,9 +42,6 @@ namespace InariUdon.Misc
         {
             BroadcastEvents(onDropTargets, onDropEvents);
         }
-
-
-
 
         void BroadcastEvents(UdonSharpBehaviour[] targets, string[] events)
         {

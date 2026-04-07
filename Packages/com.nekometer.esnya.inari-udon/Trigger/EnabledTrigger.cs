@@ -1,23 +1,21 @@
-﻿#pragma warning disable IDE0051,IDE1006,IDE0018
+#pragma warning disable IDE0051,IDE1006,IDE0018
 
 using UdonSharp;
 using UnityEngine;
-using UdonToolkit;
 using VRC.SDKBase;
 
 namespace InariUdon.Trigger
 {
 
     [
-        HelpMessage("Trigger by Enable/Disable Component and GameObject"),
         UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
     ]
     public class EnabledTrigger : UdonSharpBehaviour
     {
-        [ListView("Enabled Events")] public UdonSharpBehaviour[] enabledEventTargets = {};
-        [ListView("Enabled Events"), Popup("behaviour", "@enabledEventTargets", true)] public string[] enabledEvents = {};
-        [ListView("Disabled Events")] public UdonSharpBehaviour[] disabledEventTargets = {};
-        [ListView("Disabled Events"), Popup("behaviour", "@disabledEventTargets", true)] public string[] disabledEvents = {};
+         public UdonSharpBehaviour[] enabledEventTargets = {};
+        public string[] enabledEvents = {};
+         public UdonSharpBehaviour[] disabledEventTargets = {};
+        public string[] disabledEvents = {};
         public bool ownerOnly = false;
 
         private void SendCustomEventToTargets(UdonSharpBehaviour[] targets, string[] eventNames)

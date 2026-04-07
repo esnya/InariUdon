@@ -1,7 +1,6 @@
-﻿using BestHTTP.SecureProtocol.Org.BouncyCastle.Security;
+using BestHTTP.SecureProtocol.Org.BouncyCastle.Security;
 using TMPro;
 using UdonSharp;
-using UdonToolkit;
 using UnityEditor;
 using UnityEngine;
 using VRC.Core;
@@ -17,8 +16,8 @@ namespace InariUdon
     public class SimplePlaylist : UdonSharpBehaviour
     {
         #region Public Variables
-        [ListView("Playlist")] public VRCUrl[] playlist = { };
-        [Tooltip("Optional"), ListView("Playlist")] public string[] titles = { };
+         public VRCUrl[] playlist = { };
+        [Tooltip("Optional")] public string[] titles = { };
         public bool autoPlay = true;
         public float timeSkipThreshold = 0.5f;
         [Tooltip("Optional")] public TextMeshPro text;

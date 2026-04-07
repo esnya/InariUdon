@@ -1,7 +1,6 @@
 #pragma warning disable IDE1006
 
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.Udon;
 
@@ -13,19 +12,19 @@ namespace InariUdon.Driver
         public float value;
         public bool castToInt = false;
 
-        [SectionHeader("Write UdonBehaviour ProgramVariables")]
+        [Header("Write UdonBehaviour ProgramVariables")]
         public bool writeProgramVariables = false;
-        [HideIf("@!writeProgramVariables")] public bool sendEvent = false;
-        [HideIf("@!writeProgramVariables"), HideIf("@!sendEvent")] public bool ignoreFirstEvent = false;
-        [HideIf("@!writeProgramVariables")] public bool findTargetFromChildren = false;
-        [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), ListView("ProgramVariable Targets")] public UdonSharpBehaviour[] behaviours = {};
-        [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), ListView("ProgramVariable Targets"), Popup("programVariable", "@behaviours", true)] public string[] variableNames = {};
-        [HideIf("@!writeProgramVariables"), HideIf("@findTargetFromChildren"), HideIf("@!sendEvent"), ListView("ProgramVariable Targets"), Popup("behaviour", "@behaviours", true)] public string[] eventNames = {};
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public Transform behaviourParent;
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public bool useFind;
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren"), HideIf("@!useFind")] public string findPath;
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren")] public string variableName;
-        [HideIf("@!writeProgramVariables"), HideIf("@!findTargetFromChildren"), HideIf("@!sendEvent")] public string eventName;
+         public bool sendEvent = false;
+        public bool ignoreFirstEvent = false;
+         public bool findTargetFromChildren = false;
+        public UdonSharpBehaviour[] behaviours = {};
+        public string[] variableNames = {};
+        public string[] eventNames = {};
+        public Transform behaviourParent;
+        public bool useFind;
+        public string findPath;
+        public string variableName;
+        public string eventName;
 
         private bool isFirst = true;
 

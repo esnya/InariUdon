@@ -1,21 +1,19 @@
-﻿#pragma warning disable IDE1006
+#pragma warning disable IDE1006
 
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.SDK3.Components;
-using UdonToolkit;
-
 namespace InariUdon.Sync
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ObjectSyncRespawner : UdonSharpBehaviour
     {
         public bool findObjectSyncFromChildren = false;
-        [HideIf("@findObjectSyncFromChildren")] public VRCObjectSync[] targets = {};
-        [HideIf("@!findObjectSyncFromChildren")] public GameObject targetsParent;
-        [HideIf("@!findObjectSyncFromChildren")] public bool includeDisabled;
+         public VRCObjectSync[] targets = {};
+         public GameObject targetsParent;
+         public bool includeDisabled;
 
         public override void Interact() => _Trigger();
 

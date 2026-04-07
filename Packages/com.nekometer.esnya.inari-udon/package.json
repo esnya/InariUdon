@@ -22,7 +22,6 @@
   },
   "unity": "2022.3",
   "vpmDependencies": {
-    "sh.orels.udontoolkit": "1.2.1",
     "com.vrchat.worlds": "3.10.2",
     "com.vrchat.udonsharp": "1.1.9"
   }

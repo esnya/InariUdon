@@ -1,19 +1,17 @@
-﻿#pragma warning disable IDE1006
+#pragma warning disable IDE1006
 
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using UdonToolkit;
-
 namespace InariUdon.Trigger
 {
-    [HelpMessage("Overrides Interact, or integrates multiple.")]
+    
     public class InteractRelay : UdonSharpBehaviour
     {
         public UdonSharpBehaviour[] relayTargets;
-        [ListView("Event Targets")] public UdonSharpBehaviour[] eventTargets;
-        [ListView("Event Targets"), Popup("behaviour", "@eventTargets", true)] public string[] eventNames;
+         public UdonSharpBehaviour[] eventTargets;
+        public string[] eventNames;
 
         public override void Interact() => _Trigger();
 
