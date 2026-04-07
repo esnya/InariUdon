@@ -31,6 +31,13 @@ namespace InariUdon.Driver
             if (currentIndex < 0) currentIndex = modeProp.intValue;
             if (currentIndex < 0 || currentIndex >= modeOptions.Length) currentIndex = 0;
 
+            // Write back immediately if modeString and mode are out of sync (e.g. migrated scenes)
+            if (modeProp.intValue != currentIndex || modeStringProp.stringValue != modeOptions[currentIndex])
+            {
+                modeProp.intValue = currentIndex;
+                modeStringProp.stringValue = modeOptions[currentIndex];
+            }
+
             EditorGUI.BeginChangeCheck();
             var newIndex = EditorGUILayout.Popup(new GUIContent("Mode"), currentIndex, modeOptions);
             if (EditorGUI.EndChangeCheck())
