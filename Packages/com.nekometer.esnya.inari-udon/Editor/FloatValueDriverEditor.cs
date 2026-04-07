@@ -36,6 +36,7 @@ namespace InariUdon.Driver
             {
                 modeProp.intValue = currentIndex;
                 modeStringProp.stringValue = modeOptions[currentIndex];
+                serializedObject.ApplyModifiedProperties();
             }
 
             EditorGUI.BeginChangeCheck();
