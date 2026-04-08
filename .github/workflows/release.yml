@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - run: npm ci
+      - run: npm ci --no-workspaces
 
       - id: prev_version
         run: |
