@@ -1,3 +1,10 @@
+branches:
+  - master
+  - name: alpha
+    prerelease: true
+  - name: beta
+    prerelease: true
+
 plugins:
   - semantic-release-gitmoji
   - "@semantic-release/github"
