@@ -12,20 +12,16 @@
   "author": {
     "name": "esnya"
   },
-  "dependencies": {
-    "sh.orels.udontoolkit": "1.1.2"
-  },
   "devDependencies": {
-    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.4",
-    "@semantic-release/npm": "^9.0.1",
-    "semantic-release": "^19.0.2",
-    "semantic-release-gitmoji": "^1.4.4"
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "semantic-release": "^25.0.3",
+    "semantic-release-gitmoji": "^1.6.9"
   },
-  "unity": "2019.4",
+  "unity": "2022.3",
   "vpmDependencies": {
-    "com.vrchat.worlds": "3.1.1",
-    "com.vrchat.udonsharp": "1.1.7"
+    "com.vrchat.worlds": "3.4.0"
   }
 }

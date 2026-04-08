@@ -1,24 +1,23 @@
 
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 
 namespace InariUdon.Transforms
 {
-    [CustomName("Local Space Tracker"), UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
-    [HelpMessage("Track source transform as local position/rotation. You can translate and scale by parent transform. Call \"Trigger\" custome event to update manually. All fields are optional.")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    
     public class LocalSpaceTracker : UdonSharpBehaviour
     {
-        [SectionHeader("Tracked Source")][UTEditor]
+        [Header("Tracked Source")]
         public Transform source;
         public Transform sourceOrigin;
 
         [Space]
-        [SectionHeader("Tracker Transform")][UTEditor]
+        [Header("Tracker Transform")]
         public Transform positionTarget;
         public Transform rotationTarget;
 
-        [Popup("GetUpdateModes")] public string updateMode = "Update";
+         public string updateMode = "Update";
         bool onUpdate;
 
         void Start()
@@ -59,8 +58,8 @@ namespace InariUdon.Transforms
             };
         }
 
-        [Button("Use this as Position Target", true)] void UseThisAsPositionTarget() => positionTarget = transform;
-        [Button("Use this as Rotation Target", true)] void UseThisAsRotationTarget() => rotationTarget = transform;
+         void UseThisAsPositionTarget() => positionTarget = transform;
+         void UseThisAsRotationTarget() => rotationTarget = transform;
 #endif
     }
 }

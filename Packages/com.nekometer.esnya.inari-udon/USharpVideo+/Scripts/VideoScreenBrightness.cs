@@ -1,8 +1,6 @@
-﻿using UdonSharp;
+using UdonSharp;
 using UnityEngine;
 using UnityEngine.UI;
-using UdonToolkit;
-
 namespace InariUdon.UdonSharpVideoPlus
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
@@ -13,8 +11,8 @@ namespace InariUdon.UdonSharpVideoPlus
         public int subMesh = 0;
         public string colorPropertyName = "_EmissionColor";
         public bool uiBrightness;
-        [HideIf("@uiBrightness")] public Image icon;
-        [HideIf("@!uiBrightness")] public Material uiMaterial;
+         public Image icon;
+         public Material uiMaterial;
 
         private Material material;
         private Color max, uiMax;

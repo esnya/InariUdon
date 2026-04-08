@@ -1,5 +1,4 @@
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
@@ -11,12 +10,12 @@ namespace InariUdon.Sync
     {
         [UdonSynced] public bool value;
 
-        [ListView("On Set")] public UdonSharpBehaviour[] onSetEventListeners = {};
-        [ListView("On Set"), Popup("behaviour", "@onSetEventListeners", true)] public string[] onSetEventNames = {};
-        [ListView("On Reset")] public UdonSharpBehaviour[] onResetEventListeners = {};
-        [ListView("On Reset"), Popup("behaviour", "@onResetEventListeners", true)] public string[] onResetEventNames = {};
-        [ListView("On Toggle")] public UdonSharpBehaviour[] onToggleEventListeners = {};
-        [ListView("On Toggle"), Popup("behaviour", "@onToggleEventListeners", true)] public string[] onToggleEventNames = {};
+         public UdonSharpBehaviour[] onSetEventListeners = {};
+        public string[] onSetEventNames = {};
+         public UdonSharpBehaviour[] onResetEventListeners = {};
+        public string[] onResetEventNames = {};
+         public UdonSharpBehaviour[] onToggleEventListeners = {};
+        public string[] onToggleEventNames = {};
 
         private void DispatchEvent(UdonSharpBehaviour[] listeners, string[] names)
         {

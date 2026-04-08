@@ -1,19 +1,14 @@
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 
 namespace InariUdon.Transforms
 {
-    [
-        CustomName("Set Parent"),
-        HelpMessage("Modify parent in hierarchy ay runtime"),
-        UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
-    ]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class SetParent : UdonSharpBehaviour
     {
         #region Public Variables
-        [HideIf("@findParentByName")] [UTEditor] public Transform parent;
-        [HideIf("@!findParentByName")] [UTEditor] public string parentName;
+        public Transform parent;
+        public string parentName;
         [Tooltip("Find parent by `GameObject.Find(parentName)`")] public bool findParentByName;
         [Tooltip("None to use `this.transform`")] public Transform target;
 

@@ -1,5 +1,4 @@
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -9,50 +8,46 @@ using UnityEditor;
 
 namespace InariUdon.Driver
 {
-    [CustomName("Float Value Driver")]
-    [HelpMessage("Drives float parameters of animators by one float value calculated from scene.")]
+    
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class FloatValueDriver : UdonSharpBehaviour
     {
         #region Public Variables
-        [SectionHeader("Value Calculation Mode")]
-        [Popup("GetModeOptions")][OnValueChanged("OnModeStringChanged")][HelpBox("")][UTEditor]
+        [Header("Value Calculation Mode")]
+        
         public string modeString;
         [HideInInspector] public int mode;
 
         [Space]
 
-        [SectionHeader("Value Sources")]
-        [HideIf("HideTransformSource")][UTEditor]
+        [Header("Value Sources")]
+        
         public Transform sourceTransform;
-        [HideIf("HideTransformOrigin")][UTEditor]
+        
         public Transform transformOrigin;
-        [HideIf("HideLocalVector")][UTEditor]
+        
         public Vector3 localVector;
-        [HideIf("HideWorldVector")][UTEditor]
+        
         public Vector3 worldVector;
-        [HideIf("HideAxisVector")][UTEditor]
+        
         public Vector3 axisVector;
 
         [Space]
-        [SectionHeader("Value Transform")][UTEditor]
+        [Header("Value Transform")]
         public float valueMultiplier = 1;
         public float valueBias = 0;
         public bool clampValue;
-        [HideIf("@!clampValue")][UTEditor]
+        
         public float minValue = 0;
-        [HideIf("@!clampValue")][UTEditor]
+        
         public float maxValue = 1;
 
         [Space]
-        [SectionHeader("Drive Targets")][UTEditor]
+        [Header("Drive Targets")]
         public bool driveAnimatorParameters ;
 
-        [HideIf("@!driveAnimatorParameters")][ListView("Target Animators")][UTEditor]
         public Animator[] targetAnimators;
-        [ListView("Target Animators")]
-        [Popup("GetTargetAnimatorParameters")]
-        [UTEditor]
+        
         public string[] targetAnimatorParameters;
         #endregion
 
@@ -190,7 +185,6 @@ namespace InariUdon.Driver
                     return true;
             }
         }
-
 
         public bool HideAxisVector()
         {

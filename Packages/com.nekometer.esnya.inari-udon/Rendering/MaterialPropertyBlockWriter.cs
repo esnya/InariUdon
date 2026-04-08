@@ -1,7 +1,6 @@
 
 using System;
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.Udon;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -16,10 +15,6 @@ using UnityEngine.SceneManagement;
 namespace InariUdon.Rendering
 {
     [
-        CustomName("MaterialPropertyBlock Writer"),
-        HelpMessage(@"
-Apply a `MaterialPropertyBlock`.
-Override the material properties with various values, but they can share the same material. This is a first step for GPU instancing."),
         Documentation.ImageAttachments(new [] {
             "https://user-images.githubusercontent.com/2088693/121310202-160c6b00-c93e-11eb-92ec-91583c3f69f0.png",
             "https://user-images.githubusercontent.com/2088693/121310283-2cb2c200-c93e-11eb-9834-c99a901a0f1a.png",

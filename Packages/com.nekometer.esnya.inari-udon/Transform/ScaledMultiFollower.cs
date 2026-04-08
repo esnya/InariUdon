@@ -1,7 +1,6 @@
 #pragma warning disable IDE1006
 
 using UdonSharp;
-using UdonToolkit;
 using UnityEngine;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
@@ -14,38 +13,32 @@ namespace InariUdon.Transforms
 {
 
     [
-        CustomName("Scaled Multi Follower"),
-        HelpMessage(@"
-Drive multiple transform of targets by source transforms in single Update loop.
-Scale of positions and origin of transforms can be changed.
-This component allows you to display the position of an object on the minimap,  object placement or etc.
-        "),
         Documentation.ImageAttachments("https://user-images.githubusercontent.com/2088693/121690092-5d425980-cb00-11eb-9518-a19896cbabd5.png"),
         UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync),
     ]
     public class ScaledMultiFollower : UdonSharpBehaviour
     {
-        [SectionHeader("Source")]
+        [Header("Source")]
         [Tooltip("Find source from children")] public Transform sourceParent;
-        [Tooltip("Use specified sources")] [HideIf("EditorHideSources")] public Transform[] sources;
+        [Tooltip("Use specified sources")] public Transform[] sources;
         [Tooltip("Position origin of sources")] public Transform sourceOrigin;
         [Tooltip("Find sources by path")] public bool findSourceChild;
-        [Tooltip("Find sources by path")][HideIf("@!findSourceChild")] public string sourceChildPath;
+        [Tooltip("Find sources by path")] public string sourceChildPath;
 
-        [SectionHeader("Target")]
+        [Header("Target")]
         [Tooltip("Find targets from children")] public Transform targetParent;
-        [Tooltip("Use specified targets")][HideIf("EditorHideTargets")] public Transform[] targets;
+        [Tooltip("Use specified targets")] public Transform[] targets;
         [Tooltip("Position origin of targets")] public Transform targetOrigin;
         [Tooltip("Find targets by path")] public bool findTargetChild;
-        [Tooltip("Find targets by path")] [HideIf("@!findTargetChild")] public string targetChildPath;
+        [Tooltip("Find targets by path")] public string targetChildPath;
 
-        [SectionHeader("Transforms")]
+        [Header("Transforms")]
         [Tooltip("Scale positions")] public Vector3 positionScale = Vector3.one;
         [Tooltip("Scale positions")] public float scaleMultiplier = 1.0f;
         public bool inverseScale = false;
         [Tooltip("Enable rotation copy")] public bool rotation = true;
 
-        [SectionHeader("Other Options")]
+        [Header("Other Options")]
         public float updateFrequency = 900;
         [Tooltip("Copy `GameObject.activeSelf`")] public bool copyActive = false;
         public bool deactivateExcessiveTargets = true;
@@ -156,7 +149,6 @@ This component allows you to display the position of an object on the minimap,  
         public bool EditorHideSources() => sourceParent != null;
         public bool EditorHideTargets() => targetParent != null;
 
-        [Button("Sync Now", true)]
         public void EditorSyncNow()
         {
             Start();
