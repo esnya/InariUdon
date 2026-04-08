@@ -13,14 +13,3 @@ Do you looking for Udon Sun Controller ? This package does not contains them. It
 
 ![image](https://user-images.githubusercontent.com/2088693/180705211-f0f25559-d66f-460c-aede-445a230ae87a.png)
 ![image](https://user-images.githubusercontent.com/2088693/180705244-5dea9e3b-62a0-4ed5-b12d-89e612f49ecc.png)
-
-
-## Development (Codex Cloud)
-
-This repository includes a Codex Cloud bootstrap script for .NET-based tooling:
-
-```bash
-./.codex/setup.sh
-```
-
-The script installs a local .NET SDK into `$HOME/.dotnet` (if needed) and runs `dotnet tool restore` so `udonsharp-lint` is available from `.config/dotnet-tools.json`.
