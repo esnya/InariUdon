@@ -335,6 +335,7 @@ namespace InariUdon.Rendering
 
         private void ClearNow(MaterialPropertyBlockWriter writer)
         {
+            if (writer == null) return;
             writer.ClearTargetProperties();
         }
 
@@ -350,7 +351,10 @@ namespace InariUdon.Rendering
         private void OverrideAll(SerializedProperty targetsProperty)
         {
             var valuesProperty = GetListPropertyOf(targetsProperty, "Values");
-            for (int i = 0; i < valuesProperty.arraySize; i++) OverrideValue(valuesProperty.GetArrayElementAtIndex(i));
+            for (int i = 0; i < valuesProperty.arraySize; i++)
+            {
+                OverrideValue(valuesProperty.GetArrayElementAtIndex(i));
+            }
         }
 
         private void OnListGUI(ReorderableList list, Action RenderField)
