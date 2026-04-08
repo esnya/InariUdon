@@ -16,12 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
+      - name: Setup .NET (SDK 8 + Runtime 6)
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            6.0.x
 
       - name: Install UdonSharp Linter
-        run: dotnet tool install -g tktco.UdonSharpLinter --version 0.3.1
+        run: dotnet tool install --global tktco.UdonSharpLinter --version 0.3.1
 
       - name: Run UdonSharp Linter
-        run: dotnet tool run udonsharp-lint Packages/com.nekometer.esnya.inari-udon
+        run: ~/.dotnet/tools/udonsharp-lint Packages/com.nekometer.esnya.inari-udon
