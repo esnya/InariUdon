@@ -1,0 +1,25 @@
+name: UdonSharp Lint
+
+on:
+  push:
+    paths:
+      - 'Packages/**/*.cs'
+  pull_request:
+    paths:
+      - 'Packages/**/*.cs'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install UdonSharp Linter
+        run: dotnet tool install -g tktco.UdonSharpLinter
+
+      - name: Run UdonSharp Linter
+        run: udonsharp-lint Packages/com.nekometer.esnya.inari-udon
