@@ -120,6 +120,7 @@ namespace InariUdon.Rendering
             ClearProperties(colorTargets);
             ClearProperties(floatTargets);
             ClearProperties(textureTargets);
+            ClearProperties(vectorTargets);
         }
     }
 

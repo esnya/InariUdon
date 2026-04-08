@@ -40,6 +40,8 @@ namespace InariUdon.Transforms
             {
                 Undo.RecordObject(target, "ScaledMultiFollower Sync Now");
                 follower.EditorSyncNow();
+                EditorUtility.SetDirty(target);
+                serializedObject.Update();
             }
         }
     }

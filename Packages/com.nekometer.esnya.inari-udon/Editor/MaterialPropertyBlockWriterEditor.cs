@@ -36,17 +36,21 @@ namespace InariUdon.Rendering
         }
         public static int GetIndexOfProperty(Shader shader, string propertyName, IEnumerable<ShaderUtil.ShaderPropertyType> propertyTypes)
         {
-            return GetShaderPropertyNames(shader, propertyTypes)
-                .Select((n, i) => (n, i))
-                .Where(t => ShaderUtil.GetPropertyName(shader, t.i) == propertyName)
-                .Select(t => t.i)
+            return GetShaderPropertyIndices(shader, propertyTypes)
+                .Where(i => ShaderUtil.GetPropertyName(shader, i) == propertyName)
                 .Append(-1)
                 .First();
         }
 
         public static string GetShaderPropertyName(Shader shader, int index)
         {
-            return ShaderUtil.GetPropertyName(shader, Mathf.Clamp(index, 0, ShaderUtil.GetPropertyCount(shader)));
+            var propertyCount = ShaderUtil.GetPropertyCount(shader);
+            if (propertyCount == 0)
+            {
+                return string.Empty;
+            }
+
+            return ShaderUtil.GetPropertyName(shader, Mathf.Clamp(index, 0, propertyCount - 1));
         }
 
         public MaterialPropertyList(

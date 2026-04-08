@@ -12,7 +12,8 @@ namespace InariUdon.Sync
 
             serializedObject.Update();
 
-            var syncedFloat = (SyncedFloat)target;
+            var sliderProperty = serializedObject.FindProperty(nameof(SyncedFloat.slider));
+            var hideSliderOptions = sliderProperty.objectReferenceValue == null;
 
             var property = serializedObject.GetIterator();
             property.NextVisible(true);
@@ -23,7 +24,7 @@ namespace InariUdon.Sync
                 {
                     case nameof(SyncedFloat.wholeNumbers):
                     case nameof(SyncedFloat.exp):
-                        if (syncedFloat.HideSliderOptions()) continue;
+                        if (hideSliderOptions) continue;
                         break;
                 }
                 EditorGUILayout.PropertyField(property, true);
