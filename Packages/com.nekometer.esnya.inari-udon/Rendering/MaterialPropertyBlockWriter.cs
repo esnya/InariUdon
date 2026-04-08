@@ -108,9 +108,13 @@ namespace InariUdon.Rendering
 
         private void ClearProperties(Renderer[] renderers)
         {
+            if (renderers == null) return;
+
             var properties = new MaterialPropertyBlock();
             foreach (var renderer in renderers)
             {
+                if (renderer == null) continue;
+
                 for (int i = 0; i < renderer.sharedMaterials.Length; i++) renderer.SetPropertyBlock(properties, i);
             }
         }

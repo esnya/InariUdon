@@ -123,6 +123,9 @@ namespace InariUdon.Rendering
                         {
                             EditorGUI.PropertyField(fieldRect, nameProperty, emptyLabel);
                             fieldRect.x += rect.width / fieldCount;
+
+                            EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
+                            fieldRect.x += rect.width / fieldCount;
                         }
                         else
                         {
