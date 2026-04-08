@@ -15,17 +15,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - run: npm i -g semantic-release semantic-release-gitmoji @semantic-release/github @semantic-release/git @semantic-release/npm foreach-cli
+      - run: npm ci
 
       - id: prev_version
-        run: echo "prop=$(jq -r .version Packages/${{ env.packageName }}/package.json)" >> $GITHUB_OUTPUT
+        run: |
+          prop=$(jq -e -r '.version' "Packages/${{ env.packageName }}/package.json")
+          echo "prop=$prop" >> "$GITHUB_OUTPUT"
 
-      - run: npx semantic-release
+      - run: npx --no-install semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - id: version
-        run: echo "prop=$(jq -r .version Packages/${{ env.packageName }}/package.json)" >> $GITHUB_OUTPUT
+        run: |
+          prop=$(jq -e -r '.version' "Packages/${{ env.packageName }}/package.json")
+          echo "prop=$prop" >> "$GITHUB_OUTPUT"
     outputs:
       prev_version: ${{ steps.prev_version.outputs.prop }}
       next_version: ${{ steps.version.outputs.prop }}
