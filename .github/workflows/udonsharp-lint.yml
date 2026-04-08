@@ -21,9 +21,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install UdonSharp Linter
-        run: |
-          dotnet tool install -g tktco.UdonSharpLinter --version 0.3.1
-          echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
+        run: dotnet tool install -g tktco.UdonSharpLinter --version 0.3.1
 
       - name: Run UdonSharp Linter
-        run: udonsharp-lint Packages/com.nekometer.esnya.inari-udon
+        run: dotnet tool run udonsharp-lint Packages/com.nekometer.esnya.inari-udon
