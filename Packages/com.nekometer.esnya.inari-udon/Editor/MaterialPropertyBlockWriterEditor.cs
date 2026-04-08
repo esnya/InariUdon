@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UdonSharp;
 using UdonSharpEditor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -120,41 +119,49 @@ namespace InariUdon.Rendering
                         var propertyIndices = GetShaderPropertyIndices(shader, propertyTypes);
                         var propertyNames = GetShaderPropertyNames(shader, propertyTypes).ToArray();
 
-                        var currentSelectedIndex = propertyNames.Select((n, i) => (n, i)).Where(t => t.n == nameProperty.stringValue).Select(t => t.i).FirstOrDefault();
-
-                        var nextSelectedIndex = EditorGUI.Popup(fieldRect, currentSelectedIndex, propertyNames);
-                        fieldRect.x += rect.width / fieldCount;
-                        nameProperty.stringValue = propertyNames.Skip(nextSelectedIndex).Append(nameProperty.stringValue).First();
-
-                        var shaderPropertyIndex = propertyIndices.SkipWhile(i => GetShaderPropertyName(shader, i) != nameProperty.stringValue).FirstOrDefault();
-
-                        if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Color))
+                        if (propertyNames.Length == 0)
                         {
-                            valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
-                        }
-                        else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Range) && ShaderUtil.GetPropertyType(shader, shaderPropertyIndex) == ShaderUtil.ShaderPropertyType.Range && ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1) != ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2))
-                        {
-                            valueProperty.floatValue = EditorGUI.Slider(
-                                fieldRect,
-                                valueProperty.floatValue,
-                                ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1),
-                                ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2)
-                            );
-                        }
-                        else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Vector))
-                        {
-                            valueProperty.vector4Value = EditorGUI.Vector4Field(
-                                fieldRect,
-                                emptyLabel,
-                                valueProperty.vector4Value
-                            );
+                            EditorGUI.PropertyField(fieldRect, nameProperty, emptyLabel);
+                            fieldRect.x += rect.width / fieldCount;
                         }
                         else
                         {
-                            EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
-                        }
+                            var currentSelectedIndex = propertyNames.Select((n, i) => (n, i)).Where(t => t.n == nameProperty.stringValue).Select(t => t.i).FirstOrDefault();
 
-                        fieldRect.x += rect.width / fieldCount;
+                            var nextSelectedIndex = EditorGUI.Popup(fieldRect, currentSelectedIndex, propertyNames);
+                            fieldRect.x += rect.width / fieldCount;
+                            nameProperty.stringValue = propertyNames.Skip(nextSelectedIndex).Append(nameProperty.stringValue).First();
+
+                            var shaderPropertyIndex = propertyIndices.SkipWhile(i => GetShaderPropertyName(shader, i) != nameProperty.stringValue).FirstOrDefault();
+
+                            if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Color))
+                            {
+                                valueProperty.colorValue = EditorGUI.ColorField(fieldRect, emptyLabel, valueProperty.colorValue, true, true, true);
+                            }
+                            else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Range) && ShaderUtil.GetPropertyType(shader, shaderPropertyIndex) == ShaderUtil.ShaderPropertyType.Range && ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1) != ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2))
+                            {
+                                valueProperty.floatValue = EditorGUI.Slider(
+                                    fieldRect,
+                                    valueProperty.floatValue,
+                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 1),
+                                    ShaderUtil.GetRangeLimits(shader, shaderPropertyIndex, 2)
+                                );
+                            }
+                            else if (propertyTypes.Contains(ShaderUtil.ShaderPropertyType.Vector))
+                            {
+                                valueProperty.vector4Value = EditorGUI.Vector4Field(
+                                    fieldRect,
+                                    emptyLabel,
+                                    valueProperty.vector4Value
+                                );
+                            }
+                            else
+                            {
+                                EditorGUI.PropertyField(fieldRect, valueProperty, emptyLabel);
+                            }
+
+                            fieldRect.x += rect.width / fieldCount;
+                        }
                     }
                     else
                     {
@@ -423,12 +430,20 @@ namespace InariUdon.Rendering
             var shader = materialFilter?.shader;
             if (shader != null)
             {
-                var propertyNameIndex = EditorGUILayout.Popup(
-                    "Property Name",
-                    MaterialPropertyList.GetIndexOfProperty(materialFilter.shader, propertyName),
-                    MaterialPropertyList.GetShaderPropertyNames(materialFilter.shader).ToArray()
-                );
-                propertyName = MaterialPropertyList.GetShaderPropertyName(shader, propertyNameIndex);
+                var propertyNames = MaterialPropertyList.GetShaderPropertyNames(materialFilter.shader).ToArray();
+                if (propertyNames.Length > 0)
+                {
+                    var propertyNameIndex = EditorGUILayout.Popup(
+                        "Property Name",
+                        MaterialPropertyList.GetIndexOfProperty(materialFilter.shader, propertyName),
+                        propertyNames
+                    );
+                    propertyName = MaterialPropertyList.GetShaderPropertyName(shader, propertyNameIndex);
+                }
+                else
+                {
+                    propertyName = EditorGUILayout.TextField("Property Name", propertyName);
+                }
             }
             else
             {
