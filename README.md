@@ -13,3 +13,52 @@ Do you looking for Udon Sun Controller ? This package does not contains them. It
 
 ![image](https://user-images.githubusercontent.com/2088693/180705211-f0f25559-d66f-460c-aede-445a230ae87a.png)
 ![image](https://user-images.githubusercontent.com/2088693/180705244-5dea9e3b-62a0-4ed5-b12d-89e612f49ecc.png)
+
+## CI for UdonSharp (feasible on GitHub-hosted runners)
+Because this repository is a UPM package (not a full Unity project), the practical CI method is **static check with UdonSharp linter**.
+
+### What this repository runs
+1. Install .NET 8 SDK and .NET 6 runtime (`actions/setup-dotnet`)
+2. Install `tktco.UdonSharpLinter` as a global dotnet tool
+3. Run `udonsharp-lint` against `Packages/com.nekometer.esnya.inari-udon`
+
+### Local reproduction
+```bash
+# 1) Install .NET SDK 8.x and .NET Runtime 6.x first
+# (UdonSharpLinter depends on Microsoft.NETCore.App 6.0)
+
+# 2) Install linter
+dotnet tool install --global tktco.UdonSharpLinter --version 0.3.1
+
+# 3) If dotnet was installed into a custom location, export runtime path
+export DOTNET_ROOT="$HOME/.dotnet"
+export PATH="$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
+
+# 4) Run lint
+udonsharp-lint Packages/com.nekometer.esnya.inari-udon
+```
+
+### About Test / Build
+Running Unity Test Runner or full build requires a host Unity project and Unity license/secrets in CI, so they are intentionally not part of this workflow.
+
+
+### Alternative install (network-enabled env)
+If `dotnet` is not preinstalled, you can bootstrap it with the official installer script:
+
+```bash
+curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
+bash /tmp/dotnet-install.sh --channel 8.0 --install-dir "$HOME/.dotnet"
+bash /tmp/dotnet-install.sh --channel 6.0 --runtime dotnet --install-dir "$HOME/.dotnet"
+
+export DOTNET_ROOT="$HOME/.dotnet"
+export PATH="$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
+```
+
+
+### Codex Cloud development environment
+For Codex Cloud tasks, this repository now includes environment files:
+- `.codex/environment.yml`
+- `.codex/setup.sh`
+
+These scripts bootstrap dotnet (SDK 8 + runtime 6) and install `UdonSharpLinter` so cloud tasks can run lint immediately.
+
