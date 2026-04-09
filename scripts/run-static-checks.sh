@@ -29,8 +29,6 @@ if (Array.isArray(runtimeAsmdef.includePlatforms) && runtimeAsmdef.includePlatfo
 }
 
 const packageRoot = path.join(process.cwd(), "Packages/com.nekometer.esnya.inari-udon");
-const editorGuardPattern = /#if\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR|#if\s+UNITY_EDITOR/;
-const forbiddenUsingPattern = /^(using UnityEditor;|using UdonSharpEditor;)$/m;
 const errors = [];
 
 function walk(dir) {
@@ -44,8 +42,32 @@ function walk(dir) {
     const relativePath = path.relative(process.cwd(), fullPath).replaceAll(path.sep, "/");
     if (relativePath.includes("/Editor/")) continue;
     const source = fs.readFileSync(fullPath, "utf8");
-    if (forbiddenUsingPattern.test(source) && !editorGuardPattern.test(source)) {
-      errors.push(`${relativePath}: runtime script references editor-only namespaces without an editor preprocessor guard.`);
+    const lines = source.split(/\r?\n/);
+    let guardDepth = 0;
+    for (const line of lines) {
+      if (/^\s*#if\b/.test(line)) {
+        if (/^\s*#if\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line)) {
+          guardDepth += 1;
+        }
+        continue;
+      }
+      if (/^\s*#endif\b/.test(line)) {
+        guardDepth = Math.max(0, guardDepth - 1);
+        continue;
+      }
+      if (/^\s*#else\b/.test(line) || /^\s*#elif\b/.test(line)) {
+        if (guardDepth > 0) {
+          guardDepth -= 1;
+        }
+        if (/^\s*#elif\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line)) {
+          guardDepth += 1;
+        }
+        continue;
+      }
+      if (guardDepth === 0 && /^\s*using (UnityEditor|UdonSharpEditor);$/.test(line)) {
+        errors.push(`${relativePath}: runtime script references editor-only namespaces outside an editor preprocessor guard.`);
+        break;
+      }
     }
   }
 }
