@@ -49,7 +49,7 @@ namespace InariUdon.Transforms
         }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        string[] GetUpdateModes()
+        public string[] GetUpdateModes()
         {
             return new string[] {
                 "Update",
@@ -58,8 +58,8 @@ namespace InariUdon.Transforms
             };
         }
 
-         void UseThisAsPositionTarget() => positionTarget = transform;
-         void UseThisAsRotationTarget() => rotationTarget = transform;
+        public void UseThisAsPositionTarget() => positionTarget = transform;
+        public void UseThisAsRotationTarget() => rotationTarget = transform;
 #endif
     }
 }

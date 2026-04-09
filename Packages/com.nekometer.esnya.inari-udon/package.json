@@ -3,7 +3,7 @@
   "displayName": "InariUdon",
   "version": "10.0.0-alpha.3",
   "private": true,
-  "description": " Useful prefabs and Udon scripts for VRChat World SDK 3.0",
+  "description": "Useful prefabs and Udon scripts for VRChat World SDK 3.10.2",
   "keywords": [
     "VRChat",
     "Unity"
@@ -22,6 +22,6 @@
   },
   "unity": "2022.3",
   "vpmDependencies": {
-    "com.vrchat.worlds": "3.4.0"
+    "com.vrchat.worlds": "3.10.2"
   }
 }

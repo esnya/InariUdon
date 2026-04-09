@@ -1,5 +1,5 @@
 # InariUdon
-Useful prefabs and Udon scripts for VRChat World SDK 3.0
+Useful prefabs and Udon scripts for VRChat World SDK 3.10.2
 
 **BREAKING_CHANGE: UdonSharp is upgraded to 1.x. You must create project via VRChat Creator Companion**
 
