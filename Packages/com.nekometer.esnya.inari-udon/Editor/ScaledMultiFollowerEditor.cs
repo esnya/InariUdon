@@ -71,7 +71,10 @@ namespace InariUdon.Transforms
 
                 Undo.RecordObjects(undoTargets.ToArray(), "ScaledMultiFollower Sync Now");
                 follower.EditorSyncNow();
-                EditorUtility.SetDirty(target);
+                foreach (var undoTarget in undoTargets)
+                {
+                    EditorUtility.SetDirty(undoTarget);
+                }
                 serializedObject.Update();
             }
         }
