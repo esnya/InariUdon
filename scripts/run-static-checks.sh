@@ -6,14 +6,20 @@ cd "$ROOT_DIR"
 
 if [ -n "${CI:-}" ]; then
   CHECK_PATHS=('*.cs' '*.js' '*.json' '*.yml' '*.yaml' '*.md' '*.sh' '*.asmdef' '.releaserc.yml')
-  if git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+  if [ -n "${GITHUB_BASE_REF:-}" ] && git rev-parse --verify "origin/${GITHUB_BASE_REF}" >/dev/null 2>&1; then
+    git diff --check "origin/${GITHUB_BASE_REF}...HEAD" -- "${CHECK_PATHS[@]}"
+  elif git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
     TARGET_COMMIT='HEAD^2'
+    mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")
+    if [ "${#CHECK_FILES[@]}" -gt 0 ]; then
+      git diff-tree --check --no-commit-id --root -r "$TARGET_COMMIT" -- "${CHECK_FILES[@]}"
+    fi
   else
     TARGET_COMMIT='HEAD'
-  fi
-  mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")
-  if [ "${#CHECK_FILES[@]}" -gt 0 ]; then
-    git diff-tree --check --no-commit-id --root -r "$TARGET_COMMIT" -- "${CHECK_FILES[@]}"
+    mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")
+    if [ "${#CHECK_FILES[@]}" -gt 0 ]; then
+      git diff-tree --check --no-commit-id --root -r "$TARGET_COMMIT" -- "${CHECK_FILES[@]}"
+    fi
   fi
 else
   git diff --check
