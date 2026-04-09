@@ -54,6 +54,7 @@ namespace InariUdon.Transforms
                     {
                         undoTargets.Add(syncedTarget);
                         undoTargets.Add(syncedTarget.gameObject);
+                        undoTargets.AddRange(syncedTarget.GetComponents<Collider>());
                     }
                 }
 
