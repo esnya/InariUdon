@@ -11,7 +11,7 @@ if [ ! -x "${DOTNET_BIN}" ]; then
 fi
 
 export DOTNET_ROOT
-export PATH="${DOTNET_ROOT}:${PATH}"
+export PATH="${DOTNET_ROOT}:${HOME}/.dotnet/tools:${PATH}"
 
 echo "[setup] dotnet version: $(dotnet --version)"
 
@@ -24,4 +24,13 @@ fi
 if [ -f .config/dotnet-tools.json ]; then
   echo "[setup] Restoring local dotnet tools from .config/dotnet-tools.json ..."
   dotnet tool restore
+
+  mkdir -p .codex/bin
+  cat > .codex/bin/udonsharp-lint <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+dotnet tool run udonsharp-lint -- "$@"
+EOF
+  chmod +x .codex/bin/udonsharp-lint
+  export PATH="$(pwd)/.codex/bin:${PATH}"
 fi

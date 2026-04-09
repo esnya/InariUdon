@@ -15,22 +15,24 @@ namespace InariUdon.Sync
             var sliderProperty = serializedObject.FindProperty(nameof(SyncedFloat.slider));
             var hideSliderOptions = sliderProperty.objectReferenceValue == null;
 
-            var property = serializedObject.GetIterator();
-            property.NextVisible(true);
-
-            while (property.NextVisible(false))
-            {
-                switch (property.name)
-                {
-                    case nameof(SyncedFloat.wholeNumbers):
-                    case nameof(SyncedFloat.exp):
-                        if (hideSliderOptions) continue;
-                        break;
-                }
-                EditorGUILayout.PropertyField(property, true);
-            }
+            InariUdonEditorUtility.DrawVisibleProperties(
+                serializedObject,
+                shouldDraw: property => !hideSliderOptions || !IsSliderOnlyProperty(property.name),
+                drawProperty: property => EditorGUILayout.PropertyField(property, true));
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private static bool IsSliderOnlyProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(SyncedFloat.wholeNumbers):
+                case nameof(SyncedFloat.exp):
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
