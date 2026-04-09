@@ -11,6 +11,10 @@ namespace InariUdon
     public static class InariUdonEditorUtility
     {
         private static readonly Dictionary<Type, string[]> CachedPublicEventNames = new Dictionary<Type, string[]>();
+        private static readonly GUILayoutOption[] MiniButtonLayout =
+        {
+            GUILayout.ExpandWidth(false),
+        };
 
         public static readonly string[] CommonVrAxes = new[]
         {
@@ -64,6 +68,33 @@ namespace InariUdon
             foreach (var target in targets)
             {
                 if (target != null) target.arraySize = source.arraySize;
+            }
+        }
+
+        public static IEnumerable<SerializedProperty> EnumerateArrayElements(SerializedProperty arrayProperty)
+        {
+            if (arrayProperty == null || !arrayProperty.isArray) yield break;
+
+            for (var index = 0; index < arrayProperty.arraySize; index++)
+            {
+                yield return arrayProperty.GetArrayElementAtIndex(index);
+            }
+        }
+
+        public static void DrawArrayElements(
+            SerializedProperty arrayProperty,
+            Action<SerializedProperty, int> drawElement = null,
+            Func<SerializedProperty, int, bool> shouldDraw = null)
+        {
+            if (arrayProperty == null || !arrayProperty.isArray) return;
+
+            for (var index = 0; index < arrayProperty.arraySize; index++)
+            {
+                var element = arrayProperty.GetArrayElementAtIndex(index);
+                if (shouldDraw != null && !shouldDraw(element, index)) continue;
+
+                if (drawElement != null) drawElement(element, index);
+                else EditorGUILayout.PropertyField(element, true);
             }
         }
 
@@ -144,6 +175,28 @@ namespace InariUdon
             return newValue == emptyLabel ? null : newValue;
         }
 
+        public static T PopupField<T>(GUIContent label, T value, IEnumerable<T> values, Func<T, string> getLabel = null, string emptyLabel = null)
+        {
+            var options = values?.Distinct().ToList() ?? new List<T>();
+            if (options.Count == 0)
+            {
+                return value;
+            }
+
+            getLabel ??= option => option?.ToString() ?? string.Empty;
+
+            var displayOptions = options.Select(getLabel).ToList();
+            if (emptyLabel != null)
+            {
+                options.Insert(0, default);
+                displayOptions.Insert(0, emptyLabel);
+            }
+
+            var index = Mathf.Max(options.FindIndex(option => EqualityComparer<T>.Default.Equals(option, value)), 0);
+            index = EditorGUILayout.Popup(label, index, displayOptions.ToArray());
+            return options[index];
+        }
+
         public static void IntPopupField(SerializedProperty property, IReadOnlyList<string> values, GUIContent label = null)
         {
             property.intValue = IntPopupField(label ?? new GUIContent(property.displayName), property.intValue, values);
@@ -158,6 +211,55 @@ namespace InariUdon
 
             var index = Mathf.Clamp(value, 0, values.Count - 1);
             return EditorGUILayout.Popup(label, index, values.ToArray());
+        }
+
+        public static void ObjectPopupField<T>(
+            SerializedProperty property,
+            IEnumerable<T> values,
+            GUIContent label = null,
+            string emptyLabel = null,
+            Func<T, string> getLabel = null) where T : UnityEngine.Object
+        {
+            property.objectReferenceValue = PopupField(
+                label ?? new GUIContent(property.displayName),
+                property.objectReferenceValue as T,
+                values,
+                getLabel ?? (value => value ? value.name : string.Empty),
+                emptyLabel);
+        }
+
+        public static void ObjectFieldWithSelection<T>(SerializedProperty property, GUIContent label = null, string buttonLabel = "From Selected")
+            where T : UnityEngine.Object
+        {
+            property.objectReferenceValue = ObjectFieldWithSelection(
+                label ?? new GUIContent(property.displayName),
+                property.objectReferenceValue as T,
+                buttonLabel);
+        }
+
+        public static T ObjectFieldWithSelection<T>(GUIContent label, T value, string buttonLabel = "From Selected")
+            where T : UnityEngine.Object
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                value = EditorGUILayout.ObjectField(label, value, typeof(T), true) as T;
+                if (GUILayout.Button(buttonLabel, EditorStyles.miniButton, MiniButtonLayout))
+                {
+                    value = GetSelectedObject<T>() ?? value;
+                }
+            }
+
+            return value;
+        }
+
+        public static T GetSelectedObject<T>() where T : UnityEngine.Object
+        {
+            if (typeof(Component).IsAssignableFrom(typeof(T)))
+            {
+                return Selection.activeGameObject ? Selection.activeGameObject.GetComponent<T>() : null;
+            }
+
+            return Selection.activeObject as T;
         }
 
         public static string[] GetUdonPublicEventNames(UdonSharpBehaviour udon, bool includeNullOption = false)
