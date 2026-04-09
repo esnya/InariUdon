@@ -1,7 +1,14 @@
 {
     "name": "InariUdon.EditorTools",
     "references": [
-        "InariUdon.Editor"
+        "InariUdon.Editor",
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor",
+        "VRC.Udon",
+        "VRC.Udon.Editor",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRC.SDKBase",
+        "VRC.SDKBase.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -10,10 +17,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
-    "defineConstraints": [
-        "INARI_UDON_EDITOR_TOOLS"
-    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }
