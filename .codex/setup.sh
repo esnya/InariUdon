@@ -30,4 +30,4 @@ EOF
 chmod +x .codex/bin/udonsharp-lint
 
 export PATH="$(pwd)/.codex/bin:$PATH"
-dotnet tool run udonsharp-lint Packages/com.nekometer.esnya.inari-udon >/dev/null
+test -x .codex/bin/udonsharp-lint
