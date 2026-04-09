@@ -1,4 +1,3 @@
-using UdonSharpEditor;
 using UnityEditor;
 
 namespace InariUdon.Sync
@@ -8,8 +7,6 @@ namespace InariUdon.Sync
     {
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
 
             var sliderProperty = serializedObject.FindProperty(nameof(SyncedFloat.slider));

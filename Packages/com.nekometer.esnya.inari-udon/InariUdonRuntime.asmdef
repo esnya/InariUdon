@@ -4,7 +4,6 @@
         "VRC.Udon",
         "VRC.Udon.Serialization.OdinSerializer",
         "UdonSharp.Runtime",
-        "UdonSharp.Editor",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
@@ -17,7 +16,7 @@
     "versionDefines": [
         {
             "name": "com.vrchat.worlds",
-            "expression": "[3.10.2,)",
+            "expression": "3.10.2",
             "define": "UDONSHARP"
         }
     ],

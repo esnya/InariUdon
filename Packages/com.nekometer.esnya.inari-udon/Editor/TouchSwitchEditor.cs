@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using UdonSharpEditor;
 
 namespace InariUdon.Interaction
 {
@@ -9,8 +8,6 @@ namespace InariUdon.Interaction
     {
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
 
             var networked = serializedObject.FindProperty(nameof(TouchSwitch.networked)).boolValue;

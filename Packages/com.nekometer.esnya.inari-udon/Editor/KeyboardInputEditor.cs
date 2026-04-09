@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using UdonSharpEditor;
 using System;
 
 namespace InariUdon.Interaction
@@ -16,8 +15,6 @@ namespace InariUdon.Interaction
 
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
             var keyCodes = serializedObject.FindProperty(nameof(KeyboardInput.keyCodes));
             var modes = serializedObject.FindProperty(nameof(KeyboardInput.modes));

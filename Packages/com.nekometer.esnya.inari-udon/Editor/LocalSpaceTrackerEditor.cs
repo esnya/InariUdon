@@ -1,4 +1,3 @@
-using UdonSharpEditor;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,14 +6,18 @@ namespace InariUdon.Transforms
     [CustomEditor(typeof(LocalSpaceTracker))]
     public class LocalSpaceTrackerEditor : Editor
     {
+        private static readonly string[] UpdateModes =
+        {
+            "Update",
+            "Start",
+            "CustomEvent",
+        };
+
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
 
             var tracker = (LocalSpaceTracker)target;
-            var updateModes = tracker.GetUpdateModes();
 
             InariUdonEditorUtility.DrawVisibleProperties(
                 serializedObject,
@@ -22,7 +25,7 @@ namespace InariUdon.Transforms
                 {
                     if (property.name == nameof(LocalSpaceTracker.updateMode))
                     {
-                        InariUdonEditorUtility.StringPopupField(property, updateModes, new GUIContent(property.displayName));
+                        InariUdonEditorUtility.StringPopupField(property, UpdateModes, new GUIContent(property.displayName));
                         return;
                     }
 
@@ -37,11 +40,11 @@ namespace InariUdon.Transforms
             {
                 if (GUILayout.Button("Use This As Position Target"))
                 {
-                    InariUdonEditorUtility.RecordAndDirty("Set Position Target", () => tracker.UseThisAsPositionTarget(), tracker);
+                    InariUdonEditorUtility.RecordAndDirty("Set Position Target", () => tracker.positionTarget = tracker.transform, tracker);
                 }
                 if (GUILayout.Button("Use This As Rotation Target"))
                 {
-                    InariUdonEditorUtility.RecordAndDirty("Set Rotation Target", () => tracker.UseThisAsRotationTarget(), tracker);
+                    InariUdonEditorUtility.RecordAndDirty("Set Rotation Target", () => tracker.rotationTarget = tracker.transform, tracker);
                 }
             }
         }

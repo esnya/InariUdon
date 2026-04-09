@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UdonSharp;
 using UnityEditor;
 using UnityEngine;
 
@@ -125,17 +124,17 @@ namespace InariUdon
 
         public static void UdonPublicEventField(SerializedProperty udonProperty, SerializedProperty valueProperty, GUIContent label)
         {
-            valueProperty.stringValue = UdonPublicEventField(label, udonProperty.objectReferenceValue as UdonSharpBehaviour, valueProperty.stringValue);
+            valueProperty.stringValue = UdonPublicEventField(label, udonProperty.objectReferenceValue as Component, valueProperty.stringValue);
         }
         public static void UdonPublicEventField(SerializedProperty udonProperty, SerializedProperty valueProperty)
         {
-            valueProperty.stringValue = UdonPublicEventField(new GUIContent(valueProperty.displayName), udonProperty.objectReferenceValue as UdonSharpBehaviour, valueProperty.stringValue);
+            valueProperty.stringValue = UdonPublicEventField(new GUIContent(valueProperty.displayName), udonProperty.objectReferenceValue as Component, valueProperty.stringValue);
         }
-        public static void UdonPublicEventField(UdonSharpBehaviour udon, SerializedProperty property)
+        public static void UdonPublicEventField(Component udon, SerializedProperty property)
         {
             property.stringValue = UdonPublicEventField(new GUIContent(property.displayName), udon, property.stringValue);
         }
-        public static string UdonPublicEventField(GUIContent label, UdonSharpBehaviour udon, string value)
+        public static string UdonPublicEventField(GUIContent label, Component udon, string value)
         {
             if (udon == null) return EditorGUILayout.TextField(label, value);
 
@@ -262,7 +261,7 @@ namespace InariUdon
             return Selection.activeObject as T;
         }
 
-        public static string[] GetUdonPublicEventNames(UdonSharpBehaviour udon, bool includeNullOption = false)
+        public static string[] GetUdonPublicEventNames(Component udon, bool includeNullOption = false)
         {
             if (udon == null) return includeNullOption ? new[] { "(null)" } : Array.Empty<string>();
 

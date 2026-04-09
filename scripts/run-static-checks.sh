@@ -8,6 +8,8 @@ if [ -n "${CI:-}" ]; then
   CHECK_PATHS=('*.cs' '*.js' '*.json' '*.yml' '*.yaml' '*.md' '*.sh' '*.asmdef' '.releaserc.yml')
   if [ -n "${GITHUB_BASE_REF:-}" ] && git rev-parse --verify "origin/${GITHUB_BASE_REF}" >/dev/null 2>&1; then
     git diff --check "origin/${GITHUB_BASE_REF}...HEAD" -- "${CHECK_PATHS[@]}"
+  elif [ -n "${GITHUB_EVENT_BEFORE:-}" ] && [ "${GITHUB_EVENT_BEFORE}" != "0000000000000000000000000000000000000000" ] && git rev-parse --verify "${GITHUB_EVENT_BEFORE}^{commit}" >/dev/null 2>&1; then
+    git diff --check "${GITHUB_EVENT_BEFORE}...HEAD" -- "${CHECK_PATHS[@]}"
   elif git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
     TARGET_COMMIT='HEAD^2'
     mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")

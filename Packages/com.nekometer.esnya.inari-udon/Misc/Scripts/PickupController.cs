@@ -5,7 +5,6 @@ using VRC.SDK3.Components;
 using VRC.SDKBase;
 
 #if UNITY_EDITOR && !COMPILER_UDONSHARP
-using UdonSharpEditor;
 using UnityEditor;
 #endif
 

@@ -6,7 +6,6 @@ using VRC.SDK3.Components;
 using VRC.SDKBase;
 using VRC.Udon;
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-using UdonSharpEditor;
 #endif
 
 namespace InariUdon.Transforms
