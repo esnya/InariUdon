@@ -4,7 +4,11 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-git diff --check
+if [ -n "${CI:-}" ]; then
+  git diff-tree --check --no-commit-id --root -r HEAD
+else
+  git diff --check
+fi
 
 ruby -e 'require "yaml"; YAML.load_file(".releaserc.yml"); Dir[".github/workflows/*.yml"].sort.each { |path| YAML.load_file(path) }'
 
@@ -30,6 +34,8 @@ if (Array.isArray(runtimeAsmdef.includePlatforms) && runtimeAsmdef.includePlatfo
 
 const packageRoot = path.join(process.cwd(), "Packages/com.nekometer.esnya.inari-udon");
 const errors = [];
+const editorOnlyConditionPattern =
+  /^(?:UNITY_EDITOR|!COMPILER_UDONSHARP\s*&&\s*UNITY_EDITOR|UNITY_EDITOR\s*&&\s*!COMPILER_UDONSHARP)\s*$/;
 
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -46,7 +52,7 @@ function walk(dir) {
     const guardStack = [];
     for (const line of lines) {
       if (/^\s*#if\b/.test(line)) {
-        guardStack.push(/^\s*#if\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line));
+        guardStack.push(editorOnlyConditionPattern.test(line.replace(/^\s*#if\s+/, "").trim()));
         continue;
       }
       if (/^\s*#endif\b/.test(line)) {
@@ -62,7 +68,7 @@ function walk(dir) {
       if (/^\s*#elif\b/.test(line)) {
         if (guardStack.length > 0) {
           guardStack[guardStack.length - 1] =
-            /^\s*#elif\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line);
+            editorOnlyConditionPattern.test(line.replace(/^\s*#elif\s+/, "").trim());
         }
         continue;
       }
