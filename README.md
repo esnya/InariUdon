@@ -60,5 +60,27 @@ For Codex Cloud tasks, this repository now includes environment files:
 - `.codex/environment.yml`
 - `.codex/setup.sh`
 
-These scripts bootstrap dotnet (SDK 8 + runtime 6) and install `UdonSharpLinter` so cloud tasks can run lint immediately.
+These scripts bootstrap dotnet (SDK 8 + runtime 6) and restore the repo-pinned `UdonSharpLinter` tool so cloud tasks can run lint immediately.
 
+## Local Checks
+Run the fast local verification bundle with:
+
+```bash
+bash scripts/run-local-checks.sh
+```
+
+This runs:
+- `git diff --check`
+- YAML parsing for `.releaserc.yml` and GitHub Actions workflows
+- JSON parsing for root and package manifests
+- `udonsharp-lint` via the repo-local dotnet tool manifest
+
+Optional Unity batchmode compile is available with:
+
+```bash
+UNITY_EXE="/path/to/Unity.exe" \
+UNITY_PROJECT_PATH="/path/to/vrchat-host-project" \
+bash scripts/run-local-checks.sh --unity
+```
+
+`--unity` intentionally requires a separate VRChat Creator Companion host project that already includes this package, because package-only repositories do not compile reliably in batchmode without a pinned host project.

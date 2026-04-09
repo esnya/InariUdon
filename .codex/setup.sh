@@ -17,10 +17,17 @@ fi
 export DOTNET_ROOT="$DOTNET_DIR"
 export PATH="$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
 
-if ! command -v udonsharp-lint >/dev/null 2>&1; then
-  dotnet tool install --global tktco.UdonSharpLinter --version 0.3.1
-fi
-
 echo "DOTNET_ROOT=$DOTNET_ROOT"
 dotnet --info >/dev/null
-dotnet tool list --global | grep -q tktco.udonsharplinter
+dotnet tool restore
+
+mkdir -p .codex/bin
+cat > .codex/bin/udonsharp-lint <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+dotnet tool run udonsharp-lint -- "$@"
+EOF
+chmod +x .codex/bin/udonsharp-lint
+
+export PATH="$(pwd)/.codex/bin:$PATH"
+dotnet tool run udonsharp-lint Packages/com.nekometer.esnya.inari-udon >/dev/null
