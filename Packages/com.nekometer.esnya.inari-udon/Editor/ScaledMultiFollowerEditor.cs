@@ -31,22 +31,10 @@ namespace InariUdon.Transforms
 
             var follower = (ScaledMultiFollower)target;
 
-            var property = serializedObject.GetIterator();
-            property.NextVisible(true);
-
-            while (property.NextVisible(false))
-            {
-                switch (property.name)
-                {
-                    case nameof(ScaledMultiFollower.sources):
-                        if (follower.EditorHideSources()) continue;
-                        break;
-                    case nameof(ScaledMultiFollower.targets):
-                        if (follower.EditorHideTargets()) continue;
-                        break;
-                }
-                EditorGUILayout.PropertyField(property, true);
-            }
+            InariUdonEditorUtility.DrawVisibleProperties(
+                serializedObject,
+                shouldDraw: property => ShouldDrawProperty(property.name, follower),
+                drawProperty: property => EditorGUILayout.PropertyField(property, true));
 
             serializedObject.ApplyModifiedProperties();
 
@@ -69,13 +57,21 @@ namespace InariUdon.Transforms
                     }
                 }
 
-                Undo.RecordObjects(undoTargets.ToArray(), "ScaledMultiFollower Sync Now");
-                follower.EditorSyncNow();
-                foreach (var undoTarget in undoTargets)
-                {
-                    EditorUtility.SetDirty(undoTarget);
-                }
+                InariUdonEditorUtility.RecordAndDirty("ScaledMultiFollower Sync Now", undoTargets, () => follower.EditorSyncNow());
                 serializedObject.Update();
+            }
+        }
+
+        private static bool ShouldDrawProperty(string propertyName, ScaledMultiFollower follower)
+        {
+            switch (propertyName)
+            {
+                case nameof(ScaledMultiFollower.sources):
+                    return !follower.EditorHideSources();
+                case nameof(ScaledMultiFollower.targets):
+                    return !follower.EditorHideTargets();
+                default:
+                    return true;
             }
         }
     }

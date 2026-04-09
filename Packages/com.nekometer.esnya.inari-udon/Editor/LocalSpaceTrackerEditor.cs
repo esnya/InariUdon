@@ -16,27 +16,18 @@ namespace InariUdon.Transforms
             var tracker = (LocalSpaceTracker)target;
             var updateModes = tracker.GetUpdateModes();
 
-            var property = serializedObject.GetIterator();
-            property.NextVisible(true);
-
-            while (property.NextVisible(false))
-            {
-                if (property.name == nameof(LocalSpaceTracker.updateMode))
+            InariUdonEditorUtility.DrawVisibleProperties(
+                serializedObject,
+                drawProperty: property =>
                 {
-                    var currentIndex = System.Array.IndexOf(updateModes, property.stringValue);
-                    if (currentIndex < 0) currentIndex = 0;
-                    EditorGUI.BeginChangeCheck();
-                    var newIndex = EditorGUILayout.Popup(new GUIContent(property.displayName), currentIndex, updateModes);
-                    if (EditorGUI.EndChangeCheck())
+                    if (property.name == nameof(LocalSpaceTracker.updateMode))
                     {
-                        property.stringValue = updateModes[newIndex];
+                        InariUdonEditorUtility.StringPopupField(property, updateModes, new GUIContent(property.displayName));
+                        return;
                     }
-                }
-                else
-                {
+
                     EditorGUILayout.PropertyField(property, true);
-                }
-            }
+                });
 
             serializedObject.ApplyModifiedProperties();
 
@@ -46,15 +37,11 @@ namespace InariUdon.Transforms
             {
                 if (GUILayout.Button("Use This As Position Target"))
                 {
-                    Undo.RecordObject(tracker, "Set Position Target");
-                    tracker.UseThisAsPositionTarget();
-                    EditorUtility.SetDirty(tracker);
+                    InariUdonEditorUtility.RecordAndDirty("Set Position Target", () => tracker.UseThisAsPositionTarget(), tracker);
                 }
                 if (GUILayout.Button("Use This As Rotation Target"))
                 {
-                    Undo.RecordObject(tracker, "Set Rotation Target");
-                    tracker.UseThisAsRotationTarget();
-                    EditorUtility.SetDirty(tracker);
+                    InariUdonEditorUtility.RecordAndDirty("Set Rotation Target", () => tracker.UseThisAsRotationTarget(), tracker);
                 }
             }
         }
