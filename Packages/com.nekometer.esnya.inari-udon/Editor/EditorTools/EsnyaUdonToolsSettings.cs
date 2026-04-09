@@ -2,10 +2,6 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-#if VRCSDK && UDON
-using VRC.Udon;
-#endif
-
 namespace InariUdon.EditorTools
 {
     public class InariUdonSettings : ScriptableObject

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UdonSharpEditor;
 using UnityEditor;
 using UnityEngine;
@@ -38,7 +39,18 @@ namespace InariUdon.Transforms
 
             if (GUILayout.Button("Sync Now"))
             {
-                Undo.RecordObject(target, "ScaledMultiFollower Sync Now");
+                var undoTargets = new List<Object> { target };
+                if (follower.targets != null)
+                {
+                    foreach (var syncedTarget in follower.targets)
+                    {
+                        if (syncedTarget == null) continue;
+                        undoTargets.Add(syncedTarget);
+                        undoTargets.Add(syncedTarget.gameObject);
+                    }
+                }
+
+                Undo.RecordObjects(undoTargets.ToArray(), "ScaledMultiFollower Sync Now");
                 follower.EditorSyncNow();
                 EditorUtility.SetDirty(target);
                 serializedObject.Update();
