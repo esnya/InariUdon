@@ -34,3 +34,10 @@ EOF
   chmod +x .codex/bin/udonsharp-lint
   export PATH="$(pwd)/.codex/bin:${PATH}"
 fi
+
+echo "DOTNET_ROOT=$DOTNET_ROOT"
+dotnet --info >/dev/null
+
+if [ -x .codex/bin/udonsharp-lint ]; then
+  test -x .codex/bin/udonsharp-lint
+fi

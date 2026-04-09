@@ -2,4 +2,5 @@ name: inariudon-codex-cloud
 setup:
   - bash .codex/setup.sh
 checks:
-  - export DOTNET_ROOT="$HOME/.dotnet" && export PATH="$DOTNET_ROOT:$PATH" && dotnet tool run udonsharp-lint Packages/com.nekometer.esnya.inari-udon
+  - bash scripts/run-static-checks.sh
+  - bash scripts/run-local-checks.sh

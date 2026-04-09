@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+if [ -n "${CI:-}" ]; then
+  CHECK_PATHS=('*.cs' '*.js' '*.json' '*.yml' '*.yaml' '*.md' '*.sh' '*.asmdef' '.releaserc.yml')
+  if [ -n "${GITHUB_BASE_REF:-}" ] && git rev-parse --verify "origin/${GITHUB_BASE_REF}" >/dev/null 2>&1; then
+    git diff --check "origin/${GITHUB_BASE_REF}...HEAD" -- "${CHECK_PATHS[@]}"
+  elif git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+    TARGET_COMMIT='HEAD^2'
+    mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")
+    if [ "${#CHECK_FILES[@]}" -gt 0 ]; then
+      git diff-tree --check --no-commit-id --root -r "$TARGET_COMMIT" -- "${CHECK_FILES[@]}"
+    fi
+  else
+    TARGET_COMMIT='HEAD'
+    mapfile -t CHECK_FILES < <(git diff-tree --no-commit-id --name-only --root -r "$TARGET_COMMIT" -- "${CHECK_PATHS[@]}")
+    if [ "${#CHECK_FILES[@]}" -gt 0 ]; then
+      git diff-tree --check --no-commit-id --root -r "$TARGET_COMMIT" -- "${CHECK_FILES[@]}"
+    fi
+  fi
+else
+  git diff --check
+fi
+
+ruby -e 'require "yaml"; YAML.load_file(".releaserc.yml"); Dir[".github/workflows/*.yml"].sort.each { |path| YAML.load_file(path) }'
+
+node <<'NODE'
+const fs = require("fs");
+const path = require("path");
+
+const manifests = [
+  "package.json",
+  "Packages/com.nekometer.esnya.inari-udon/package.json",
+  "Packages/com.nekometer.esnya.inari-udon/InariUdonRuntime.asmdef",
+  "Packages/com.nekometer.esnya.inari-udon/Editor/InariUdonEditor.asmdef",
+];
+
+for (const relativePath of manifests) {
+  JSON.parse(fs.readFileSync(path.join(process.cwd(), relativePath), "utf8"));
+}
+
+const runtimeAsmdef = JSON.parse(fs.readFileSync("Packages/com.nekometer.esnya.inari-udon/InariUdonRuntime.asmdef", "utf8"));
+if (Array.isArray(runtimeAsmdef.includePlatforms) && runtimeAsmdef.includePlatforms.includes("Editor")) {
+  throw new Error("Runtime asmdef must not be editor-only.");
+}
+
+const packageRoot = path.join(process.cwd(), "Packages/com.nekometer.esnya.inari-udon");
+const errors = [];
+const editorOnlyConditionPattern =
+  /^(?:UNITY_EDITOR|!COMPILER_UDONSHARP\s*&&\s*UNITY_EDITOR|UNITY_EDITOR\s*&&\s*!COMPILER_UDONSHARP)\s*$/;
+
+function walk(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walk(fullPath);
+      continue;
+    }
+    if (!entry.name.endsWith(".cs")) continue;
+    const relativePath = path.relative(process.cwd(), fullPath).replaceAll(path.sep, "/");
+    if (relativePath.includes("/Editor/")) continue;
+    const source = fs.readFileSync(fullPath, "utf8");
+    const lines = source.split(/\r?\n/);
+    const guardStack = [];
+    for (const line of lines) {
+      if (/^\s*#if\b/.test(line)) {
+        const matchesEditorOnly = editorOnlyConditionPattern.test(line.replace(/^\s*#if\s+/, "").trim());
+        guardStack.push({ active: matchesEditorOnly, matched: matchesEditorOnly });
+        continue;
+      }
+      if (/^\s*#endif\b/.test(line)) {
+        guardStack.pop();
+        continue;
+      }
+      if (/^\s*#else\b/.test(line)) {
+        if (guardStack.length > 0) {
+          const current = guardStack[guardStack.length - 1];
+          current.active = !current.matched;
+          current.matched = true;
+        }
+        continue;
+      }
+      if (/^\s*#elif\b/.test(line)) {
+        if (guardStack.length > 0) {
+          const current = guardStack[guardStack.length - 1];
+          const matchesEditorOnly = editorOnlyConditionPattern.test(line.replace(/^\s*#elif\s+/, "").trim());
+          current.active = !current.matched && matchesEditorOnly;
+          current.matched = current.matched || matchesEditorOnly;
+        }
+        continue;
+      }
+      const guardedByEditor = guardStack.some(frame => frame.active);
+      if (!guardedByEditor && /^\s*using (UnityEditor|UdonSharpEditor);$/.test(line)) {
+        errors.push(`${relativePath}: runtime script references editor-only namespaces outside an editor preprocessor guard.`);
+        break;
+      }
+    }
+  }
+}
+
+walk(packageRoot);
+
+if (errors.length > 0) {
+  console.error(errors.join("\n"));
+  process.exit(1);
+}
+NODE
