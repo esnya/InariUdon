@@ -43,28 +43,31 @@ function walk(dir) {
     if (relativePath.includes("/Editor/")) continue;
     const source = fs.readFileSync(fullPath, "utf8");
     const lines = source.split(/\r?\n/);
-    let guardDepth = 0;
+    const guardStack = [];
     for (const line of lines) {
       if (/^\s*#if\b/.test(line)) {
-        if (/^\s*#if\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line)) {
-          guardDepth += 1;
-        }
+        guardStack.push(/^\s*#if\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line));
         continue;
       }
       if (/^\s*#endif\b/.test(line)) {
-        guardDepth = Math.max(0, guardDepth - 1);
+        guardStack.pop();
         continue;
       }
-      if (/^\s*#else\b/.test(line) || /^\s*#elif\b/.test(line)) {
-        if (guardDepth > 0) {
-          guardDepth -= 1;
-        }
-        if (/^\s*#elif\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line)) {
-          guardDepth += 1;
+      if (/^\s*#else\b/.test(line)) {
+        if (guardStack.length > 0) {
+          guardStack[guardStack.length - 1] = false;
         }
         continue;
       }
-      if (guardDepth === 0 && /^\s*using (UnityEditor|UdonSharpEditor);$/.test(line)) {
+      if (/^\s*#elif\b/.test(line)) {
+        if (guardStack.length > 0) {
+          guardStack[guardStack.length - 1] =
+            /^\s*#elif\s+(?:!COMPILER_UDONSHARP\s*&&\s*)?UNITY_EDITOR\b/.test(line);
+        }
+        continue;
+      }
+      const guardedByEditor = guardStack.includes(true);
+      if (!guardedByEditor && /^\s*using (UnityEditor|UdonSharpEditor);$/.test(line)) {
         errors.push(`${relativePath}: runtime script references editor-only namespaces outside an editor preprocessor guard.`);
         break;
       }
