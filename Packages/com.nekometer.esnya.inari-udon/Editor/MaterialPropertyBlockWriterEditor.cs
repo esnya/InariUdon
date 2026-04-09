@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UdonSharpEditor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -322,9 +321,7 @@ namespace InariUdon.Rendering
         private static IEnumerable<MaterialPropertyBlockWriter> GetAllWriters()
         {
             return SceneManager.GetActiveScene().GetRootGameObjects()
-                .SelectMany(o => o.GetComponentsInChildren<UdonBehaviour>())
-                .Where(udon => UdonSharpEditorUtility.IsUdonSharpBehaviour(udon))
-                .Select(udon => UdonSharpEditorUtility.GetProxyBehaviour(udon) as MaterialPropertyBlockWriter)
+                .SelectMany(o => o.GetComponentsInChildren<MaterialPropertyBlockWriter>(true))
                 .Where(writer => writer != null);
         }
 
@@ -484,8 +481,6 @@ namespace InariUdon.Rendering
 
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
 
             EditorGUILayout.LabelField("Write On", EditorStyles.boldLabel);

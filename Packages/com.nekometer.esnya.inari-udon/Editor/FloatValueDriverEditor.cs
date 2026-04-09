@@ -1,27 +1,30 @@
 using UnityEditor;
 using UnityEngine;
-using UdonSharpEditor;
 
 namespace InariUdon.Driver
 {
     [CustomEditor(typeof(FloatValueDriver))]
     public class FloatValueDriverEditor : Editor
     {
+        private static readonly string[] ModeOptions =
+        {
+            "Direction Inner Product",
+            "Position Inner Product",
+        };
+
         private string[] _modeOptions;
 
         private void OnEnable()
         {
-            _modeOptions = ((FloatValueDriver)target).GetModeOptions();
+            _modeOptions = ModeOptions;
         }
 
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
-
             serializedObject.Update();
 
             var driver = (FloatValueDriver)target;
-            var modeOptions = _modeOptions ?? driver.GetModeOptions();
+            var modeOptions = _modeOptions ?? ModeOptions;
 
             var modeProp = serializedObject.FindProperty(nameof(FloatValueDriver.mode));
             var modeStringProp = serializedObject.FindProperty(nameof(FloatValueDriver.modeString));
@@ -58,19 +61,19 @@ namespace InariUdon.Driver
                     case nameof(FloatValueDriver.mode):
                         break;
                     case nameof(FloatValueDriver.transformOrigin):
-                        if (!driver.HideTransformOrigin())
+                        if (driver.mode == 1)
                             EditorGUILayout.PropertyField(property);
                         break;
                     case nameof(FloatValueDriver.localVector):
-                        if (!driver.HideLocalVector())
+                        if (driver.mode == 0)
                             EditorGUILayout.PropertyField(property);
                         break;
                     case nameof(FloatValueDriver.worldVector):
-                        if (!driver.HideWorldVector())
+                        if (driver.mode == 0)
                             EditorGUILayout.PropertyField(property);
                         break;
                     case nameof(FloatValueDriver.axisVector):
-                        if (!driver.HideAxisVector())
+                        if (driver.mode == 1)
                             EditorGUILayout.PropertyField(property);
                         break;
                     default:

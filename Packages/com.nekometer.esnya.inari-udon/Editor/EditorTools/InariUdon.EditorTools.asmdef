@@ -1,0 +1,19 @@
+{
+    "name": "InariUdon.EditorTools",
+    "references": [
+        "InariUdon.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "INARI_UDON_EDITOR_TOOLS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
