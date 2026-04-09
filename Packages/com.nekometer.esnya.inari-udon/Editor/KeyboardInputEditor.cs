@@ -24,9 +24,7 @@ namespace InariUdon.Interaction
             var eventTargets = serializedObject.FindProperty(nameof(KeyboardInput.eventTargets));
             var onKeyDownEvents = serializedObject.FindProperty(nameof(KeyboardInput.onKeyDownEvents));
 
-            modes.arraySize = keyCodes.arraySize;
-            eventTargets.arraySize = keyCodes.arraySize;
-            onKeyDownEvents.arraySize = keyCodes.arraySize;
+            InariUdonEditorUtility.MatchArraySize(keyCodes, modes, eventTargets, onKeyDownEvents);
 
             EditorGUILayout.PropertyField(keyCodes, new GUIContent("Key Mapping"), false);
 
@@ -57,8 +55,7 @@ namespace InariUdon.Interaction
                 if (GUILayout.Button("Add Element"))
                 {
                     keyCodes.arraySize++;
-                    eventTargets.arraySize = keyCodes.arraySize;
-                    onKeyDownEvents.arraySize = keyCodes.arraySize;
+                    InariUdonEditorUtility.MatchArraySize(keyCodes, modes, eventTargets, onKeyDownEvents);
                 }
             }
 

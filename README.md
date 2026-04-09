@@ -1,5 +1,5 @@
 # InariUdon
-Useful prefabs and Udon scripts for VRChat World SDK 3.0
+Useful prefabs and Udon scripts for VRChat World SDK 3.10.2
 
 **BREAKING_CHANGE: UdonSharp is upgraded to 1.x. You must create project via VRChat Creator Companion**
 
@@ -61,4 +61,3 @@ For Codex Cloud tasks, this repository now includes environment files:
 - `.codex/setup.sh`
 
 These scripts bootstrap dotnet (SDK 8 + runtime 6) and install `UdonSharpLinter` so cloud tasks can run lint immediately.
-
