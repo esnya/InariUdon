@@ -5,17 +5,7 @@ on:
   pull_request:
 
 jobs:
-  actionlint:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: reviewdog/action-actionlint@v1
-        with:
-          fail_level: error
-
-  manifests:
+  static-checks:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,20 +14,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate release config and workflows
-        run: ruby -e 'require "yaml"; YAML.load_file(".releaserc.yml"); Dir[".github/workflows/*.yml"].sort.each { |path| YAML.load_file(path) }'
-      - name: Validate package manifests
-        run: |
-          node <<'NODE'
-          const fs = require("fs");
-          const manifests = [
-            "package.json",
-            "Packages/com.nekometer.esnya.inari-udon/package.json",
-          ];
-          for (const path of manifests) {
-            JSON.parse(fs.readFileSync(path, "utf8"));
-          }
-          NODE
+      - uses: reviewdog/action-actionlint@v1
+        with:
+          fail_level: error
+      - name: Run static checks
+        run: bash scripts/run-static-checks.sh
 
   udonsharp-lint:
     runs-on: ubuntu-latest

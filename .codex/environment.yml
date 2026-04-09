@@ -2,4 +2,5 @@ name: inariudon-codex-cloud
 setup:
   - bash .codex/setup.sh
 checks:
+  - bash scripts/run-static-checks.sh
   - bash scripts/run-local-checks.sh

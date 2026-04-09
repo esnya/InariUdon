@@ -23,23 +23,7 @@ export PATH="$ROOT_DIR/.codex/bin:$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH"
 
 cd "$ROOT_DIR"
 
-git diff --check
-
-ruby -e 'require "yaml"; YAML.load_file(".releaserc.yml"); Dir[".github/workflows/*.yml"].sort.each { |path| YAML.load_file(path) }'
-
-node <<'NODE'
-const fs = require("fs");
-const path = require("path");
-
-const manifests = new Set([
-  "package.json",
-  "Packages/com.nekometer.esnya.inari-udon/package.json",
-]);
-
-for (const file of manifests) {
-  JSON.parse(fs.readFileSync(path.join(process.cwd(), file), "utf8"));
-}
-NODE
+bash scripts/run-static-checks.sh
 
 dotnet tool restore
 dotnet tool run udonsharp-lint "$PACKAGE_DIR"

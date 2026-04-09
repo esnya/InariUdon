@@ -63,17 +63,26 @@ For Codex Cloud tasks, this repository now includes environment files:
 These scripts bootstrap dotnet (SDK 8 + runtime 6) and restore the repo-pinned `UdonSharpLinter` tool so cloud tasks can run lint immediately.
 
 ## Local Checks
+Fast static verification without dotnet or Unity:
+
+```bash
+bash scripts/run-static-checks.sh
+```
+
+This covers:
+- `git diff --check`
+- YAML parsing for `.releaserc.yml` and GitHub Actions workflows
+- JSON parsing for root/package manifests and asmdefs
+- runtime asmdef sanity checks
+- runtime scripts that accidentally import `UnityEditor` / `UdonSharpEditor` without editor guards
+
 Run the fast local verification bundle with:
 
 ```bash
 bash scripts/run-local-checks.sh
 ```
 
-This runs:
-- `git diff --check`
-- YAML parsing for `.releaserc.yml` and GitHub Actions workflows
-- JSON parsing for root and package manifests
-- `udonsharp-lint` via the repo-local dotnet tool manifest
+This runs the static checks above, then `udonsharp-lint` via the repo-local dotnet tool manifest.
 
 Optional Unity batchmode compile is available with:
 
