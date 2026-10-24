@@ -1,0 +1,26 @@
+name: Release tooling smoke
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /package.json
+            /package-lock.json
+            /.releaserc.yml
+            /.github
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.22.1'
+      - run: node --version && npm --version
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Check consumers without release hooks, network, or child processes
+        run: node .github/scripts/release-tooling-smoke.mjs .
